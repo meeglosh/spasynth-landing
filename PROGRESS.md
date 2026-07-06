@@ -1,6 +1,6 @@
 # SPASynth Landing Page — Project Progress
 
-Last updated: 2026-07-06
+Last updated: 2026-07-06 (HTTPS confirmed live)
 
 ## What this is
 
@@ -17,18 +17,18 @@ at the custom domain **spasynth.com**.
 
 ## Current live status
 
-- `http://spasynth.com` — **live**, serving the site correctly.
-- `https://spasynth.com` — **not yet working**. GitHub hasn't issued the TLS
-  cert yet (still presenting the default `*.github.io` wildcard cert /
-  hostname mismatch). DNS is now correct (see below), so this should resolve
-  on its own within roughly an hour of the DNS fix. Once `curl -v
-  https://spasynth.com` shows a cert with `subject: CN=spasynth.com` (or it
-  matches), go to **Settings → Pages → Enforce HTTPS** and check the box.
-  If it's taking a long time, try clearing and re-saving the custom domain
-  field in Settings → Pages to force GitHub to re-check DNS.
+- `https://spasynth.com` — **fully live**. TLS cert approved (expires
+  2026-10-04, covers `spasynth.com` + `www.spasynth.com`), Enforce HTTPS is
+  on, and `http://spasynth.com` now 301-redirects to HTTPS. Nothing left to
+  do on the deployment/infra side.
 - GitHub Pages: enabled, source = `main` branch, `/` root. (Had to be turned
   on manually in the GitHub web UI — the `gh` CLI token in this environment
   doesn't have Pages admin scope, `gh api repos/.../pages` POST returns 403.)
+- Getting HTTPS to issue required clearing and re-saving the custom domain
+  field in Settings → Pages once DNS was corrected (shows up in history as
+  the `Delete CNAME` / `Create CNAME` commits) — that forced GitHub to
+  re-check DNS and kick off cert provisioning immediately instead of waiting
+  on its own schedule.
 
 ### DNS (GoDaddy)
 
@@ -80,14 +80,13 @@ from the brief) → Specs table → FAQ accordion → Footer.
 
 ## Outstanding tasks (pick up here next session)
 
-1. Confirm `https://spasynth.com` cert has issued; enable Enforce HTTPS.
-2. Once the Shopify store is live, update the nav CTA (text + href) and
+1. Once the Shopify store is live, update the nav CTA (text + href) and
    possibly add real "Buy" buttons/links inside the Editions cards.
-3. Manual cross-browser check — so far only verified via headless Chrome
+2. Manual cross-browser check — so far only verified via headless Chrome
    screenshots at 1440px + CSS breakpoint review, not a real device/browser
    pass (mobile nav toggle, canvas animation smoothness, hover states).
-4. Nothing else is blocking; the content/design is considered done pending
-   the above.
+3. Deployment/infra is done (HTTPS live and enforced). Everything else is
+   content/polish, not blocking.
 
 ## Commit history so far
 
