@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPASynth: Your Library Is The Synth | Silverplatter Audio</title>
+<meta name="description" content="SPASynth is a hybrid synthesizer built around the entire Silverplatter Audio sound-effects library (88 packs, 11,401 sounds), playable as oscillators, granular fuel, and modulation sources. No DRM, ever.">
+<link rel="icon" href="assets/branding/SPAudio_logo_white.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="grain"></div>
+
+<header class="site-header" id="top">
+  <div class="wrap header-inner">
+    <a class="brand" href="#top">
+      <span class="brand-ring"></span>
+      <span class="brand-word">SPASynth</span>
+    </a>
+    <nav class="main-nav" id="main-nav">
+      <a href="#library">Library</a>
+      <a href="#chaos">Chaos</a>
+      <a href="#features">Features</a>
+      <a href="#editions">Editions</a>
+      <a href="#no-drm">No DRM</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-primary btn-small" href="#editions">Get SPASynth</a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <canvas class="hero-scope" id="hero-scope"></canvas>
+    <div class="hero-glow hero-glow-orange"></div>
+    <div class="hero-glow hero-glow-cyan"></div>
+    <div class="wrap hero-inner">
+      <p class="eyebrow" data-reveal>SILVERPLATTER AUDIO PRESENTS</p>
+      <h1 data-reveal>Your sound library<br><span class="text-gradient">is the synth.</span></h1>
+      <p class="hero-sub" data-reveal>
+        SPASynth is a hybrid synthesizer built around the entire Silverplatter Audio
+        sound-effects library (88 packs, 11,401 production-ready sounds), playable as
+        oscillators, granular fuel, and modulation sources inside a full wavetable synth
+        with an organic-chaos engine and a one-button patch randomizer.
+      </p>
+      <div class="hero-cta" data-reveal>
+        <a class="btn btn-primary" href="#editions">See the Editions</a>
+        <a class="btn btn-ghost" href="#features">Explore Features</a>
+      </div>
+      <div class="hero-shot" data-reveal>
+        <img src="assets/images/spasynth-dark.png" alt="SPASynth plugin interface showing oscillators, filters, organic chaos engine, arpeggiator, and mod matrix in its default dark blue-teal theme with orange and cyan accents" loading="eager">
+      </div>
+    </div>
+  </section>
+
+  <!-- THE HOOK: LIBRARY IS THE SYNTH -->
+  <section class="section" id="library">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">THE HOOK</p>
+        <h2>Other synths give you waveforms.<br>This one gives you the whole Foley stage.</h2>
+        <p class="section-lede">
+          A typewriter. A rainstorm. A billiard break. Load any of the 11,401 sounds
+          in the library and it becomes a playable keyboard instrument, a granular cloud,
+          or the modulation source that pumps your filter, all at once, if you want.
+        </p>
+      </div>
+
+      <div class="signal-diagram" data-reveal>
+        <div class="signal-node signal-node-source">
+          <span class="signal-node-label">ANY SOUND</span>
+          <span class="signal-node-sub">rain · typewriter · billiards · 11,401 more</span>
+        </div>
+        <svg class="signal-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <path class="line-orange" d="M 0 20 C 40 20, 40 20, 100 20" />
+          <path class="line-orange" d="M 0 50 C 40 50, 40 50, 100 50" />
+          <path class="line-cyan"   d="M 0 80 C 40 80, 40 80, 100 80" />
+        </svg>
+        <div class="signal-targets">
+          <div class="signal-node signal-node-target">
+            <span class="tag tag-orange">OSC</span>
+            <span class="signal-node-label">Oscillator</span>
+            <span class="signal-node-sub">Keytracked, root note, start offset, loop points</span>
+          </div>
+          <div class="signal-node signal-node-target">
+            <span class="tag tag-orange">GRAIN</span>
+            <span class="signal-node-label">Granular Fuel</span>
+            <span class="signal-node-sub">Size, density, position, spray, scrubbed by an LFO</span>
+          </div>
+          <div class="signal-node signal-node-target">
+            <span class="tag tag-cyan">MOD</span>
+            <span class="signal-node-label">Modulation Source</span>
+            <span class="signal-node-sub">SFX Amp + SFX Pitch, analyzed on import</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="section-foot" data-reveal>
+        Every loaded sound is analyzed the moment it loads: amplitude follower and
+        pitch tracking, automatically. Route a thunderstorm's loudness to your filter
+        cutoff and the storm plays the synth.
+      </p>
+    </div>
+  </section>
+
+  <!-- CHAOS / RANDOMIZE -->
+  <section class="section section-alt" id="chaos">
+    <div class="wrap">
+      <div class="two-col">
+        <div class="chaos-copy" data-reveal>
+          <p class="eyebrow">PATCH GENERATION</p>
+          <h2>One button. A genuine patch generator, not a gimmick.</h2>
+          <p>
+            RANDOMIZE ALL rolls an entire playable patch. The WILD knob sets how polite
+            or unhinged the results get. Every parameter carries hand-tuned, musically
+            weighted randomization ranges and biases. Every roll is guaranteed to make sound.
+          </p>
+          <p class="chaos-locks-label">Lock what you love, re-roll the rest:</p>
+          <div class="lock-row">
+            <span class="lock-chip is-locked">OSC</span>
+            <span class="lock-chip">FILTER</span>
+            <span class="lock-chip">ENV</span>
+            <span class="lock-chip is-locked">LFO</span>
+            <span class="lock-chip">CHAOS</span>
+            <span class="lock-chip">ARP</span>
+            <span class="lock-chip is-locked">FX</span>
+            <span class="lock-chip">MATRIX</span>
+          </div>
+        </div>
+        <div class="chaos-visual" data-reveal>
+          <div class="wild-knob">
+            <div class="wild-knob-dial"></div>
+            <span class="wild-knob-label">WILD</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chaos-organic" data-reveal>
+        <div class="chaos-organic-text">
+          <p class="eyebrow">ORGANIC CHAOS</p>
+          <h3>Analog instability, on purpose.</h3>
+          <p>
+            A bank of slow random walkers drifts pitch, phase, wavetable position,
+            and amplitude per voice, plus drifting saturation and distortion for
+            harmonic movement. Global depth, rate, and mix, all modulatable. It's
+            what makes digital patches breathe.
+          </p>
+        </div>
+        <div class="scope-widget">
+          <canvas id="chaos-scope"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE GRID -->
+  <section class="section" id="features">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">THE FULL PICTURE</p>
+        <h2>Everything under the hood.</h2>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-card" data-reveal>
+          <span class="tag tag-orange">ENGINES</span>
+          <h3>7 engines, 3 slots</h3>
+          <p>Wavetable, Sample/SFX, Granular, Virtual Analog, 2-op FM, Noise
+          (white/pink/brown), and Karplus-Strong Pluck. Mix and match across
+          three oscillator slots.</p>
+        </article>
+
+        <article class="feature-card" data-reveal>
+          <span class="tag tag-cyan">FILTERS</span>
+          <h3>Dual multimode filters</h3>
+          <p>Two filters, 8 types each (LP/HP/BP/Notch, 12 &amp; 24 dB), drive,
+          keytracking, ±4 octave envelope depth, and dry/wet mix. Route them
+          series or parallel.</p>
+        </article>
+
+        <article class="feature-card" data-reveal>
+          <span class="tag tag-cyan">MODULATION</span>
+          <h3>16-slot mod matrix</h3>
+          <p>20 sources (3 envelopes, 3 LFOs, macros, velocity, mod wheel,
+          aftertouch, chaos, and 6 SFX followers) into 90+ destinations.
+          Evaluated at 64-sample resolution.</p>
+        </article>
+
+        <article class="feature-card" data-reveal>
+          <span class="tag tag-orange">ARP</span>
+          <h3>12-mode arpeggiator</h3>
+          <p>Up, down, up/down, converge, diverge, chord, random-walk, and
+          melodic phrases. Plus CHANCE, STUTTER, JUMP, and HUMAN probability
+          controls that turn patterns into performances.</p>
+        </article>
+
+        <article class="feature-card" data-reveal>
+          <span class="tag tag-orange">PLAY</span>
+          <h3>Built to play live</h3>
+          <p>Global glide across every engine and both filters' keytracking,
+          16-voice polyphony, and MIDI Learn on every single control:
+          right-click, move a knob, done.</p>
+        </article>
+
+        <article class="feature-card" data-reveal>
+          <span class="tag tag-cyan">FX</span>
+          <h3>Full effects chain</h3>
+          <p>Distortion, chorus, tempo-synced ping-pong delay, reverb, and a
+          3-band EQ, each with its own live, signal-fed scope.</p>
+        </article>
+
+        <article class="feature-card" data-reveal>
+          <span class="tag tag-orange">LIBRARY</span>
+          <h3>88 packs, 11,401 sounds</h3>
+          <p>24-bit/48kHz, production-ready for film and TV. Auto-discovery
+          means you extract to one folder and SPASynth finds it, no scanning
+          dialogs. 264 factory presets included.</p>
+        </article>
+
+        <article class="feature-card" data-reveal>
+          <span class="tag tag-cyan">INTERFACE</span>
+          <h3>Telemetry-animated UI</h3>
+          <p>A resizable, GPU-friendly vector interface where every scope,
+          envelope, LFO, and filter curve is animated live from the actual
+          audio engine. Re-tint every accent color to your own palette.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACCENT RETINT SHOWCASE -->
+  <section class="section retint">
+    <div class="wrap retint-inner" data-reveal>
+      <div class="retint-text">
+        <p class="eyebrow">MAKE IT YOURS</p>
+        <h2>Two accent colors. Any colors you want.</h2>
+        <p>The default theme runs deep blue-teal with orange for audio and cyan
+        for modulation. A built-in picker re-tints the entire interface:
+        link both accents for a single-color look, or split them however
+        you like.</p>
+      </div>
+      <div class="retint-shot">
+        <img src="assets/images/spasynth-accent.png" alt="The same SPASynth interface re-tinted violet and lime using the built-in accent color picker" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- EDITIONS -->
+  <section class="section" id="editions">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">EDITIONS</p>
+        <h2>Same synth. The difference is the library.</h2>
+        <p class="pricing-note">Pricing coming soon.</p>
+      </div>
+
+      <div class="editions-grid">
+        <article class="edition-card" data-reveal>
+          <h3>Standard</h3>
+          <p class="edition-tag">The full synth</p>
+          <ul>
+            <li>Every engine, filter, and effect</li>
+            <li>All 264 factory presets</li>
+            <li>440-sound starter library (5 sounds from every one of the 88 packs)</li>
+          </ul>
+        </article>
+
+        <article class="edition-card edition-card-featured" data-reveal>
+          <span class="edition-badge">FULL LIBRARY</span>
+          <h3>Pro</h3>
+          <p class="edition-tag">The full synth, the whole library</p>
+          <ul>
+            <li>Everything in Standard</li>
+            <li>The complete 11,401-sound, 37 GB Silverplatter Audio library</li>
+            <li>Every pack, every sound, playable from day one</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="upgrade-path" data-reveal>
+        <p><strong>Standard → Pro:</strong> pay the difference, download the
+        full library, drop it in the same folder. No reinstall, nothing to
+        activate. Individual add-on packs install the same way. Every copy
+        can carry a personal ownership stamp ("Licensed to you@…") shown
+        in the footer. A signature, not a lock.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- NO DRM -->
+  <section class="no-drm" id="no-drm">
+    <div class="wrap" data-reveal>
+      <p class="eyebrow">THE POSITION</p>
+      <blockquote>
+        SPASynth has no copy protection, no serial numbers, no activation, no
+        dongles, and it never phones home. We sell to people who pay for the
+        tools they love, and we price it accordingly. The license is simple:
+        use the sounds in anything you make, royalty-free, forever: just
+        don't redistribute the raw files.
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- SPECS -->
+  <section class="section" id="specs">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">SPECS</p>
+        <h2>Formats &amp; requirements</h2>
+      </div>
+      <div class="specs-table" data-reveal>
+        <div class="specs-row">
+          <span class="specs-os">macOS 11+</span>
+          <span class="specs-detail">Universal (Apple silicon &amp; Intel)</span>
+          <span class="specs-formats"><span class="tag">AU</span><span class="tag">VST3</span><span class="tag">Standalone</span></span>
+        </div>
+        <div class="specs-row">
+          <span class="specs-os">Windows 10+</span>
+          <span class="specs-detail">64-bit</span>
+          <span class="specs-formats"><span class="tag">VST3</span><span class="tag">Standalone</span></span>
+        </div>
+      </div>
+      <p class="specs-note" data-reveal>No AAX in v1. Current release: v1.0.0.</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">FAQ</p>
+        <h2>Good questions.</h2>
+      </div>
+      <div class="faq-list" data-reveal>
+        <details class="faq-item">
+          <summary>Will my DAW support it?</summary>
+          <p>On macOS, SPASynth ships as AU and VST3, plus a standalone app.
+          On Windows, it's VST3 and standalone. If your DAW hosts either
+          format, you're set.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do I need the library on my system drive?</summary>
+          <p>No. Point SPASynth at the library folder wherever it lives:
+          external drive, NAS, wherever. Auto-discovery finds it, and presets
+          use portable paths so sessions survive the library living anywhere.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What happens when I upgrade to Pro?</summary>
+          <p>Pay the difference, download the complete 11,401-sound library,
+          drop it in the same folder as your Standard library. No reinstall,
+          nothing to activate.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Is there copy protection?</summary>
+          <p>No. No serial numbers, no activation, no dongles, no phone-home,
+          ever. Buy it, download it, own it.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Pro Tools / AAX support?</summary>
+          <p>Not in v1.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <img class="footer-logo" src="assets/branding/SPAudio_logo_banner_white.svg" alt="Silverplatter Audio">
+    <p class="footer-copy">SPASynth v1.0.0. Built on the Silverplatter Audio sound library.</p>
+    <nav class="footer-nav">
+      <a href="#library">Library</a>
+      <a href="#editions">Editions</a>
+      <a href="#no-drm">No DRM</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
