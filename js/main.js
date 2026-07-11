@@ -1,6 +1,8 @@
 (function () {
   "use strict";
 
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   /* ---------- sticky header ---------- */
   var header = document.querySelector(".site-header");
   var onScroll = function () {
@@ -120,7 +122,36 @@
     requestAnimationFrame(step);
   }
 
-  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  /* ---------- hero parallax ----------
+     Title/subtitle drift slightly faster than the scroll, the
+     waveform canvas lags behind, so the copy reads as a layer
+     floating above the background rather than pinned to it. */
+  var heroSection = document.querySelector(".hero");
+  var heroCopy = document.getElementById("hero-copy");
+  var heroScope = document.getElementById("hero-scope");
+  if (heroSection && heroCopy && heroScope && !reduceMotion) {
+    var parallaxTicking = false;
+    var updateParallax = function () {
+      var rect = heroSection.getBoundingClientRect();
+      if (rect.bottom > 0 && rect.top < window.innerHeight) {
+        var scrolled = Math.max(0, -rect.top);
+        heroCopy.style.transform = "translateY(" + (scrolled * -0.06) + "px)";
+        heroScope.style.transform = "translateY(" + (scrolled * 0.18) + "px)";
+      }
+      parallaxTicking = false;
+    };
+    document.addEventListener(
+      "scroll",
+      function () {
+        if (!parallaxTicking) {
+          requestAnimationFrame(updateParallax);
+          parallaxTicking = true;
+        }
+      },
+      { passive: true }
+    );
+    updateParallax();
+  }
 
   if (!reduceMotion) {
     makeScope(document.getElementById("hero-scope"), {
