@@ -505,6 +505,13 @@ p{ margin: 0; color: var(--text-dim); }
   background: var(--orange);
 }
 .edition-card-featured li::before{ background: var(--cyan); }
+.edition-note{
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  color: var(--cyan);
+  font-size: 0.85rem;
+}
 .upgrade-path{
   margin-top: 28px;
   padding: 22px 26px;
