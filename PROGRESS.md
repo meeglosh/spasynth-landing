@@ -76,7 +76,11 @@ from the brief) → Specs table → FAQ accordion → Footer.
   Shopify listing goes live** — built installer packages already exist
   locally at `~/arsenal/dist/shopify/` (Standard + Pro), so the store side
   may already be in progress separately from this repo.
-- Pricing is TBD by Mike — do not add prices until told a real number.
+- Pricing is live: Standard is $149 (intro price $99), Pro is $702
+  (discounted from $1,264, the Everything Bundle price on Shopify).
+  Pro's value pitch: $702 is less than the Everything Bundle alone costs,
+  so SPASynth comes along for less than free. Update these numbers here
+  and in the Editions section together if they ever change.
 
 ## Outstanding tasks (pick up here next session)
 

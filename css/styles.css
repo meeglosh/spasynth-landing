@@ -453,13 +453,6 @@ p{ margin: 0; color: var(--text-dim); }
 }
 
 /* ---------- editions ---------- */
-.pricing-note{
-  margin-top: 16px;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  letter-spacing: 0.04em;
-  color: var(--text-dim);
-}
 .editions-grid{
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -479,6 +472,36 @@ p{ margin: 0; color: var(--text-dim); }
 .edition-badge{
   position: absolute;
   top: 24px; right: 24px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: var(--orange);
+  background: var(--orange-soft);
+  border: 1px solid rgba(240,139,58,0.35);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+.edition-price{
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 14px 0 4px;
+}
+.price-original{
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--text-dim);
+  text-decoration: line-through;
+  opacity: 0.65;
+}
+.price-current{
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.price-badge{
   font-family: var(--font-mono);
   font-size: 0.65rem;
   letter-spacing: 0.08em;
