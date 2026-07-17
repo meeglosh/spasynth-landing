@@ -255,7 +255,6 @@ p{ margin: 0; color: var(--text-dim); }
   left: 0;
   width: 22.6087%;
   height: auto;
-  filter: drop-shadow(8px 0 24px rgba(0,0,0,0.55));
   transform: translateX(-100%);
   animation: hero-panel-slide 9s ease-in-out infinite;
 }
