@@ -249,6 +249,24 @@ p{ margin: 0; color: var(--text-dim); }
   margin: 0 auto;
 }
 .hero-shot img{ width: 100%; }
+.hero-shot .hero-shot-panel{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 22.6087%;
+  height: auto;
+  filter: drop-shadow(8px 0 24px rgba(0,0,0,0.55));
+  transform: translateX(-100%);
+  animation: hero-panel-slide 9s ease-in-out infinite;
+}
+@keyframes hero-panel-slide{
+  0%, 16.67%     { transform: translateX(-100%); }
+  22.22%, 77.78% { transform: translateX(0%); }
+  83.33%, 100%   { transform: translateX(-100%); }
+}
+@media (prefers-reduced-motion: reduce){
+  .hero-shot .hero-shot-panel{ animation: none; transform: translateX(-100%); }
+}
 
 /* ---------- sections ---------- */
 .section{ padding: 120px 0; }
