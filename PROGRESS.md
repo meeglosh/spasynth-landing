@@ -10,10 +10,15 @@ at the custom domain **spasynth.com**.
 
 - Repo: `github.com/meeglosh/spasynth-landing` (branch `main`)
 - Local path: `~/spasynth-landing`
-- Content source of truth: `~/arsenal/docs/marketing-brief.md` — the full
+- Content source of truth: `~/spasynth/docs/marketing-brief.md` — the full
   feature list, positioning, brand voice, and palette all come from there.
   **Do not add features, numbers, pricing, or claims that aren't in that
-  brief.**
+  brief.** (Moved here from `~/arsenal/docs/` at some point; if this path
+  goes stale again, it's probably moved again.)
+- Shopify product-listing copy (Standard/Pro/Upgrade descriptions, SEO,
+  shared FAQ) lives at `~/spasynth/docs/shopify-listings.md` — useful for
+  copy alignment and is the source for exact pricing, including the
+  Standard→Pro upgrade price this site doesn't otherwise surface.
 
 ## Current live status
 
@@ -81,8 +86,17 @@ from the brief) → Specs table → FAQ accordion → Footer.
   the bundle actually sells for after its own discount. Pro is priced
   to exactly match that $702 bundle price, not below it — the pitch is
   "SPASynth comes included at no extra cost," not "cheaper than the
-  bundle." Update these numbers here and in the Editions section
-  together if they ever change.
+  bundle." The Standard→Pro upgrade (library only, no synth) is $603
+  intro, discounted from $1,115 regular — shown in the dashed box under
+  the edition cards. All these numbers come from
+  `~/spasynth/docs/shopify-listings.md`; update there, here, and in the
+  Editions section together if they ever change.
+- FAQ has two items pulled from the Shopify shared FAQ that weren't on
+  the site before: free v1 updates, and the Windows SmartScreen warning
+  explainer. The Shopify doc has a few more FAQ entries (system
+  requirements, sound/preset counts, usage rights) not yet mirrored here
+  since they're either covered elsewhere on the page or felt redundant;
+  revisit if the FAQ section feels thin.
 
 ## Outstanding tasks (pick up here next session)
 
