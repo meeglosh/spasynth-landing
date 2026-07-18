@@ -634,13 +634,16 @@ p{ margin: 0; color: var(--text-dim); }
 /* ---------- no drm ---------- */
 .no-drm{
   padding: 130px 0;
-  background:
-    radial-gradient(ellipse at 20% 20%, rgba(79,196,214,0.08), transparent 55%),
-    radial-gradient(ellipse at 80% 80%, rgba(240,139,58,0.08), transparent 55%),
-    var(--bg-deep);
+  background-image:
+    radial-gradient(ellipse at 20% 20%, rgba(79,196,214,0.1), transparent 55%),
+    radial-gradient(ellipse at 80% 80%, rgba(240,139,58,0.1), transparent 55%),
+    linear-gradient(180deg, rgba(8,11,13,0.99) 0%, rgba(8,11,13,0.8) 20%, rgba(8,11,13,0.8) 80%, rgba(8,11,13,0.99) 100%),
+    url("../assets/images/spasynth-detail-bg.jpg");
+  background-position: center, center, center, center;
+  background-size: cover, cover, cover, cover;
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  background-color: var(--bg-deep);
   text-align: center;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
 }
 .no-drm blockquote{
   max-width: 780px;
