@@ -155,10 +155,22 @@ removed now — would need to be rebuilt, not just uncommented).
   each flagged with an inline `<!-- TODO -->` comment in `index.html`.
   **Swap all three for real Shopify product URLs once the store is live**
   (`target="_blank" rel="noopener"` is already set on all of them, so only
-  the `href` needs to change). Standard/Pro buttons live at the bottom of
-  `.edition-card` (styled via `.edition-buy`, pinned to the card bottom via
-  `margin-top: auto` so both cards' buttons align); the upgrade button is
-  `.upgrade-buy` inside `.upgrade-path`.
+  the `href` needs to change). The upgrade button is `.upgrade-buy` inside
+  `.upgrade-path`, simple fixed `margin-top`.
+
+  Standard/Pro buttons (`.edition-buy`) are trickier: `.edition-card` is a
+  flex column, and each card has an `.edition-spacer` div (`flex: 1 0 0`)
+  right before the button, plus the button itself has a fixed
+  `margin-top: 20px`. **Don't simplify this back to `margin-top: auto` on
+  just the button** — Pro is the taller card (defines the grid row height
+  via stretch), so it structurally has zero leftover space relative to
+  itself, meaning a lone `margin-top: auto` always resolves to 0 for Pro
+  specifically, no matter how much you trim elsewhere. The spacer+fixed-
+  margin combo is what makes Pro get a real minimum gap while Standard
+  (which does have leftover space) still bottom-pins correctly, and titles
+  stay top-aligned across both cards. If touching this again, don't use
+  `justify-content: flex-end` either — that pushes each card's *entire*
+  content block to the bottom, breaking title alignment between the cards.
 - Footer logo and a "Silverplatter Audio" nav link both point to
   `https://www.silverplatteraudio.com` (opens in a new tab).
 - FAQ has two items pulled from the Shopify shared FAQ that weren't on the
