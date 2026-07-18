@@ -467,6 +467,8 @@ p{ margin: 0; color: var(--text-dim); }
 .edition-card{
   position: relative;
   isolation: isolate;
+  display: flex;
+  flex-direction: column;
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -600,7 +602,7 @@ p{ margin: 0; color: var(--text-dim); }
   font-size: 0.85rem;
 }
 .edition-buy{
-  width: 100%;
+  align-self: flex-start;
   margin-top: auto;
 }
 .upgrade-buy{ margin-top: 20px; }
