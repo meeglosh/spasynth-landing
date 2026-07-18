@@ -164,20 +164,9 @@ p{ margin: 0; color: var(--text-dim); }
   font-size: 1.15rem;
   letter-spacing: 0.02em;
 }
-.brand-ring{
-  width: 20px; height: 20px;
-  border-radius: 50%;
-  border: 3px solid var(--text);
-  position: relative;
+.brand-mark{
+  width: 22px; height: 22px;
   flex-shrink: 0;
-}
-.brand-ring::after{
-  content: "";
-  position: absolute;
-  inset: 5px;
-  border-radius: 50%;
-  border: 3px solid var(--bg);
-  background: var(--orange);
 }
 .main-nav{
   display: flex;
