@@ -1,6 +1,6 @@
 # SPASynth Landing Page — Project Progress
 
-Last updated: 2026-07-17
+Last updated: 2026-07-18
 
 ## What this is
 
@@ -103,18 +103,25 @@ at the custom domain **spasynth.com**.
 
 ### Pricing (real numbers, from Mike directly — not from the marketing brief)
 
+**All prices are USD.** An earlier session priced Pro/Upgrade using numbers
+that turned out to be CAD, not USD — those were wrong and got corrected this
+session. If a pricing update ever comes in without an explicit currency,
+confirm USD before touching the copy.
+
 - Standard: $149 regular, **$99 intro** (badge makes the discount explicit).
-- Pro: $702, discounted from **$1,264** (the Everything Bundle's list price
-  on Shopify). $702 is what the bundle *already* sells for after its own
-  discount — Pro is priced to **exactly match** that bundle sale price, not
-  undercut it. The pitch is "SPASynth comes included at no extra cost," not
-  "cheaper than the bundle." Got this wrong once (said "cheaper") and had
-  to correct it — keep this distinction precise if the copy changes.
-- Standard→Pro upgrade (library only, no synth): $603 intro, discounted
-  from $1,115 regular. Shown in the dashed box under the edition cards,
-  with the same price-badge visual treatment as the edition cards.
-- All these numbers should stay in sync across `~/spasynth/docs/shopify-listings.md`,
-  this file, and the Editions section in `index.html`.
+- Pro: $499, discounted from **$899** (the Everything Bundle's list price
+  on Shopify, in USD). $499 is what the bundle *already* sells for after its
+  own discount — Pro is priced to **exactly match** that bundle sale price,
+  not undercut it. The pitch is "SPASynth comes included at no extra cost,"
+  not "cheaper than the bundle." Got this wrong once before (said "cheaper")
+  and had to correct it — keep this distinction precise if the copy changes.
+- Standard→Pro upgrade (library only, no synth): $400 intro, discounted
+  from $750 regular (the difference at each tier: 499−99=400, 899−149=750).
+  Shown in the dashed box under the edition cards, with the same price-badge
+  visual treatment as the edition cards.
+- All these numbers should stay in sync across `~/spasynth/docs/shopify-listings.md`
+  (source of truth, already correct in USD as of this session), this file,
+  and the Editions section in `index.html`.
 - Pricing cards (Standard/Pro/Upgrade box) have a hover effect: a soft
   drifting orange/cyan "vapor" glow behind the card, built from a blurred
   `::before` pseudo-element. It's masked by an opaque `::after` layer
