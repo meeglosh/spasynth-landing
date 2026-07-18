@@ -137,7 +137,7 @@ p{ margin: 0; color: var(--text-dim); }
 .site-header{
   position: fixed;
   top: 0; left: 0; right: 0;
-  z-index: 100;
+  z-index: 1000;
   padding: 18px 0;
   background: rgba(12,17,20,0);
   border-bottom: 1px solid transparent;
