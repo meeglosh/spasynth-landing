@@ -146,10 +146,19 @@ removed now — would need to be rebuilt, not just uncommented).
 
 ## Known placeholder / intentionally incomplete
 
-- **Nav CTA button** currently reads "Coming soon" and links to `#editions`.
-  This was "Get SPASynth" originally; changed because the Shopify store
-  isn't live yet. **Swap the text and href to the real store URL once the
-  Shopify listing goes live.**
+- **Nav CTA button** reads "Get SPASynth" and links to `#editions` (its
+  original text; was briefly "Coming soon" while the store wasn't live,
+  reverted back once Buy buttons were added). It just scrolls to the
+  Editions section, it's not a purchase link itself.
+- **"Buy now" buttons** exist on all three products (Standard, Pro, and the
+  Standard→Pro upgrade box) but all point to `href="#"` as a placeholder,
+  each flagged with an inline `<!-- TODO -->` comment in `index.html`.
+  **Swap all three for real Shopify product URLs once the store is live**
+  (`target="_blank" rel="noopener"` is already set on all of them, so only
+  the `href` needs to change). Standard/Pro buttons live at the bottom of
+  `.edition-card` (styled via `.edition-buy`, pinned to the card bottom via
+  `margin-top: auto` so both cards' buttons align); the upgrade button is
+  `.upgrade-buy` inside `.upgrade-path`.
 - Footer logo and a "Silverplatter Audio" nav link both point to
   `https://www.silverplatteraudio.com` (opens in a new tab).
 - FAQ has two items pulled from the Shopify shared FAQ that weren't on the
@@ -164,8 +173,8 @@ removed now — would need to be rebuilt, not just uncommented).
 
 ## Outstanding tasks (pick up here next session)
 
-1. Once the Shopify store is live, update the nav CTA (text + href) and
-   possibly add real "Buy" buttons/links inside the Editions cards.
+1. Once the Shopify store is live, swap the three placeholder "Buy now"
+   `href="#"` links (Standard, Pro, upgrade) for real Shopify product URLs.
 2. Manual cross-browser check — so far only verified via headless Chrome
    (Playwright) screenshots at various widths, not a real device/browser
    pass (mobile nav toggle, canvas animation smoothness, hover states,

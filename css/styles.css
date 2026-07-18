@@ -599,6 +599,11 @@ p{ margin: 0; color: var(--text-dim); }
   color: var(--cyan);
   font-size: 0.85rem;
 }
+.edition-buy{
+  width: 100%;
+  margin-top: auto;
+}
+.upgrade-buy{ margin-top: 20px; }
 .upgrade-path{
   position: relative;
   isolation: isolate;
