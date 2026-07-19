@@ -27,21 +27,45 @@ at the custom domain **spasynth.com**.
 
 ## Current live status
 
-- `https://spasynth.com` — **fully live**. TLS cert approved (expires
-  2026-10-04, covers `spasynth.com` + `www.spasynth.com`), Enforce HTTPS is
-  on, and `http://spasynth.com` now 301-redirects to HTTPS. Nothing left to
-  do on the deployment/infra side.
+- `https://spasynth.com` — **fully live**, confirmed working end-to-end
+  (2026-07-18): apex returns 200, `http://` redirects to `https://`, `www`
+  redirects to the apex. Served through Cloudflare's proxy in front of
+  GitHub Pages (see DNS section below — this is a real architecture change,
+  not just a config detail).
 - GitHub Pages: enabled, source = `main` branch, `/` root. (Had to be turned
   on manually in the GitHub web UI — the `gh` CLI token in this environment
   doesn't have Pages admin scope, `gh api repos/.../pages` POST returns 403.)
 
-### DNS (GoDaddy)
+### DNS — now on Cloudflare, NOT GoDaddy (changed 2026-07-18)
 
-- `www.spasynth.com` → CNAME → `meeglosh.github.io` — confirmed working.
-- `spasynth.com` (apex) → 4 A records: `185.199.108.153`, `185.199.109.153`,
-  `185.199.110.153`, `185.199.111.153`. GoDaddy previously auto-added two
-  stray parking-forwarding A records that broke cert issuance; if HTTPS
-  ever breaks again, check for stray A records first.
+**Read this before touching DNS again.** The domain's nameservers were
+switched at the registrar level from GoDaddy to Cloudflare
+(`amanda.ns.cloudflare.com` / `ignacio.ns.cloudflare.com`) at some point
+before 2026-07-18, for reasons unknown (Mike didn't recall a deliberate
+reason when asked; possibly set up for something else and forgotten).
+**GoDaddy's own DNS panel is now inert** — whatever records live there
+(including the old 4 A records pointing at GitHub Pages IPs) have zero
+effect on real-world resolution, since GoDaddy isn't the authoritative
+nameserver anymore. Only Cloudflare's DNS dashboard matters now.
+
+- **What broke:** only `www.spasynth.com` (CNAME → `meeglosh.github.io`)
+  had been carried over into Cloudflare's zone. The apex (`spasynth.com`,
+  no `www`) had no record at all there, so it failed to resolve. Since
+  GitHub Pages redirects `www` → apex, this took the whole site down even
+  though `www`'s own DNS was technically fine.
+- **The fix:** an apex record was added in Cloudflare's dashboard. It now
+  resolves to a Cloudflare IP (`172.64.80.1` as of this writing, not a
+  GitHub Pages IP directly) — confirms Cloudflare's proxy ("orange cloud")
+  is turned ON for this record, so traffic flows browser → Cloudflare edge
+  → GitHub Pages, not directly to GitHub. This is working correctly
+  (verified HTTPS returns 200 with valid content), so no need to switch it
+  to "DNS only" (grey cloud) unless something breaks later.
+- **If DNS problems come up again:** check Cloudflare's dashboard first,
+  not GoDaddy's. `dig spasynth.com NS` will show which nameservers are
+  currently authoritative if there's ever doubt.
+- GoDaddy's stray parking-forwarding A records (documented in earlier
+  versions of this file) are now moot, since GoDaddy DNS isn't in the
+  resolution path at all anymore.
 
 ## Design decisions (so a future session doesn't relitigate these)
 
