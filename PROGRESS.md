@@ -83,47 +83,43 @@ nameserver anymore. Only Cloudflare's DNS dashboard matters now.
   without being asked.
 - No em dashes anywhere in copy, ever — replaced with colons, parentheses,
   commas, or split sentences. Keep new copy dash-free.
-- Hero has two animation layers, both respecting `prefers-reduced-motion`:
-  1. A canvas oscilloscope background (`js/main.js`, `makeScope`) with a
-     scroll-linked parallax: the title/subtitle drift slightly faster than
-     scroll, the canvas lags behind (`.hero-copy` / `#hero-scope` in
-     `js/main.js` + `css/styles.css`).
-  2. An animated preset-drawer overlay (see below).
-
-### Hero preset-drawer animation (non-obvious, read before touching)
-
-- `assets/images/spasynth-hero.png` is the **closed/base** state (shows
-  Oscillator A mid-"loading…", matching `~/spasynth/docs/spasynth-loading.png`).
-- `assets/images/spasynth-hero-panel.png` is a **precise crop** (0,0 to
-  312×900 px) of just the presets-panel region from the open-drawer
-  screenshot (`~/spasynth/docs/spasynth-dark.png`), measured via pixel-diff
-  against the closed image, not eyeballed.
-- These are layered in `.hero-shot` in `index.html`: base `<img>` +
-  `<img class="hero-shot-panel">`. CSS (`.hero-shot .hero-shot-panel` in
-  `css/styles.css`) positions the panel at `width: 22.6087%` (= 312/1380,
-  the source image width) with `height: auto` — this only works because
-  both source images share the same 1380×900 dimensions and the panel crop
-  starts at the image's top-left corner. If either source image is ever
-  re-exported at different dimensions or the panel's on-screen position
-  changes, this percentage and the crop need to be redone (see the
-  pixel-diff approach used this session: crop a vertical strip from both
-  images, diff to find the true edge, don't guess).
-- Animates via `transform: translateX()` on a `@keyframes hero-panel-slide`
-  loop (currently 9s: ~1.5s closed → 0.5s slide open → 5s held open → 0.5s
-  slide closed → ~1.5s closed). Slides in from the **left**, matching the
-  panel's actual dock side in the real plugin UI — Mike initially asked for
-  "from the right" but that would sweep the panel across the whole frame
-  to reach a left-docked resting position, which looks broken; explained
-  this and got confirmation to do it correctly instead.
-- **No drop-shadow on the panel overlay** — a `filter: drop-shadow(...)`
-  was tried and removed because it wraps around all four edges of the
-  cropped rectangle (including the top/bottom crop lines, which aren't
-  real UI edges), producing a visible shadow smear mid-toolbar. If you
-  want depth on the panel again, it needs to be a shadow only on the
-  right edge (e.g. a pseudo-element gradient), not a `filter`.
-- Retint showcase image (`assets/images/spasynth-accent.png`) and the hero
-  images were all refreshed this session to the current v1.0.0 build
-  (previous versions showed "v0.1" in the corner).
+- **Hero is a full-screen photographic background** (as of 2026-07-21,
+  merged from the `experiment/fullscreen-hero-bg` branch — this replaced an
+  earlier version built around a canvas oscilloscope + framed plugin
+  screenshot + animated preset-drawer overlay; that whole approach, its
+  CSS, and its image assets were removed in the merge, so ignore any old
+  references to `.hero-scope`, `.hero-shot`, `#hero-scope`, or
+  `spasynth-hero-panel.png` if they turn up in old notes or git history).
+  Current implementation, all respecting `prefers-reduced-motion`:
+  1. `.hero-bg-image` (in `index.html`, styled in `css/styles.css`) is a
+     full-bleed `background-image` div behind the copy: a stylized "SPASynth
+     as hardware" render (`assets/images/spasynth-hero-bg.jpg`, sourced from
+     `~/spasynth/docs/spasynth-hardware.png`) with a heavy vertical dark
+     gradient scrim over it. The scrim had to be tuned much darker than a
+     typical hero overlay (up to ~0.97 opacity near the edges) because
+     `background-size: cover` crops a *different* part of the image at
+     different viewport aspect ratios, so contrast that works at one width
+     can fail at another (a nav link nearly disappeared against a bright
+     lamp in the photo before this was fixed) — don't lighten the scrim
+     without re-checking contrast across several widths.
+  2. Scroll-linked parallax (`js/main.js`, the "hero parallax" block):
+     `#hero-copy` (title/subtitle) drifts up faster than scroll
+     (`translateY(scrolled * -0.18)`), `.hero-bg-image` lags behind
+     (`translateY(scrolled * 0.4)`). The background image has an
+     oversized box (`top: -45%; height: 150%`) so this shift never reveals
+     a gap at the section edge — if either multiplier is increased, this
+     buffer needs to grow to match (worked example of the math is in the
+     merged commit history on the experiment branch).
+  3. `#hero-title` also widens (`letter-spacing`, -0.01em resting up to
+     +0.3em) and blurs (`filter: blur()`, 0 to 10px) as the user scrolls,
+     scaled to roughly the point the title exits the viewport (not the
+     full hero height) so the effect completes while it's still visible.
+     `white-space: nowrap` keeps it from wrapping to a second line as it
+     widens; relies on `body{overflow-x:hidden}` (already present) to clip
+     the overflow instead of creating a horizontal scrollbar.
+- Retint showcase image (`assets/images/spasynth-accent.png`) was refreshed
+  to the current v1.0.3 build (previous versions showed "v0.1" in the
+  corner).
 
 ### Pricing (real numbers, from Mike directly — not from the marketing brief)
 
@@ -213,8 +209,9 @@ removed now — would need to be rebuilt, not just uncommented).
    `href="#"` links (Standard, Pro, upgrade) for real Shopify product URLs.
 2. Manual cross-browser check — so far only verified via headless Chrome
    (Playwright) screenshots at various widths, not a real device/browser
-   pass (mobile nav toggle, canvas animation smoothness, hover states,
-   the hero drawer animation on an actual phone).
+   pass (mobile nav toggle, hover states, the new hero effects — background
+   parallax and the title letter-spacing/blur scroll effect — on an actual
+   phone/tablet).
 3. Deployment/infra is done (HTTPS live and enforced). Everything else is
    content/polish, not blocking.
 4. **Site content is behind the actual product (v1.0.3 shipped, confirmed
@@ -230,13 +227,6 @@ removed now — would need to be rebuilt, not just uncommented).
      Accent Colors, Clear MIDI Learn).
    - Cross-check against `~/spasynth/docs/CHANGELOG.md` for the full,
      confirmed-accurate feature list next time this gets picked up.
-5. There's an experimental branch, `experiment/fullscreen-hero-bg`, with a
-   full rework of the hero section (photographic background instead of the
-   oscilloscope canvas + framed screenshot, stronger scroll parallax, a
-   scroll-linked letter-spacing/blur effect on the title). Not merged,
-   pending Mike's decision on whether to keep it. See that branch's commits
-   for the reasoning (font/parallax tuning, gap-avoidance math for the
-   background image, etc.) if it comes up again.
 
 ## Recent session summary (2026-07-21)
 
@@ -244,18 +234,23 @@ Added FAQ entries for iZotope RX9 (won't load, by design) and using
 SPASynth for film/TV/game SFX (Keys preset workflow). Diagnosed and fixed
 a real production outage: spasynth.com's nameservers had moved to
 Cloudflare and the apex domain had no record in Cloudflare's zone (see
-the DNS section above). Opened `experiment/fullscreen-hero-bg` to try a
-full-screen photographic hero background per Mike's request (see
-Outstanding tasks below for status). Checked `~/spasynth/docs/CHANGELOG.md`
-against `~/spasynth/docs/next-release-plan.md` and found what looked like
-a premature/aspirational changelog entry, listing planned-but-maybe-not-
-built features as shipped; Mike confirmed 1.0.3 genuinely shipped with
-all of it (verified independently against `~/spasynth`'s own git log).
-Added a "Notes for this build" section to the 1.0.3 changelog entry
-(it only existed for 1.0.2 before). Confirmed the landing site itself
-is behind that shipped 1.0.3 state and fixed the two most obviously wrong
-things (stale v1.0.0 version number, stale 5-effect FX feature card) per
-Mike's explicit request to scope down to just those two for now.
+the DNS section above). Checked `~/spasynth/docs/CHANGELOG.md` against
+`~/spasynth/docs/next-release-plan.md` and found what looked like a
+premature/aspirational changelog entry, listing planned-but-maybe-not-built
+features as shipped; Mike confirmed 1.0.3 genuinely shipped with all of it
+(verified independently against `~/spasynth`'s own git log). Added a
+"Notes for this build" section to the 1.0.3 changelog entry (it only
+existed for 1.0.2 before). Confirmed the landing site itself is behind
+that shipped 1.0.3 state and fixed the two most obviously wrong things
+(stale v1.0.0 version number, stale 5-effect FX feature card) per Mike's
+explicit request to scope down to just those two for now (see Outstanding
+tasks above for the rest). Built a full-screen photographic hero
+background on `experiment/fullscreen-hero-bg` (replacing the oscilloscope
+canvas + framed screenshot + preset-drawer overlay), iterated on it per
+feedback (stronger parallax, title letter-spacing/blur on scroll, no
+line-wrap), then merged it to `main` and deleted the now-dead CSS/image
+assets the old hero left behind (see Design decisions above for how the
+new hero actually works).
 
 ## Recent session summary (2026-07-17)
 
