@@ -196,6 +196,23 @@ p{ margin: 0; color: var(--text-dim); }
   padding: 168px 0 100px;
   overflow: hidden;
 }
+.hero.hero-bg{
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 130px 0 90px;
+}
+.hero-bg-image{
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(180deg, rgba(8,11,13,0.72) 0%, rgba(8,11,13,0.84) 25%, rgba(8,11,13,0.88) 55%, rgba(8,11,13,0.91) 78%, rgba(8,11,13,0.97) 100%),
+    url("../assets/images/spasynth-hero-bg.jpg");
+  background-size: cover;
+  background-position: center 32%;
+  background-repeat: no-repeat;
+}
 .hero-scope{
   position: absolute;
   top: 0; left: 0;
@@ -228,6 +245,7 @@ p{ margin: 0; color: var(--text-dim); }
   margin-bottom: 72px;
   flex-wrap: wrap;
 }
+.hero-bg .hero-cta{ margin-bottom: 0; }
 .hero-shot{
   position: relative;
   border-radius: var(--radius);
