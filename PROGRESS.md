@@ -1,6 +1,6 @@
 # SPASynth Landing Page — Project Progress
 
-Last updated: 2026-07-18
+Last updated: 2026-07-21
 
 ## What this is
 
@@ -217,6 +217,45 @@ removed now — would need to be rebuilt, not just uncommented).
    the hero drawer animation on an actual phone).
 3. Deployment/infra is done (HTTPS live and enforced). Everything else is
    content/polish, not blocking.
+4. **Site content is behind the actual product (v1.0.3 shipped, confirmed
+   by Mike against `~/spasynth`'s own git history).** Version number and
+   the FX feature card are now fixed (see below), but still stale/missing:
+   - "Built to play live" feature card only mentions 16-voice polyphony;
+     doesn't mention the new **Voice modes** (Poly/Mono/Duo/Paraphonic/
+     Unison), the **Panic button**, or **standalone tempo** (internal BPM +
+     MIDI clock).
+   - **Oversampling** (2x/4x/8x quality setting) isn't mentioned anywhere.
+   - 1.0.2 features never made it onto the site either: the **on-screen
+     keyboard** and the **settings menu** (Set Library Folder, Rescan,
+     Accent Colors, Clear MIDI Learn).
+   - Cross-check against `~/spasynth/docs/CHANGELOG.md` for the full,
+     confirmed-accurate feature list next time this gets picked up.
+5. There's an experimental branch, `experiment/fullscreen-hero-bg`, with a
+   full rework of the hero section (photographic background instead of the
+   oscilloscope canvas + framed screenshot, stronger scroll parallax, a
+   scroll-linked letter-spacing/blur effect on the title). Not merged,
+   pending Mike's decision on whether to keep it. See that branch's commits
+   for the reasoning (font/parallax tuning, gap-avoidance math for the
+   background image, etc.) if it comes up again.
+
+## Recent session summary (2026-07-21)
+
+Added FAQ entries for iZotope RX9 (won't load, by design) and using
+SPASynth for film/TV/game SFX (Keys preset workflow). Diagnosed and fixed
+a real production outage: spasynth.com's nameservers had moved to
+Cloudflare and the apex domain had no record in Cloudflare's zone (see
+the DNS section above). Opened `experiment/fullscreen-hero-bg` to try a
+full-screen photographic hero background per Mike's request (see
+Outstanding tasks below for status). Checked `~/spasynth/docs/CHANGELOG.md`
+against `~/spasynth/docs/next-release-plan.md` and found what looked like
+a premature/aspirational changelog entry, listing planned-but-maybe-not-
+built features as shipped; Mike confirmed 1.0.3 genuinely shipped with
+all of it (verified independently against `~/spasynth`'s own git log).
+Added a "Notes for this build" section to the 1.0.3 changelog entry
+(it only existed for 1.0.2 before). Confirmed the landing site itself
+is behind that shipped 1.0.3 state and fixed the two most obviously wrong
+things (stale v1.0.0 version number, stale 5-effect FX feature card) per
+Mike's explicit request to scope down to just those two for now.
 
 ## Recent session summary (2026-07-17)
 
