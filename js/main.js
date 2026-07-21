@@ -124,19 +124,32 @@
 
   /* ---------- hero parallax ----------
      Title/subtitle drift slightly faster than the scroll, the
-     waveform canvas lags behind, so the copy reads as a layer
-     floating above the background rather than pinned to it. */
+     background photo lags behind, so the copy reads as a layer
+     floating above the background rather than pinned to it. The
+     title's letter-spacing also widens from its resting value (-0.01em)
+     up to +0.3em over the course of scrolling through the hero. */
   var heroSection = document.querySelector(".hero");
   var heroCopy = document.getElementById("hero-copy");
-  var heroScope = document.getElementById("hero-scope");
-  if (heroSection && heroCopy && heroScope && !reduceMotion) {
+  var heroBg = document.querySelector(".hero-bg-image");
+  var heroTitle = document.getElementById("hero-title");
+  if (heroSection && heroCopy && heroBg && !reduceMotion) {
     var parallaxTicking = false;
     var updateParallax = function () {
       var rect = heroSection.getBoundingClientRect();
       if (rect.bottom > 0 && rect.top < window.innerHeight) {
         var scrolled = Math.max(0, -rect.top);
-        heroCopy.style.transform = "translateY(" + (scrolled * -0.06) + "px)";
-        heroScope.style.transform = "translateY(" + (scrolled * 0.18) + "px)";
+        heroCopy.style.transform = "translateY(" + (scrolled * -0.18) + "px)";
+        heroBg.style.transform = "translateY(" + (scrolled * 0.4) + "px)";
+        if (heroTitle) {
+          // Title drifts up faster than scroll (see translateY above), so
+          // it scrolls out of view well before the hero section does.
+          // Reach full letter-spacing at roughly that exit point, not at
+          // the full hero height, so the widening completes while it's
+          // still visible instead of stopping at a fraction of its range.
+          var progress = Math.min(1, scrolled / (rect.height * 0.42));
+          heroTitle.style.letterSpacing = (-0.01 + progress * 0.3) + "em";
+          heroTitle.style.filter = "blur(" + (progress * 10) + "px)";
+        }
       }
       parallaxTicking = false;
     };
@@ -154,13 +167,6 @@
   }
 
   if (!reduceMotion) {
-    makeScope(document.getElementById("hero-scope"), {
-      color: "#4fc4d6",
-      pointCount: 220,
-      speed: 0.5,
-      lineWidth: 1.2,
-      glow: 0
-    });
     makeScope(document.getElementById("chaos-scope"), {
       color: "#f08b3a",
       pointCount: 90,
