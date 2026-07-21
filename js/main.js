@@ -135,8 +135,8 @@
       var rect = heroSection.getBoundingClientRect();
       if (rect.bottom > 0 && rect.top < window.innerHeight) {
         var scrolled = Math.max(0, -rect.top);
-        heroCopy.style.transform = "translateY(" + (scrolled * -0.06) + "px)";
-        heroBg.style.transform = "translateY(" + (scrolled * 0.18) + "px)";
+        heroCopy.style.transform = "translateY(" + (scrolled * -0.18) + "px)";
+        heroBg.style.transform = "translateY(" + (scrolled * 0.4) + "px)";
       }
       parallaxTicking = false;
     };

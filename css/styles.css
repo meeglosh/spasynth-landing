@@ -205,8 +205,8 @@ p{ margin: 0; color: var(--text-dim); }
 .hero-bg-image{
   position: absolute;
   left: 0; right: 0;
-  top: -25%;
-  height: 130%;
+  top: -45%;
+  height: 150%;
   z-index: -1;
   background-image:
     linear-gradient(180deg, rgba(8,11,13,0.72) 0%, rgba(8,11,13,0.84) 25%, rgba(8,11,13,0.88) 55%, rgba(8,11,13,0.91) 78%, rgba(8,11,13,0.97) 100%),
