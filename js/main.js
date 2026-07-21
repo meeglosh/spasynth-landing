@@ -124,19 +124,19 @@
 
   /* ---------- hero parallax ----------
      Title/subtitle drift slightly faster than the scroll, the
-     waveform canvas lags behind, so the copy reads as a layer
+     background photo lags behind, so the copy reads as a layer
      floating above the background rather than pinned to it. */
   var heroSection = document.querySelector(".hero");
   var heroCopy = document.getElementById("hero-copy");
-  var heroScope = document.getElementById("hero-scope");
-  if (heroSection && heroCopy && heroScope && !reduceMotion) {
+  var heroBg = document.querySelector(".hero-bg-image");
+  if (heroSection && heroCopy && heroBg && !reduceMotion) {
     var parallaxTicking = false;
     var updateParallax = function () {
       var rect = heroSection.getBoundingClientRect();
       if (rect.bottom > 0 && rect.top < window.innerHeight) {
         var scrolled = Math.max(0, -rect.top);
         heroCopy.style.transform = "translateY(" + (scrolled * -0.06) + "px)";
-        heroScope.style.transform = "translateY(" + (scrolled * 0.18) + "px)";
+        heroBg.style.transform = "translateY(" + (scrolled * 0.18) + "px)";
       }
       parallaxTicking = false;
     };
@@ -154,13 +154,6 @@
   }
 
   if (!reduceMotion) {
-    makeScope(document.getElementById("hero-scope"), {
-      color: "#4fc4d6",
-      pointCount: 220,
-      speed: 0.5,
-      lineWidth: 1.2,
-      glow: 0
-    });
     makeScope(document.getElementById("chaos-scope"), {
       color: "#f08b3a",
       pointCount: 90,
