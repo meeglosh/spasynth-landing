@@ -148,6 +148,7 @@
           // still visible instead of stopping at a fraction of its range.
           var progress = Math.min(1, scrolled / (rect.height * 0.42));
           heroTitle.style.letterSpacing = (-0.01 + progress * 0.3) + "em";
+          heroTitle.style.filter = "blur(" + (progress * 10) + "px)";
         }
       }
       parallaxTicking = false;
