@@ -121,6 +121,51 @@ nameserver anymore. Only Cloudflare's DNS dashboard matters now.
   to the current v1.0.3 build (previous versions showed "v0.1" in the
   corner).
 
+### Hero demo shot (non-obvious, read before touching)
+
+A separate section (`.hero-demo`, not part of `.hero`) sits directly under
+the hero, before `#library`. A static base screenshot
+(`spasynth-hero-anim-base.jpg`, from `~/spasynth/docs/spasynth-loading.png`,
+the "loading…" closed state) with two overlays that **alternate on one
+shared 14s timeline, never simultaneous**: the preset browser slides in
+from the left (`.hero-demo-panel`), holds, slides out; then the on-screen
+keyboard slides up from the bottom (`.hero-demo-keyboard`), holds, slides
+out; then a pause before the loop repeats.
+
+- Crops: `spasynth-hero-anim-panel.png` is the same left-docked-strip
+  technique as the old hero drawer (0,0 to 312×900 of
+  `~/spasynth/docs/spasynth-dark.png`, re-measured via pixel-diff against
+  the base image, not assumed to still be 312px just because it was last
+  time). `spasynth-hero-anim-keyboard.png` is a ~86px-tall full-width strip
+  cropped from `~/spasynth/docs/spasynth-keyboard.png` (y 882–967 of a
+  1380×996 source) — **the real app's window grows 96px taller when the
+  keyboard appears rather than overlaying existing content**, but a few of
+  those px are shared margin/transition, so the crop is ~86px, not 96px;
+  re-derive via pixel-diff (see git history for the exact method) if the
+  keyboard screenshot ever changes. On the site, this overlay necessarily
+  covers real content that's normally visible in the closed state (the FX
+  tab row and bottom of the Distortion panel) — that's an intentional
+  trade-off for a fixed-aspect container, not a bug, and it reveals cleanly
+  again once the keyboard slides back out.
+- Each overlay is a **wrapper `<div>`, not the `<img>` itself**, with a
+  sibling edge-shadow `<div>` (gradient, not `filter: drop-shadow`) — the
+  old hero drawer's drop-shadow bug (documented lesson: it wraps all four
+  edges of a crop rectangle, smearing a shadow across crop lines that
+  aren't real UI edges) would recur here too, and replaced elements like
+  `<img>` don't reliably render `::before`/`::after` for a shadow pseudo-
+  element anyway. Edge shadow sits on the "leading" edge of each overlay
+  (right edge for the panel, top edge for the keyboard) since that's the
+  edge sweeping across the base image as it opens.
+- Per-keyframe `animation-timing-function` (not one global easing) gives
+  each slide an ease-out entrance and ease-in exit; holds in between don't
+  need explicit easing since nothing changes during them.
+- **Watch the CSS cascade if editing `.hero-demo`'s padding**: it needs
+  `padding-top: 0` to sit close under the hero, but the general
+  `.section{padding:120px 0}` rule comes later in the stylesheet and has
+  equal specificity as a single-class selector, so it silently wins ties.
+  Fixed with a `.section.hero-demo` compound selector; don't revert to a
+  plain `.hero-demo{...}` override without re-checking computed style.
+
 ### Pricing (real numbers, from Mike directly — not from the marketing brief)
 
 **All prices are USD.** An earlier session priced Pro/Upgrade using numbers
@@ -250,7 +295,14 @@ canvas + framed screenshot + preset-drawer overlay), iterated on it per
 feedback (stronger parallax, title letter-spacing/blur on scroll, no
 line-wrap), then merged it to `main` and deleted the now-dead CSS/image
 assets the old hero left behind (see Design decisions above for how the
-new hero actually works).
+new hero actually works). Swapped the hero background photo for a
+zoomed-out version Mike provided (reads even better across viewport
+widths than the original crop). Brought back a screenshot demo under the
+hero (removed when the hero went full-bleed photographic) as its own new
+section before Library, rebuilt against fresh v1.0.3 screenshots, now
+alternating two overlay animations (preset browser, on-screen keyboard)
+instead of just the one drawer the old hero had (see Hero demo shot above
+for the implementation details).
 
 ## Recent session summary (2026-07-17)
 
