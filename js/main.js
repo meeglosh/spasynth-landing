@@ -125,10 +125,13 @@
   /* ---------- hero parallax ----------
      Title/subtitle drift slightly faster than the scroll, the
      background photo lags behind, so the copy reads as a layer
-     floating above the background rather than pinned to it. */
+     floating above the background rather than pinned to it. The
+     title's letter-spacing also widens from its resting value (-0.01em)
+     up to +0.3em over the course of scrolling through the hero. */
   var heroSection = document.querySelector(".hero");
   var heroCopy = document.getElementById("hero-copy");
   var heroBg = document.querySelector(".hero-bg-image");
+  var heroTitle = document.getElementById("hero-title");
   if (heroSection && heroCopy && heroBg && !reduceMotion) {
     var parallaxTicking = false;
     var updateParallax = function () {
@@ -137,6 +140,15 @@
         var scrolled = Math.max(0, -rect.top);
         heroCopy.style.transform = "translateY(" + (scrolled * -0.18) + "px)";
         heroBg.style.transform = "translateY(" + (scrolled * 0.4) + "px)";
+        if (heroTitle) {
+          // Title drifts up faster than scroll (see translateY above), so
+          // it scrolls out of view well before the hero section does.
+          // Reach full letter-spacing at roughly that exit point, not at
+          // the full hero height, so the widening completes while it's
+          // still visible instead of stopping at a fraction of its range.
+          var progress = Math.min(1, scrolled / (rect.height * 0.42));
+          heroTitle.style.letterSpacing = (-0.01 + progress * 0.3) + "em";
+        }
       }
       parallaxTicking = false;
     };
