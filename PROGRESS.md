@@ -126,39 +126,28 @@ nameserver anymore. Only Cloudflare's DNS dashboard matters now.
 A separate section (`.hero-demo`, not part of `.hero`) sits directly under
 the hero, before `#library`. A static base screenshot
 (`spasynth-hero-anim-base.jpg`, from `~/spasynth/docs/spasynth-loading.png`,
-the "loading…" closed state) with two overlays that **alternate on one
-shared 14s timeline, never simultaneous**: the preset browser slides in
-from the left (`.hero-demo-panel`), holds, slides out; then the on-screen
-keyboard slides up from the bottom (`.hero-demo-keyboard`), holds, slides
-out; then a pause before the loop repeats.
+the "loading…" closed state) with the preset browser (`.hero-demo-panel`,
+cropped from `~/spasynth/docs/spasynth-dark.png`, same left-docked-strip
+technique as the old hero drawer) sliding in from the left, holding, then
+sliding back out, on a 9s loop (`demo-panel-slide` keyframes: ~1.5s
+closed → 0.5s slide open → 5s held → 0.5s slide closed → ~1.5s closed).
 
-- Crops: `spasynth-hero-anim-panel.png` is the same left-docked-strip
-  technique as the old hero drawer (0,0 to 312×900 of
-  `~/spasynth/docs/spasynth-dark.png`, re-measured via pixel-diff against
-  the base image, not assumed to still be 312px just because it was last
-  time). `spasynth-hero-anim-keyboard.png` is a ~86px-tall full-width strip
-  cropped from `~/spasynth/docs/spasynth-keyboard.png` (y 882–967 of a
-  1380×996 source) — **the real app's window grows 96px taller when the
-  keyboard appears rather than overlaying existing content**, but a few of
-  those px are shared margin/transition, so the crop is ~86px, not 96px;
-  re-derive via pixel-diff (see git history for the exact method) if the
-  keyboard screenshot ever changes. On the site, this overlay necessarily
-  covers real content that's normally visible in the closed state (the FX
-  tab row and bottom of the Distortion panel) — that's an intentional
-  trade-off for a fixed-aspect container, not a bug, and it reveals cleanly
-  again once the keyboard slides back out.
-- Each overlay is a **wrapper `<div>`, not the `<img>` itself**, with a
-  sibling edge-shadow `<div>` (gradient, not `filter: drop-shadow`) — the
-  old hero drawer's drop-shadow bug (documented lesson: it wraps all four
-  edges of a crop rectangle, smearing a shadow across crop lines that
-  aren't real UI edges) would recur here too, and replaced elements like
-  `<img>` don't reliably render `::before`/`::after` for a shadow pseudo-
-  element anyway. Edge shadow sits on the "leading" edge of each overlay
-  (right edge for the panel, top edge for the keyboard) since that's the
-  edge sweeping across the base image as it opens.
-- Per-keyframe `animation-timing-function` (not one global easing) gives
-  each slide an ease-out entrance and ease-in exit; holds in between don't
-  need explicit easing since nothing changes during them.
+- This originally also had an on-screen-keyboard overlay alternating with
+  the panel on a shared 14s timeline, plus an edge-shadow div on the
+  panel. **Both were removed same-session per Mike's feedback** ("remove
+  the drop shadow," "remove the keyboard part entirely, I don't like
+  it") — don't re-add either without being asked again. If the keyboard
+  idea comes back, the crop was `~/spasynth/docs/spasynth-keyboard.png`,
+  y 882–967 of a 1380×996 source (re-derive via pixel-diff against the
+  base image, don't assume those numbers still hold if the screenshot
+  changes), and it necessarily covered real content (the FX tab row and
+  bottom of the Distortion panel) since a fixed-aspect container can't
+  grow the way the real app's window does when the keyboard appears.
+- The panel overlay is still a **wrapper `<div>`, not the `<img>` itself**
+  — kept that way even after removing the edge-shadow sibling div it was
+  originally there to support, since replaced elements like `<img>` don't
+  reliably render `::before`/`::after` if a shadow or other pseudo-element
+  effect gets added back later.
 - **Watch the CSS cascade if editing `.hero-demo`'s padding**: it needs
   `padding-top: 0` to sit close under the hero, but the general
   `.section{padding:120px 0}` rule comes later in the stylesheet and has
@@ -301,8 +290,10 @@ widths than the original crop). Brought back a screenshot demo under the
 hero (removed when the hero went full-bleed photographic) as its own new
 section before Library, rebuilt against fresh v1.0.3 screenshots, now
 alternating two overlay animations (preset browser, on-screen keyboard)
-instead of just the one drawer the old hero had (see Hero demo shot above
-for the implementation details).
+instead of just the one drawer the old hero had, then simplified back
+down to just the preset browser (dropped the keyboard overlay and the
+panel's edge shadow) per Mike's immediate follow-up feedback (see Hero
+demo shot above for the implementation details).
 
 ## Recent session summary (2026-07-17)
 
