@@ -236,13 +236,15 @@ removed now — would need to be rebuilt, not just uncommented).
   original text; was briefly "Coming soon" while the store wasn't live,
   reverted back once Buy buttons were added). It just scrolls to the
   Editions section, it's not a purchase link itself.
-- **"Buy now" buttons** exist on all three products (Standard, Pro, and the
-  Standard→Pro upgrade box) but all point to `href="#"` as a placeholder,
-  each flagged with an inline `<!-- TODO -->` comment in `index.html`.
-  **Swap all three for real Shopify product URLs once the store is live**
+- **Pricing card CTA buttons** exist on all three products (Standard, Pro,
+  and the Standard→Pro upgrade box) but currently read "Coming soon" (was
+  briefly "Buy now," reverted per Mike). All point to `href="#"` as a
+  placeholder, each flagged with an inline `<!-- TODO -->` comment in
+  `index.html`. **Swap all three for real Shopify product URLs (and
+  probably the label back to "Buy now") once the store is live**
   (`target="_blank" rel="noopener"` is already set on all of them, so only
-  the `href` needs to change). The upgrade button is `.upgrade-buy` inside
-  `.upgrade-path`, simple fixed `margin-top`.
+  the `href`/label need to change). The upgrade button is `.upgrade-buy`
+  inside `.upgrade-path`, simple fixed `margin-top`.
 
   Standard/Pro buttons (`.edition-buy`) are trickier: `.edition-card` is a
   flex column, and each card has an `.edition-spacer` div (`flex: 1 0 0`)
@@ -271,8 +273,9 @@ removed now — would need to be rebuilt, not just uncommented).
 
 ## Outstanding tasks (pick up here next session)
 
-1. Once the Shopify store is live, swap the three placeholder "Buy now"
-   `href="#"` links (Standard, Pro, upgrade) for real Shopify product URLs.
+1. Once the Shopify store is live, swap the three placeholder "Coming soon"
+   `href="#"` links (Standard, Pro, upgrade) for real Shopify product URLs
+   (and likely change the label back to "Buy now").
 2. Manual cross-browser check — so far only verified via headless Chrome
    (Playwright) screenshots at various widths, not a real device/browser
    pass (mobile nav toggle, hover states, the new hero effects — background
