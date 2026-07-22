@@ -117,6 +117,22 @@ nameserver anymore. Only Cloudflare's DNS dashboard matters now.
      `white-space: nowrap` keeps it from wrapping to a second line as it
      widens; relies on `body{overflow-x:hidden}` (already present) to clip
      the overflow instead of creating a horizontal scrollbar.
+     **Gotcha found on mobile:** `.hero.hero-bg` is `display:flex` (for
+     vertical centering), which makes `.hero-inner` a flex item. The
+     shared `.wrap` class's `margin: 0 auto`, inherited by `.hero-inner`,
+     triggers flexbox's auto-margin behavior (absorbs free space instead
+     of stretching), so a flex item with auto margins sizes to its
+     content instead of filling the container. Normally invisible, but
+     once the title's nowrap content grew wide enough from the
+     letter-spacing effect, `.hero-inner` itself grew to match — dragging
+     the subtitle and CTA buttons wider too, even though they have no
+     letter-spacing of their own. Fixed with
+     `.hero-bg .hero-inner{ width:100%; margin-left:0; margin-right:0; }`,
+     scoped narrowly so the shared `.wrap` class elsewhere is untouched.
+     If `.hero-bg` or `.wrap` ever change, re-check this interaction
+     (measure `.hero-inner`'s `getBoundingClientRect().width` at a
+     scrolled position on a narrow viewport — it should equal the
+     viewport width, not grow past it).
 - Retint showcase image (`assets/images/spasynth-accent.png`) was refreshed
   to the current v1.0.3 build (previous versions showed "v0.1" in the
   corner).
