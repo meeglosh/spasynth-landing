@@ -94,14 +94,26 @@ nameserver anymore. Only Cloudflare's DNS dashboard matters now.
   1. `.hero-bg-image` (in `index.html`, styled in `css/styles.css`) is a
      full-bleed `background-image` div behind the copy: a stylized "SPASynth
      as hardware" render (`assets/images/spasynth-hero-bg.jpg`, sourced from
-     `~/spasynth/docs/spasynth-hardware.png`) with a heavy vertical dark
-     gradient scrim over it. The scrim had to be tuned much darker than a
-     typical hero overlay (up to ~0.97 opacity near the edges) because
-     `background-size: cover` crops a *different* part of the image at
-     different viewport aspect ratios, so contrast that works at one width
-     can fail at another (a nav link nearly disappeared against a bright
-     lamp in the photo before this was fixed) — don't lighten the scrim
-     without re-checking contrast across several widths.
+     `~/spasynth/docs/spasynth-hardware.png`, later swapped for a zoomed-out
+     crop Mike provided) with **two** dark gradient layers over it, not one.
+     Hero content (title/subtitle/CTAs) is **left-aligned**, not centered
+     (`.hero-bg .hero-inner{text-align:left}` plus overrides on `.hero-bg
+     h1`/`.hero-bg .hero-sub`'s `margin:0 auto` and `.hero-cta`'s
+     `justify-content`, all scoped to `.hero-bg` so the shared `.hero`/
+     `.hero-sub`/`.hero-cta` rules used elsewhere aren't touched) — this was
+     a deliberate change so the right two-thirds of the image reads clearly
+     instead of being evenly darkened for centered text. The two gradients:
+     a horizontal one (dark on the left under the text, fading to
+     transparent by ~78% width) layered with a vertical one (kept dark at
+     the very top for nav legibility and at the very bottom for a clean
+     section handoff, but much lighter through the middle band than before,
+     since the horizontal gradient now carries the legibility burden on the
+     left while the right is meant to stay visible). `background-size:
+     cover` crops a *different* part of the image at different viewport
+     aspect ratios, so contrast that works at one width can fail at another
+     (a nav link nearly disappeared against a bright lamp in the photo
+     before this was first fixed, pre-left-align) — re-check contrast at
+     1440/1920/mobile if either gradient's stops change.
   2. Scroll-linked parallax (`js/main.js`, the "hero parallax" block):
      `#hero-copy` (title/subtitle) drifts up faster than scroll
      (`translateY(scrolled * -0.18)`), `.hero-bg-image` lags behind
@@ -116,7 +128,11 @@ nameserver anymore. Only Cloudflare's DNS dashboard matters now.
      full hero height) so the effect completes while it's still visible.
      `white-space: nowrap` keeps it from wrapping to a second line as it
      widens; relies on `body{overflow-x:hidden}` (already present) to clip
-     the overflow instead of creating a horizontal scrollbar.
+     the overflow instead of creating a horizontal scrollbar. Since the
+     hero is left-aligned, the growing letter-spacing now bleeds off the
+     **right** edge only (the left edge stays anchored at the margin) —
+     reads as the text dissolving into the revealed image detail, which is
+     the intended effect, not a bug.
      **Gotcha found on mobile:** `.hero.hero-bg` is `display:flex` (for
      vertical centering), which makes `.hero-inner` a flex item. The
      shared `.wrap` class's `margin: 0 auto`, inherited by `.hero-inner`,
