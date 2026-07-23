@@ -151,7 +151,16 @@ nameserver anymore. Only Cloudflare's DNS dashboard matters now.
      viewport width, not grow past it).
 - Retint showcase image (`assets/images/spasynth-accent.png`) was refreshed
   to the current v1.0.3 build (previous versions showed "v0.1" in the
-  corner).
+  corner), swapped again later same-session for a further-updated capture.
+  It also **continuously animates through different accent-color pairs**:
+  `.retint-shot img` has a 24s linear `filter: hue-rotate()` loop (0deg to
+  360deg, `@keyframes retint-hue-cycle`). This works cleanly because
+  hue-rotate only visibly shifts saturated pixels — the two accent colors
+  (violet/lime in the source screenshot) — while the mostly-neutral dark
+  UI chrome stays put, confirmed by sampling several rotation angles.
+  Disabled under `prefers-reduced-motion`. If the source screenshot is
+  ever replaced with one whose background isn't sufficiently neutral/dark,
+  re-check that the background doesn't visibly shift too.
 
 ### Hero demo shot (non-obvious, read before touching)
 
