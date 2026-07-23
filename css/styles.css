@@ -474,6 +474,14 @@ p{ margin: 0; color: var(--text-dim); }
   border-radius: var(--radius);
   border: 1px solid var(--border-strong);
   box-shadow: 0 30px 80px -30px rgba(0,0,0,0.6);
+  animation: retint-hue-cycle 24s linear infinite;
+}
+@keyframes retint-hue-cycle{
+  from{ filter: hue-rotate(0deg); }
+  to{ filter: hue-rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce){
+  .retint-shot img{ animation: none; }
 }
 
 /* ---------- editions ---------- */
