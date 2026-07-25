@@ -1,6 +1,6 @@
 # SPASynth Landing Page — Project Progress
 
-Last updated: 2026-07-21
+Last updated: 2026-07-25
 
 ## What this is
 
@@ -227,10 +227,24 @@ confirm USD before touching the copy.
 
 ## Section order (index.html)
 
-Hero → Library-is-the-synth (signal diagram) → Randomize/Chaos (WILD knob +
-lock chips + Organic Chaos scope) → Feature grid (8 cards) → Accent re-tint
-showcase → Editions (Standard/Pro + upgrade box) → No-DRM statement (verbatim
-blockquote from the brief) → Specs table → FAQ accordion → Footer.
+Hero → Hero demo shot → Library-is-the-synth (signal diagram) →
+Randomize/Chaos (WILD knob + lock chips + Organic Chaos scope) → Feature grid
+(8 cards) → Accent re-tint showcase (now with the hue-cycle animation, see
+Design decisions) → Editions (Standard/Pro + upgrade box) → No-DRM statement
+(verbatim blockquote from the brief) → Specs table → FAQ accordion → Footer.
+
+The Library-is-the-synth **signal diagram is 4 nodes, not 3**: Oscillator,
+Granular Fuel, Modulation Source, and (added 2026-07-22) **Convolution
+Impulse** — a sound loaded into SPASynth can now also become a convolution
+reverb impulse (the shipped 1.0.3 Convolve module), so the diagram, hero
+subtitle, meta descriptions, and the Library section lede were all updated
+together to describe 4 uses instead of 3. The SVG connector lines
+(`.signal-lines`) are evenly spaced at y = 12.5/37.5/62.5/87.5 in a 0–100
+viewBox; if a 5th use ever gets added, recompute all the y-positions rather
+than just appending one (they need to stay evenly spaced across the new
+total). Convolution Impulse is tagged cyan (`tag-cyan`), grouped with
+Modulation Source as a "shaping" category rather than orange "generation"
+like Oscillator/Granular Fuel.
 
 Feature grid is a strict 4-column grid (2-col tablet, 1-col mobile) — an
 "In-pack quick-swap" 9th card was added and then explicitly removed same
@@ -270,31 +284,49 @@ removed now — would need to be rebuilt, not just uncommented).
   content block to the bottom, breaking title alignment between the cards.
 - Footer logo and a "Silverplatter Audio" nav link both point to
   `https://www.silverplatteraudio.com` (opens in a new tab).
-- FAQ has two items pulled from the Shopify shared FAQ that weren't on the
-  site before: free v1 updates, and the Windows SmartScreen warning
-  explainer. The Shopify doc has a few more FAQ entries (system
+- FAQ has grown organically, item by item, rather than as one pass: free v1
+  updates and the Windows SmartScreen warning (from the Shopify shared FAQ),
+  iZotope RX9 compatibility (won't load, by design), using SPASynth for
+  film/TV/game SFX (Keys preset workflow), and where Pro purchasers find
+  their library download links (the included "SPASynth Pro Library -
+  Downloads.html" file). The Shopify doc has a few more entries (system
   requirements, sound/preset counts, usage rights) not yet mirrored here
   since they felt redundant with content elsewhere on the page; revisit if
   the FAQ section feels thin.
+- **"Will I get updates?"** already exists as a FAQ item ("Yes. Updates
+  across the v1 line are free...") — Mike asked for a FAQ confirming free
+  updates late in a session and this was pointed out as already covering
+  it. He hadn't replied to confirm whether that existing entry satisfies
+  the ask, or whether he wanted something different (different phrasing,
+  more detail, a separate question), by the time this got written down —
+  **check with him first thing next session** rather than assuming either
+  answer.
 - Sound count is **11,474** (updated from an earlier 11,401 — more accurate
   count) everywhere it appears, qualified as "up to" except where the copy
   is explicitly about the complete/Pro library.
 
 ## Outstanding tasks (pick up here next session)
 
-1. Once the Shopify store is live, swap the three placeholder "Coming soon"
+1. **Ask Mike first:** does the existing "Will I get updates?" FAQ item
+   satisfy his request for "a FAQ answer confirming updates are free," or
+   did he want something different? He asked this near the end of a
+   session and never replied to the clarifying question — don't assume,
+   just ask.
+2. Once the Shopify store is live, swap the three placeholder "Coming soon"
    `href="#"` links (Standard, Pro, upgrade) for real Shopify product URLs
    (and likely change the label back to "Buy now").
-2. Manual cross-browser check — so far only verified via headless Chrome
+3. Manual cross-browser check — so far only verified via headless Chrome
    (Playwright) screenshots at various widths, not a real device/browser
-   pass (mobile nav toggle, hover states, the new hero effects — background
-   parallax and the title letter-spacing/blur scroll effect — on an actual
-   phone/tablet).
-3. Deployment/infra is done (HTTPS live and enforced). Everything else is
+   pass (mobile nav toggle, hover states, the hero effects — background
+   parallax, the title letter-spacing/blur scroll effect, the left-aligned
+   layout, the retint hue-cycle animation — on an actual phone/tablet).
+4. Deployment/infra is done (HTTPS live and enforced). Everything else is
    content/polish, not blocking.
-4. **Site content is behind the actual product (v1.0.3 shipped, confirmed
-   by Mike against `~/spasynth`'s own git history).** Version number and
-   the FX feature card are now fixed (see below), but still stale/missing:
+5. **Site content is still catching up to the actual product** (v1.0.3
+   shipped, confirmed by Mike against `~/spasynth`'s own git history).
+   Fixed so far: version number, the FX feature card, and the signal
+   diagram/copy now mention convolution impulses as a 4th use. Still
+   stale/missing:
    - "Built to play live" feature card only mentions 16-voice polyphony;
      doesn't mention the new **Voice modes** (Poly/Mono/Duo/Paraphonic/
      Unison), the **Panic button**, or **standalone tempo** (internal BPM +
@@ -305,6 +337,31 @@ removed now — would need to be rebuilt, not just uncommented).
      Accent Colors, Clear MIDI Learn).
    - Cross-check against `~/spasynth/docs/CHANGELOG.md` for the full,
      confirmed-accurate feature list next time this gets picked up.
+
+## Recent session summary (2026-07-22 to 2026-07-23)
+
+Fixed a real mobile layout bug: the hero title's scroll-driven letter-spacing
+widening was dragging the subtitle and CTA buttons wider too, root-caused to
+a flexbox auto-margin interaction (see Design decisions, hero section, the
+"Gotcha found on mobile" note) rather than anything specific to the title
+itself. Added convolution impulse as a 4th documented use for library sounds
+(shipped in 1.0.3 as the Convolve FX module) across the hero subtitle, meta
+descriptions, the Library section lede, and expanded the signal diagram from
+3 nodes to 4. Left-aligned the hero title/subtitle/CTAs (were centered) and
+added a second, horizontal gradient layer so the right two-thirds of the
+background photo reads clearly instead of being evenly darkened — verified
+contrast at 1440/1920/mobile again since this touches the same
+scroll-and-viewport-sensitive area as earlier hero work. Reverted the
+pricing card CTAs from "Buy now" back to "Coming soon" per Mike. Added a FAQ
+entry for where Pro purchasers find their library download links (the
+included "SPASynth Pro Library - Downloads.html" file). Swapped the retint
+showcase image for Mike's latest capture and added a 24s hue-rotate
+animation so the two accent colors continuously cycle through different
+complementary pairs while demoing the feature, instead of sitting static.
+Cleaned up stray macOS `.DS_Store` files and added a `.gitignore`. Confirmed
+the local `experiment/fullscreen-hero-bg` branch is fully merged into `main`
+(never pushed to origin) — safe to ignore or delete, left as-is since
+deleting branches wasn't asked for.
 
 ## Recent session summary (2026-07-21)
 
