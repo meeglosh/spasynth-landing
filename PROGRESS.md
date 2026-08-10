@@ -1,6 +1,6 @@
 # SPASynth Landing Page — Project Progress
 
-Last updated: 2026-07-25
+Last updated: 2026-08-10
 
 ## What this is
 
@@ -322,21 +322,38 @@ removed now — would need to be rebuilt, not just uncommented).
    layout, the retint hue-cycle animation — on an actual phone/tablet).
 4. Deployment/infra is done (HTTPS live and enforced). Everything else is
    content/polish, not blocking.
-5. **Site content is still catching up to the actual product** (v1.0.3
-   shipped, confirmed by Mike against `~/spasynth`'s own git history).
-   Fixed so far: version number, the FX feature card, and the signal
-   diagram/copy now mention convolution impulses as a 4th use. Still
-   stale/missing:
-   - "Built to play live" feature card only mentions 16-voice polyphony;
-     doesn't mention the new **Voice modes** (Poly/Mono/Duo/Paraphonic/
-     Unison), the **Panic button**, or **standalone tempo** (internal BPM +
-     MIDI clock).
-   - **Oversampling** (2x/4x/8x quality setting) isn't mentioned anywhere.
-   - 1.0.2 features never made it onto the site either: the **on-screen
-     keyboard** and the **settings menu** (Set Library Folder, Rescan,
-     Accent Colors, Clear MIDI Learn).
-   - Cross-check against `~/spasynth/docs/CHANGELOG.md` for the full,
-     confirmed-accurate feature list next time this gets picked up.
+5. **Site content vs. actual product — full audit done 2026-08-10** against
+   `~/spasynth/docs/CHANGELOG.md` (now through 1.0.7). Fixed: version number
+   (now v1.0.7 in specs note + footer), the FX feature card, the signal
+   diagram/copy (convolution impulses as a 4th use), the PLAY card (now
+   covers Voice modes — Poly/Mono/Duo/Paraphonic/Unison — and the Panic
+   button), and the INTERFACE card (now covers the on-screen keyboard,
+   settings menu, and oversampling). Still not on the site:
+   - **Standalone tempo** (1.0.3: internal BPM, tap tempo, MIDI clock sync)
+     — no natural home found yet, needs its own card or a line somewhere.
+   - 1.0.4–1.0.7 items (Reset to Default, file-browser folder memory,
+     reverb/randomize tuning, crash fixes, output safety net) are
+     intentionally excluded — internal fixes/polish, not landing-page
+     material.
+   - Re-run this audit against `~/spasynth/docs/CHANGELOG.md` next time a
+     new version ships.
+
+## Recent session summary (2026-08-10)
+
+Ran a missing-features audit against `~/spasynth/docs/CHANGELOG.md` (see
+Outstanding tasks above for the full breakdown). Fixed the stale version
+number (v1.0.3 → v1.0.7, specs note + footer). Rewrote the "Built to play
+live" PLAY feature card to cover 1.0.3's Voice modes (Poly/Mono/Duo/
+Paraphonic/Unison) and the Panic button, dropping the old MIDI-Learn
+explanation to keep the card tight. Rewrote the INTERFACE feature card to
+add the on-screen keyboard, settings menu, and oversampling (2x/4x/8x),
+folded in alongside the existing accent re-tint mention rather than as a
+new card. Added 60px of left padding to the hero title and subtitle on
+large/XL viewports only (`min-width: 901px`, matching the existing tablet
+breakpoint) per Mike's request to push them further from the screen edge;
+tablet/phone layout untouched. Committed and pushed to `main` (`3f5706a`).
+Standalone tempo (1.0.3) is the one remaining audited gap — no card fits it
+naturally yet.
 
 ## Recent session summary (2026-07-22 to 2026-07-23)
 
