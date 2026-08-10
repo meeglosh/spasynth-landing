@@ -348,10 +348,12 @@ Paraphonic/Unison) and the Panic button, dropping the old MIDI-Learn
 explanation to keep the card tight. Rewrote the INTERFACE feature card to
 add the on-screen keyboard, settings menu, and oversampling (2x/4x/8x),
 folded in alongside the existing accent re-tint mention rather than as a
-new card. Added 60px of left padding to the hero title and subtitle on
-large/XL viewports only (`min-width: 901px`, matching the existing tablet
-breakpoint) per Mike's request to push them further from the screen edge;
-tablet/phone layout untouched. Committed and pushed to `main` (`3f5706a`).
+new card. Added 60px of left padding to the hero content on large/XL
+viewports only (`min-width: 901px`, matching the existing tablet
+breakpoint) per Mike's request to push it further from the screen edge —
+applied at the `.hero-copy` and `.hero-cta` container level so the
+eyebrow, title, subtitle, and CTA buttons all shift together; tablet/phone
+layout untouched. Committed and pushed to `main` (`3f5706a`, `cee8d26`).
 Standalone tempo (1.0.3) is the one remaining audited gap — no card fits it
 naturally yet.
 
