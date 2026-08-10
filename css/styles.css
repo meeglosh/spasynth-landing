@@ -227,6 +227,10 @@ p{ margin: 0; color: var(--text-dim); }
   margin: 0 auto 40px;
   font-size: 1.08rem;
 }
+@media (min-width: 901px){
+  .hero-bg h1,
+  .hero-bg .hero-sub{ padding-left: 60px; }
+}
 .hero-bg .hero-sub{ margin-left: 0; margin-right: auto; }
 .hero-cta{
   display: flex;
