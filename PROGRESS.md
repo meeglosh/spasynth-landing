@@ -322,21 +322,37 @@ removed now — would need to be rebuilt, not just uncommented).
    layout, the retint hue-cycle animation — on an actual phone/tablet).
 4. Deployment/infra is done (HTTPS live and enforced). Everything else is
    content/polish, not blocking.
-5. **Site content vs. actual product — full audit done 2026-08-10** against
-   `~/spasynth/docs/CHANGELOG.md` (now through 1.0.7). Fixed: version number
-   (now v1.0.7 in specs note + footer), the FX feature card, the signal
-   diagram/copy (convolution impulses as a 4th use), the PLAY card (now
-   covers Voice modes — Poly/Mono/Duo/Paraphonic/Unison — and the Panic
-   button), and the INTERFACE card (now covers the on-screen keyboard,
-   settings menu, and oversampling). Still not on the site:
-   - **Standalone tempo** (1.0.3: internal BPM, tap tempo, MIDI clock sync)
-     — no natural home found yet, needs its own card or a line somewhere.
-   - 1.0.4–1.0.7 items (Reset to Default, file-browser folder memory,
-     reverb/randomize tuning, crash fixes, output safety net) are
-     intentionally excluded — internal fixes/polish, not landing-page
-     material.
+5. **Site content vs. actual product — re-audited 2026-09-12** against
+   `~/spasynth/docs/CHANGELOG.md` (now through 1.0.15). Version number is
+   v1.0.15 (specs note + footer). All landing-worthy 1.0.8–1.0.15 items are
+   now folded into existing feature cards (see the 2026-09-12 summary).
+   Standalone tempo (1.0.3) finally landed in the PLAY card. Still open:
+   - **Screenshots are pre-1.0.11.** The faceplate was visually redesigned
+     in 1.0.11 (one continuous dark faceplate, recessed bands) and the
+     preset browser now opens beside the synth (1.0.15), so the hero photo,
+     the demo-shot section, and the retint image all show the old look.
+     Needs fresh captures from Mike.
+   - Intentionally excluded as internal fixes/polish: 1.0.7–1.0.10 bug
+     fixes, 1.0.9 CPU work, 1.0.13/1.0.14 crash fixes, greyed-out
+     inapplicable controls, factory preset re-voicing.
    - Re-run this audit against `~/spasynth/docs/CHANGELOG.md` next time a
      new version ships.
+
+## Recent session summary (2026-09-12)
+
+Re-ran the missing-features audit against `~/spasynth/docs/CHANGELOG.md`,
+which had moved from 1.0.7 to 1.0.15 since August. Bumped the version
+(specs note + footer). Folded new features into existing cards rather than
+adding cards, to keep the 2x4 grid: ENGINES now mentions the 8 built-in
+wavetables, tempo-synced beat-locked sample loops with a zoomable waveform,
+and the analog SUB oscillator; MODULATION adds ASSIGN mode and the live
+modulation indicator on knobs; PLAY adds the standalone tempo bar (BPM, tap
+tempo, time signature, MIDI clock sync), closing the long-standing tempo
+gap; FX adds the Crush bit crusher, the new plate-derived reverb engine,
+and the switchable EQ band types; LIBRARY adds user preset banks; INTERFACE
+adds the side-opening preset browser. Verified the grid still lays out
+cleanly at 1400px via headless Chromium (Playwright). Flagged that every
+screenshot on the site predates the 1.0.11 faceplate redesign.
 
 ## Recent session summary (2026-08-10)
 
