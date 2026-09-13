@@ -327,16 +327,43 @@ removed now — would need to be rebuilt, not just uncommented).
    v1.0.15 (specs note + footer). All landing-worthy 1.0.8–1.0.15 items are
    now folded into existing feature cards (see the 2026-09-12 summary).
    Standalone tempo (1.0.3) finally landed in the PLAY card. Still open:
-   - **Screenshots are pre-1.0.11.** The faceplate was visually redesigned
-     in 1.0.11 (one continuous dark faceplate, recessed bands) and the
-     preset browser now opens beside the synth (1.0.15), so the hero photo,
-     the demo-shot section, and the retint image all show the old look.
-     Needs fresh captures from Mike.
+   - Screenshots refreshed to v1.0.15 on 2026-09-12 (UI demo, retint). The
+     3D render (hero, teardown, studio photo) still models the pre-1.0.11
+     faceplate; it reads as a stylized study model, re-render only if asked.
    - Intentionally excluded as internal fixes/polish: 1.0.7–1.0.10 bug
      fixes, 1.0.9 CPU work, 1.0.13/1.0.14 crash fixes, greyed-out
      inapplicable controls, factory preset re-voicing.
    - Re-run this audit against `~/spasynth/docs/CHANGELOG.md` next time a
      new version ships.
+
+## Recent session summary (2026-09-12, later: case-study redesign shipped)
+
+Rebuilt the whole landing page in the grammar of the flat7.design SPASynth
+case study (`/Users/mikejerugim/flat7-design-spasynth/public/spasynth/`) and
+merged it to `main`. Every piece of landing copy survived (all 8 feature
+cards, both edition cards, upgrade path, all 15 FAQ items, specs, no-DRM
+quote); only connective tissue is new. Stack: the scroll-craft engine
+(`css/scrollcraft.css`, `js/scrollcraft.js`, copied verbatim, never edit),
+Barlow / Barlow Condensed, teal `#6dd6c2` on charcoal with sage interludes.
+Page order: masthead (sticky, section nav + CTA) → hero with the assembled
+3D render → **UI demo**: a pinned scroll-craft act (`data-sc-act="pin"`,
+span 2.2) where the v1.0.15 synth sits centred, then the preset browser
+panel slides out from behind its left edge as you scroll while the synth
+nudges right so the pair stays centred, flush like the real window; no
+copy, driven purely by `--sc-p` in CSS → The Hook + studio photo → sage
+bench intro → **3D teardown** (`js/scene.js`, 181-frame WebP sequences in
+`assets/scene/`, three module stops remapped to Sample engine / Organic
+Chaos / Mod matrix notes, then Randomize + reassembly) → features grid on
+sage + case-study interface figure → retint (new v1.0.15 purple/green
+capture with the 24s hue cycle) → listening room (3 MP3s in
+`assets/audio/`) → editions → no-DRM teal band → specs → FAQ →
+**Changelog accordion** (all 13 releases newest first, collapsed; regenerate
+with `python3 scripts/build-changelog.py` whenever a version ships) → close.
+Removed the old CSS/JS/hero assets. Verified in headless real Chrome
+(Playwright from the flat7 checkout) at 1440 and 390 wide, plus the pin at
+p=.1/.5/.9 and the teardown at its stops. Mike's new v1.0.15 captures live
+in `~/spasynth/docs/` (accent, chaos, dark/browser, keyboard, loading,
+marketing); the demo uses marketing + a 320px crop of dark.
 
 ## Recent session summary (2026-09-12)
 

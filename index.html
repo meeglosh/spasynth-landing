@@ -1,8 +1,9 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101413">
 <title>SPASynth: Your Library Is The Synth | Silverplatter Audio</title>
 <meta name="description" content="SPASynth is a hybrid synthesizer built around the entire Silverplatter Audio sound-effects library (88 packs, up to 11,474 sounds), playable as oscillators, granular fuel, modulation sources, and convolution impulses. No DRM, ever.">
 <meta property="og:type" content="website">
@@ -17,526 +18,399 @@
 <link rel="icon" href="assets/branding/SPAudio_logo_white.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/scrollcraft.css">
 <link rel="stylesheet" href="css/styles.css">
+<script src="js/scrollcraft.js" defer></script>
+<script src="js/page.js" defer></script>
+<script type="module" src="js/scene.js?v=20260907-recesses"></script>
 </head>
 <body>
+<a class="skip-link" href="#hook">Skip to the content</a>
 
-<div class="grain"></div>
-
-<header class="site-header" id="top">
-  <div class="wrap header-inner">
-    <a class="brand" href="#top">
-      <img class="brand-mark" src="assets/branding/SPAudio_logo_white.svg" alt="" width="22" height="22">
-      <span class="brand-word">SPASynth</span>
-    </a>
-    <nav class="main-nav" id="main-nav">
-      <a href="#library">Library</a>
-      <a href="#chaos">Chaos</a>
-      <a href="#features">Features</a>
-      <a href="#editions">Editions</a>
-      <a href="#no-drm">No DRM</a>
-      <a href="#faq">FAQ</a>
-    </nav>
-    <a class="btn btn-primary btn-small" href="#editions">Get SPASynth</a>
-    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
+<header class="masthead" id="top">
+  <a class="brand" href="#top"><img class="brand-mark" src="assets/branding/SPAudio_logo_white.svg" alt="" width="20" height="20"><span>SPASynth</span></a>
+  <nav class="masthead-nav" id="main-nav" aria-label="Sections">
+    <a href="#hook">Library</a>
+    <a href="#teardown">Inside</a>
+    <a href="#features">Features</a>
+    <a href="#listening">Listen</a>
+    <a href="#editions">Editions</a>
+    <a href="#no-drm">No DRM</a>
+    <a href="#faq">FAQ</a>
+    <a href="#changelog">Changelog</a>
+  </nav>
+  <a class="masthead-cta" href="#editions">Get SPASynth</a>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav"><span></span><span></span><span></span></button>
 </header>
 
 <main>
-
   <!-- HERO -->
-  <section class="hero hero-bg">
-    <div class="hero-bg-image" role="img" aria-label="A stylized render imagining SPASynth as a physical desktop hardware synthesizer on a studio desk"></div>
-    <div class="wrap hero-inner">
-      <div class="hero-copy" id="hero-copy">
-        <p class="eyebrow" data-reveal>SILVERPLATTER AUDIO PRESENTS</p>
-        <h1 id="hero-title" data-reveal>Your sound library<br><span class="text-gradient">is the synth.</span></h1>
-        <p class="hero-sub" data-reveal>
-          SPASynth is a hybrid synthesizer built around the entire Silverplatter Audio
-          sound-effects library (88 packs, up to 11,474 production-ready sounds), playable as
-          oscillators, granular fuel, modulation sources, and convolution impulses inside a
-          full wavetable synth with an organic-chaos engine and a one-button patch randomizer.
-        </p>
+  <section class="hero" data-sc-act="flow" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="eyebrow">Silverplatter Audio presents</p>
+      <h1 id="hero-title">Your sound library<br> is the synth.</h1>
+      <p class="hero-deck">SPASynth is a hybrid synthesizer built around the entire Silverplatter Audio sound-effects library (88 packs, up to 11,474 production-ready sounds), playable as oscillators, granular fuel, modulation sources, and convolution impulses inside a full wavetable synth with an organic-chaos engine and a one-button patch randomizer.</p>
+      <div class="hero-cta">
+        <a class="btn btn-solid" href="#editions">See the Editions</a>
+        <a class="btn btn-line" href="#features">Explore Features</a>
       </div>
-      <div class="hero-cta" data-reveal>
-        <a class="btn btn-primary" href="#editions">See the Editions</a>
-        <a class="btn btn-ghost" href="#features">Explore Features</a>
-      </div>
+    </div>
+    <div class="hero-object">
+      <div class="hero-light" aria-hidden="true" data-sc-parallax="0.55"></div>
+      <div class="hero-rule" aria-hidden="true"></div>
+      <img class="hero-synth" src="assets/scene/studio-assembled.webp?v=20260907-recesses" width="1600" height="1050" alt="A three-dimensional SPASynth instrument with wood side panels, black controls and turquoise displays." fetchpriority="high" data-sc-parallax="-0.45">
+      <p class="object-caption">Software, imagined as hardware.</p>
+    </div>
+    <div class="hero-foot"><span>88 packs · up to 11,474 sounds · No DRM, ever</span><span class="release-status"><i aria-hidden="true"></i> v1.0.15 · AU · VST3 · Standalone</span></div>
+  </section>
+
+  <!-- UI DEMO: a pinned beat. Scrolling opens the preset browser beside the synth, as the app does. -->
+  <section class="demo" data-sc-act="pin" data-sc-span="2.2" aria-label="SPASynth interface">
+    <div class="demo-stage section-gutter" data-sc-stage>
+      <figure class="demo-figure">
+        <div class="demo-inner">
+          <div class="demo-panel-clip"><img class="demo-panel" src="assets/images/spasynth-demo-panel.png" width="320" height="900" alt="" aria-hidden="true"></div>
+          <img class="demo-synth" src="assets/images/spasynth-demo-base.png" width="2760" height="1800" alt="The SPASynth v1.0.15 interface in its dark theme with teal accents. As the page scrolls, the preset browser panel opens beside it, listing packs and presets." loading="lazy">
+        </div>
+        <figcaption>SPASynth v1.0.15</figcaption>
+      </figure>
     </div>
   </section>
 
-  <!-- HERO DEMO SHOT -->
-  <section class="section hero-demo">
-    <div class="wrap">
-      <div class="hero-demo-shot" data-reveal>
-        <img src="assets/images/spasynth-hero-anim-base.jpg" alt="SPASynth plugin interface in its dark theme with teal accents, showing oscillators, filters, organic chaos engine, arpeggiator, and mod matrix" loading="lazy">
-        <div class="hero-demo-panel">
-          <img src="assets/images/spasynth-hero-anim-panel.png" alt="" aria-hidden="true">
-        </div>
-      </div>
+  <!-- THE HOOK -->
+  <section class="origin section-gutter" id="hook" data-sc-act="flow" aria-labelledby="hook-title">
+    <div class="origin-copy">
+      <p class="eyebrow">The hook</p>
+      <h2 id="hook-title">Other synths give you waveforms. This one gives you the whole Foley stage.</h2>
+      <p class="lead">A typewriter. A rainstorm. A billiard break. Load any of the library's up to 11,474 sounds and it becomes a playable keyboard instrument, a granular cloud, the modulation source that pumps your filter, or a convolution impulse behind a reverb, all at once, if you want.</p>
+      <p>Every loaded sound is analyzed the moment it loads: amplitude follower and pitch tracking, automatically. Route a thunderstorm's loudness to your filter cutoff and the storm plays the synth.</p>
+    </div>
+    <figure class="studio-figure" data-sc-reveal="left" data-sc-reveal-at="0.05 0.4">
+      <img src="assets/scene/studio.jpg" width="1577" height="997" alt="SPASynth imagined in a warm studio, surrounded by recording equipment." loading="lazy">
+      <figcaption>The library is the starting point. The instrument is software.</figcaption>
+    </figure>
+  </section>
+
+  <!-- BENCH INTRO -->
+  <section class="bench-intro section-gutter" aria-labelledby="bench-title" data-sc-act="flow">
+    <div><p class="eyebrow">Inside the instrument</p><h2 id="bench-title">Take it apart.<br> Find the synth.</h2></div>
+    <div class="bench-intro-right"><p>Three parts of SPASynth explain the idea better than a spec sheet. Each one is a different way a recording becomes an instrument.</p>
+      <nav class="signal-index" aria-label="Explore the instrument"><a href="#sample-note">Source <span aria-hidden="true">↗</span></a><a href="#chaos-note">Movement <span aria-hidden="true">↗</span></a><a href="#matrix-note">Connections <span aria-hidden="true">↗</span></a></nav>
     </div>
   </section>
 
-  <!-- THE HOOK: LIBRARY IS THE SYNTH -->
-  <section class="section" id="library">
-    <div class="wrap">
-      <div class="section-head" data-reveal>
-        <p class="eyebrow">THE HOOK</p>
-        <h2>Other synths give you waveforms.<br>This one gives you the whole Foley stage.</h2>
-        <p class="section-lede">
-          A typewriter. A rainstorm. A billiard break. Load any of the library's
-          up to 11,474 sounds and it becomes a playable keyboard instrument, a granular cloud,
-          the modulation source that pumps your filter, or a convolution impulse behind a
-          reverb, all at once, if you want.
-        </p>
+  <!-- TEARDOWN -->
+  <section class="teardown" id="teardown" data-sc-act="flow" aria-label="An illustrated teardown of SPASynth">
+    <div class="bench-visual">
+      <div class="bench-caption"><span>SPASynth / study model</span><span id="module-label">Sample engine</span></div>
+      <div id="synth-stage" data-model-version="20260907-recesses" data-poster-assembled="assets/scene/studio-assembled.webp?v=20260907-recesses" data-poster-exploded="assets/scene/studio-exploded.webp?v=20260907-recesses" role="img" aria-label="Three-dimensional SPASynth model. Selected module panels, displays and controls separate into an exploded view, then reassemble as the page progresses.">
+        <img class="scene-fallback" src="assets/scene/studio-assembled.webp?v=20260907-recesses" width="1600" height="1050" alt="" aria-hidden="true">
       </div>
-
-      <div class="signal-diagram" data-reveal>
-        <div class="signal-node signal-node-source">
-          <span class="signal-node-label">ANY SOUND</span>
-          <span class="signal-node-sub">rain · typewriter · billiards · up to 11,474 more</span>
+      <div class="bench-floor" aria-hidden="true"></div>
+      <p class="model-disclosure">A physical metaphor for a software instrument.<br> Internal layers are illustrative, not a hardware schematic.</p>
+    </div>
+    <div class="field-notes">
+      <article class="field-note" id="sample-note" data-module="sample">
+        <div class="note-content"><span class="component-name">Oscillator A · Sample engine</span>
+          <h3>Any sound.<br> Four ways in.</h3>
+          <p>Load a recording and it can be a keytracked oscillator, granular fuel, the modulation source that pumps your filter, or a convolution impulse behind a reverb. All at once, if you want.</p>
+          <dl class="route-list">
+            <div><dt>Oscillator</dt><dd>Keytracked, root note, start offset, loop points</dd></div>
+            <div><dt>Granular fuel</dt><dd>Size, density, position, spray, scrubbed by an LFO</dd></div>
+            <div><dt>Modulation source</dt><dd>SFX Amp + SFX Pitch, analyzed on import</dd></div>
+            <div><dt>Convolution impulse</dt><dd>Pre-delay, decay, damping: any sound becomes a space</dd></div>
+          </dl>
+          <div class="signal-line"><span>Recording</span><b aria-hidden="true">→</b><span>Sample engine</span><b aria-hidden="true">→</b><span>Instrument</span></div>
         </div>
-        <svg class="signal-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-          <path class="line-orange" d="M 0 12.5 C 40 12.5, 40 12.5, 100 12.5" />
-          <path class="line-orange" d="M 0 37.5 C 40 37.5, 40 37.5, 100 37.5" />
-          <path class="line-cyan"   d="M 0 62.5 C 40 62.5, 40 62.5, 100 62.5" />
-          <path class="line-cyan"   d="M 0 87.5 C 40 87.5, 40 87.5, 100 87.5" />
-        </svg>
-        <div class="signal-targets">
-          <div class="signal-node signal-node-target">
-            <span class="tag tag-orange">OSC</span>
-            <span class="signal-node-label">Oscillator</span>
-            <span class="signal-node-sub">Keytracked, root note, start offset, loop points</span>
-          </div>
-          <div class="signal-node signal-node-target">
-            <span class="tag tag-orange">GRAIN</span>
-            <span class="signal-node-label">Granular Fuel</span>
-            <span class="signal-node-sub">Size, density, position, spray, scrubbed by an LFO</span>
-          </div>
-          <div class="signal-node signal-node-target">
-            <span class="tag tag-cyan">MOD</span>
-            <span class="signal-node-label">Modulation Source</span>
-            <span class="signal-node-sub">SFX Amp + SFX Pitch, analyzed on import</span>
-          </div>
-          <div class="signal-node signal-node-target">
-            <span class="tag tag-cyan">CONV</span>
-            <span class="signal-node-label">Convolution Impulse</span>
-            <span class="signal-node-sub">Pre-delay, decay, damping: any sound becomes a space</span>
+      </article>
+      <article class="field-note" id="chaos-note" data-module="chaos">
+        <div class="note-content"><span class="component-name">Organic Chaos</span>
+          <h3>Analog instability,<br> on purpose.</h3>
+          <p>A bank of slow random walkers drifts pitch, phase, wavetable position, and amplitude per voice, plus drifting saturation and distortion for harmonic movement. Global depth, rate, and mix, all modulatable.</p>
+          <div class="scope-widget" aria-hidden="true"><canvas id="chaos-scope"></canvas></div>
+          <p class="note-pull">It's what makes digital patches breathe.</p>
+        </div>
+      </article>
+      <article class="field-note" id="matrix-note" data-module="matrix">
+        <div class="note-content"><span class="component-name">Modulation matrix</span>
+          <h3>16 slots.<br> 20 sources. 90+ destinations.</h3>
+          <p>Three envelopes, three LFOs, macros, velocity, mod wheel, aftertouch, chaos, and six SFX followers, routed anywhere. ASSIGN mode wires a route in two clicks, and every modulated knob shows its live range on the ring.</p>
+          <p>Evaluated at 64-sample resolution, so fast sources stay fast.</p>
+          <div class="signal-line"><span>Source</span><b aria-hidden="true">→</b><span>Destination</span><b aria-hidden="true">→</b><span>Amount</span></div>
+        </div>
+      </article>
+      <article class="field-note quiet-note" id="random-note" data-module="whole">
+        <div class="note-content"><span class="component-name">Randomize All · Wild</span>
+          <h3>One button.<br> A genuine patch generator.</h3>
+          <p>RANDOMIZE ALL rolls an entire playable patch. The WILD knob sets how polite or unhinged the results get. Every parameter carries hand-tuned, musically weighted randomization ranges and biases. Every roll is guaranteed to make sound.</p>
+          <p class="locks-label">Lock what you love, re-roll the rest:</p>
+          <div class="lock-row" aria-label="Section locks">
+            <span class="lock-chip is-locked">OSC</span><span class="lock-chip">FILTER</span><span class="lock-chip">ENV</span><span class="lock-chip is-locked">LFO</span><span class="lock-chip">CHAOS</span><span class="lock-chip">ARP</span><span class="lock-chip is-locked">FX</span><span class="lock-chip">MATRIX</span>
           </div>
         </div>
-      </div>
-
-      <p class="section-foot" data-reveal>
-        Every loaded sound is analyzed the moment it loads: amplitude follower and
-        pitch tracking, automatically. Route a thunderstorm's loudness to your filter
-        cutoff and the storm plays the synth.
-      </p>
+      </article>
+      <article class="field-note reassembly-note" id="reassembly-note" data-module="whole">
+        <div class="note-content">
+          <h3>Many parts.<br> One instrument.</h3>
+          <p>Not a sample player with a filter bolted on. A full hybrid synthesizer where the library is one of seven engines, and the rest of the instrument is built to make it move.</p>
+          <p class="note-pull">Everything under the hood, below.</p>
+        </div>
+      </article>
     </div>
   </section>
 
-  <!-- CHAOS / RANDOMIZE -->
-  <section class="section section-alt" id="chaos">
-    <div class="wrap">
-      <div class="two-col">
-        <div class="chaos-copy" data-reveal>
-          <p class="eyebrow">PATCH GENERATION</p>
-          <h2>One button. A genuine patch generator, not a gimmick.</h2>
-          <p>
-            RANDOMIZE ALL rolls an entire playable patch. The WILD knob sets how polite
-            or unhinged the results get. Every parameter carries hand-tuned, musically
-            weighted randomization ranges and biases. Every roll is guaranteed to make sound.
-          </p>
-          <p class="chaos-locks-label">Lock what you love, re-roll the rest:</p>
-          <div class="lock-row">
-            <span class="lock-chip is-locked">OSC</span>
-            <span class="lock-chip">FILTER</span>
-            <span class="lock-chip">ENV</span>
-            <span class="lock-chip is-locked">LFO</span>
-            <span class="lock-chip">CHAOS</span>
-            <span class="lock-chip">ARP</span>
-            <span class="lock-chip is-locked">FX</span>
-            <span class="lock-chip">MATRIX</span>
-          </div>
-        </div>
-        <div class="chaos-visual" data-reveal>
-          <div class="wild-knob">
-            <div class="wild-knob-dial"></div>
-            <span class="wild-knob-label">WILD</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="chaos-organic" data-reveal>
-        <div class="chaos-organic-text">
-          <p class="eyebrow">ORGANIC CHAOS</p>
-          <h3>Analog instability, on purpose.</h3>
-          <p>
-            A bank of slow random walkers drifts pitch, phase, wavetable position,
-            and amplitude per voice, plus drifting saturation and distortion for
-            harmonic movement. Global depth, rate, and mix, all modulatable. It's
-            what makes digital patches breathe.
-          </p>
-        </div>
-        <div class="scope-widget">
-          <canvas id="chaos-scope"></canvas>
-        </div>
-      </div>
+  <!-- FEATURES -->
+  <section class="build section-gutter" id="features" data-sc-act="flow" aria-labelledby="features-title">
+    <div class="build-heading"><p class="eyebrow">The full picture</p><h2 id="features-title">Everything under the hood.</h2></div>
+    <div class="build-copy"><p class="lead">Seven engines across three slots, dual filters, a 16-slot matrix, a 12-mode arpeggiator, and a nine-module effects chain. Every scope and curve animated live from the audio engine.</p></div>
+    <div class="feature-grid" data-sc-in data-sc-stagger="60">
+      <article class="feature-card"><span class="tag">Engines</span><h3>7 engines, 3 slots</h3><p>Wavetable (8 built-in morphable tables, or load your own), Sample/SFX with tempo-synced, beat-locked loops and a zoomable waveform, Granular, Virtual Analog with a phase-locked SUB, 2-op FM, Noise (white/pink/brown), and Karplus-Strong Pluck. Mix and match across three oscillator slots.</p></article>
+      <article class="feature-card"><span class="tag">Filters</span><h3>Dual multimode filters</h3><p>Two filters, 8 types each (LP/HP/BP/Notch, 12 &amp; 24 dB), drive, keytracking, ±4 octave envelope depth, and dry/wet mix. Route them series or parallel.</p></article>
+      <article class="feature-card"><span class="tag">Modulation</span><h3>16-slot mod matrix</h3><p>20 sources (3 envelopes, 3 LFOs, macros, velocity, mod wheel, aftertouch, chaos, and 6 SFX followers) into 90+ destinations. ASSIGN mode wires a route in two clicks, and every modulated knob shows its live range on the ring. Evaluated at 64-sample resolution.</p></article>
+      <article class="feature-card"><span class="tag">Arp</span><h3>12-mode arpeggiator</h3><p>Up, down, up/down, converge, diverge, chord, random-walk, and melodic phrases. Plus CHANCE, STUTTER, JUMP, and HUMAN probability controls that turn patterns into performances.</p></article>
+      <article class="feature-card"><span class="tag">Play</span><h3>Built to play live</h3><p>Five voice modes (Poly, Mono, Duo, Paraphonic, Unison) with note priority and unison detune/width, global glide, MIDI Learn on every control, and one-click Panic to clear stuck notes. Standalone gets its own tempo bar: BPM, tap tempo, time signature, and MIDI clock sync.</p></article>
+      <article class="feature-card"><span class="tag">FX</span><h3>9-module effects chain</h3><p>Distortion (including a Crush bit crusher), chorus, a Phaser/Flanger Mod tab, Tremolo/Vibrato, tempo-synced ping-pong delay, a plate-derived reverb engine in five characters (Hall, Plate, Chamber, Room, Spring), Convolve (turn any library sound or your own WAV into an impulse), a parametric EQ (up to 8 bands, each switchable between bell, shelf, cut, notch, band-pass, and tilt, with a live spectrum analyzer), and a limiter/maximizer. Drag to reorder the chain, saved with every preset.</p></article>
+      <article class="feature-card"><span class="tag">Library</span><h3>88 packs, up to 11,474 sounds</h3><p>24-bit/48kHz, production-ready for film and TV. Auto-discovery means you extract to one folder and SPASynth finds it, no scanning dialogs. 264 factory presets included, plus your own preset banks that show up as categories in the browser.</p></article>
+      <article class="feature-card"><span class="tag">Interface</span><h3>Telemetry-animated UI</h3><p>A resizable, GPU-friendly vector interface where every scope, envelope, LFO, and filter curve is animated live from the actual audio engine. Re-tint every accent color, play from the built-in on-screen keyboard with no MIDI controller needed, browse presets in a panel that slides open beside the synth instead of over it, and dial in 2x/4x/8x oversampling from the settings menu.</p></article>
     </div>
+    <figure class="interface-figure" data-sc-reveal="up" data-sc-reveal-at="0.05 0.45"><img src="assets/scene/interface.png?v=20260907-recesses" width="2760" height="1800" alt="The SPASynth software interface, with sample and wavetable oscillators, filters, modulation and effects." loading="lazy"><figcaption>The actual software interface. The physical instrument above is a visualization.</figcaption></figure>
   </section>
 
-  <!-- FEATURE GRID -->
-  <section class="section" id="features">
-    <div class="wrap">
-      <div class="section-head" data-reveal>
-        <p class="eyebrow">THE FULL PICTURE</p>
-        <h2>Everything under the hood.</h2>
-      </div>
-
-      <div class="feature-grid">
-        <article class="feature-card" data-reveal>
-          <span class="tag tag-orange">ENGINES</span>
-          <h3>7 engines, 3 slots</h3>
-          <p>Wavetable (8 built-in morphable tables, or load your own),
-          Sample/SFX with tempo-synced, beat-locked loops and a zoomable
-          waveform, Granular, Virtual Analog with a phase-locked SUB, 2-op FM,
-          Noise (white/pink/brown), and Karplus-Strong Pluck. Mix and match
-          across three oscillator slots.</p>
-        </article>
-
-        <article class="feature-card" data-reveal>
-          <span class="tag tag-cyan">FILTERS</span>
-          <h3>Dual multimode filters</h3>
-          <p>Two filters, 8 types each (LP/HP/BP/Notch, 12 &amp; 24 dB), drive,
-          keytracking, ±4 octave envelope depth, and dry/wet mix. Route them
-          series or parallel.</p>
-        </article>
-
-        <article class="feature-card" data-reveal>
-          <span class="tag tag-cyan">MODULATION</span>
-          <h3>16-slot mod matrix</h3>
-          <p>20 sources (3 envelopes, 3 LFOs, macros, velocity, mod wheel,
-          aftertouch, chaos, and 6 SFX followers) into 90+ destinations.
-          ASSIGN mode wires a route in two clicks, and every modulated knob
-          shows its live range on the ring. Evaluated at 64-sample
-          resolution.</p>
-        </article>
-
-        <article class="feature-card" data-reveal>
-          <span class="tag tag-orange">ARP</span>
-          <h3>12-mode arpeggiator</h3>
-          <p>Up, down, up/down, converge, diverge, chord, random-walk, and
-          melodic phrases. Plus CHANCE, STUTTER, JUMP, and HUMAN probability
-          controls that turn patterns into performances.</p>
-        </article>
-
-        <article class="feature-card" data-reveal>
-          <span class="tag tag-orange">PLAY</span>
-          <h3>Built to play live</h3>
-          <p>Five voice modes (Poly, Mono, Duo, Paraphonic, Unison) with note
-          priority and unison detune/width, global glide, MIDI Learn on every
-          control, and one-click Panic to clear stuck notes. Standalone gets
-          its own tempo bar: BPM, tap tempo, time signature, and MIDI clock
-          sync.</p>
-        </article>
-
-        <article class="feature-card" data-reveal>
-          <span class="tag tag-cyan">FX</span>
-          <h3>9-module effects chain</h3>
-          <p>Distortion (including a Crush bit crusher), chorus, a
-          Phaser/Flanger Mod tab, Tremolo/Vibrato, tempo-synced ping-pong
-          delay, a plate-derived reverb engine in five characters (Hall,
-          Plate, Chamber, Room, Spring), Convolve (turn any library sound or
-          your own WAV into an impulse), a parametric EQ (up to 8 bands, each
-          switchable between bell, shelf, cut, notch, band-pass, and tilt,
-          with a live spectrum analyzer), and a limiter/maximizer. Drag to
-          reorder the chain, saved with every preset.</p>
-        </article>
-
-        <article class="feature-card" data-reveal>
-          <span class="tag tag-orange">LIBRARY</span>
-          <h3>88 packs, up to 11,474 sounds</h3>
-          <p>24-bit/48kHz, production-ready for film and TV. Auto-discovery
-          means you extract to one folder and SPASynth finds it, no scanning
-          dialogs. 264 factory presets included, plus your own preset banks
-          that show up as categories in the browser.</p>
-        </article>
-
-        <article class="feature-card" data-reveal>
-          <span class="tag tag-cyan">INTERFACE</span>
-          <h3>Telemetry-animated UI</h3>
-          <p>A resizable, GPU-friendly vector interface where every scope,
-          envelope, LFO, and filter curve is animated live from the actual
-          audio engine. Re-tint every accent color, play from the built-in
-          on-screen keyboard with no MIDI controller needed, browse presets
-          in a panel that slides open beside the synth instead of over it,
-          and dial in 2x/4x/8x oversampling from the settings menu.</p>
-        </article>
-      </div>
+  <!-- RETINT -->
+  <section class="retint section-gutter" data-sc-act="flow" aria-labelledby="retint-title">
+    <div class="retint-text">
+      <p class="eyebrow">Make it yours</p>
+      <h2 id="retint-title">Two accent colors.<br> Any colors you want.</h2>
+      <p>The default theme runs a single deep teal accent throughout. A built-in picker re-tints the entire interface: split oscillators and filters from envelopes and modulation into two colors like this, or keep everything linked for the default single-color look.</p>
     </div>
+    <figure class="retint-shot" data-sc-reveal="right" data-sc-reveal-at="0.05 0.4"><img src="assets/images/spasynth-accent.png" width="1380" height="900" alt="The same SPASynth interface re-tinted with the built-in accent picker: purple for oscillators and filters, green for envelopes and modulation, cycling through other complementary pairs" loading="lazy"></figure>
   </section>
 
-  <!-- ACCENT RETINT SHOWCASE -->
-  <section class="section retint">
-    <div class="wrap retint-inner" data-reveal>
-      <div class="retint-text">
-        <p class="eyebrow">MAKE IT YOURS</p>
-        <h2>Two accent colors. Any colors you want.</h2>
-        <p>The default theme runs a single deep teal accent throughout. A
-        built-in picker re-tints the entire interface: split oscillators and
-        filters from envelopes and modulation into two colors like this, or
-        keep everything linked for the default single-color look.</p>
-      </div>
-      <div class="retint-shot">
-        <img src="assets/images/spasynth-accent.png" alt="The same SPASynth interface re-tinted using the built-in accent color picker, cycling through different complementary color pairs" loading="lazy">
-      </div>
+  <!-- LISTENING -->
+  <section class="listening section-gutter" id="listening" aria-labelledby="listening-title" data-sc-act="flow">
+    <div class="listening-title"><p class="eyebrow">Hear it</p><h2 id="listening-title">A little room<br> for listening.</h2><p class="listening-note"><strong>100% SPASynth.</strong> <span data-track-count>Three</span> <span data-track-noun>tracks</span> made entirely with SPASynth. No other instruments or effects were used.</p></div>
+    <div class="audio-tracks">
+      <div class="audio-track"><div><span class="track-category">Original track · 100% SPASynth</span><h3>City of Cones</h3></div><audio controls preload="none" src="assets/audio/city-of-cones.mp3" aria-label="Play City of Cones, made entirely with SPASynth"></audio></div>
+      <div class="audio-track"><div><span class="track-category">Original track · 100% SPASynth</span><h3>Barnicle</h3></div><audio controls preload="none" src="assets/audio/barnicle-v1.1.mp3" aria-label="Play Barnicle, made entirely with SPASynth"></audio></div>
+      <div class="audio-track"><div><span class="track-category">Original track · 100% SPASynth</span><h3>SPA</h3></div><audio controls preload="none" src="assets/audio/spa-1.2.mp3" aria-label="Play SPA, made entirely with SPASynth"></audio></div>
     </div>
   </section>
 
   <!-- EDITIONS -->
-  <section class="section" id="editions">
-    <div class="wrap">
-      <div class="section-head" data-reveal>
-        <p class="eyebrow">EDITIONS</p>
-        <h2>Same synth. The difference is the library.</h2>
-      </div>
-
-      <div class="editions-grid">
-        <article class="edition-card" data-reveal>
-          <h3>Standard</h3>
-          <div class="edition-price">
-            <span class="price-original">$149</span>
-            <span class="price-current">$99</span>
-            <span class="price-badge">INTRO PRICE</span>
-          </div>
-          <p class="edition-tag">The full synth</p>
-          <ul>
-            <li>Every engine, filter, and effect</li>
-            <li>All 264 factory presets</li>
-            <li>440-sound starter library (5 sounds from every one of the 88 packs)</li>
-          </ul>
-          <div class="edition-spacer"></div>
-          <!-- TODO: placeholder link, swap for the real Shopify product URL at launch -->
-          <a class="btn btn-primary btn-small edition-buy" href="#" target="_blank" rel="noopener">Coming soon</a>
-        </article>
-
-        <article class="edition-card edition-card-featured" data-reveal>
-          <span class="edition-badge">FULL LIBRARY</span>
-          <h3>Pro</h3>
-          <div class="edition-price">
-            <span class="price-original">$899</span>
-            <span class="price-current">$499</span>
-          </div>
-          <p class="edition-tag">The full synth, the whole library</p>
-          <ul>
-            <li>Everything in Standard</li>
-            <li>The complete 11,474-sound, 37 GB Silverplatter Audio library</li>
-            <li>Every pack, every sound, playable from day one</li>
-            <li><strong><u>Includes the entire Silverplatter Audio Everything Bundle</u></strong></li>
-            <li>Lifetime free library updates, same deal as the Everything
-            Bundle: every new pack and every pack update, forever</li>
-          </ul>
-          <p class="edition-note">$499 is exactly what the Everything Bundle
-          costs on its own (already discounted from $899), so SPASynth
-          comes included at no extra cost.</p>
-          <div class="edition-spacer"></div>
-          <!-- TODO: placeholder link, swap for the real Shopify product URL at launch -->
-          <a class="btn btn-primary btn-small edition-buy" href="#" target="_blank" rel="noopener">Coming soon</a>
-        </article>
-      </div>
-
-      <div class="upgrade-path" data-reveal>
-        <div class="upgrade-path-head">
-          <strong>Standard → Pro upgrade</strong>
-          <div class="edition-price edition-price-inline">
-            <span class="price-original">$750</span>
-            <span class="price-current">$400</span>
-            <span class="price-badge">INTRO PRICE</span>
-          </div>
-        </div>
-        <p>Already own Standard? Add the complete library for the difference:
-        download it, drop it in the same folder. No reinstall, nothing to
-        activate. Individual add-on packs install the same way. Every copy
-        can carry a personal ownership stamp ("Licensed to you@…") shown
-        in the footer. A signature, not a lock.</p>
+  <section class="editions section-gutter" id="editions" data-sc-act="flow" aria-labelledby="editions-title">
+    <div class="editions-heading"><p class="eyebrow">Editions</p><h2 id="editions-title">Same synth.<br> The difference is the library.</h2></div>
+    <div class="editions-grid" data-sc-in data-sc-stagger="90">
+      <article class="edition-card">
+        <h3>Standard</h3>
+        <div class="edition-price"><span class="price-original">$149</span><span class="price-current">$99</span><span class="price-badge">Intro price</span></div>
+        <p class="edition-tag">The full synth</p>
+        <ul>
+          <li>Every engine, filter, and effect</li>
+          <li>All 264 factory presets</li>
+          <li>440-sound starter library (5 sounds from every one of the 88 packs)</li>
+        </ul>
         <!-- TODO: placeholder link, swap for the real Shopify product URL at launch -->
-        <a class="btn btn-primary btn-small upgrade-buy" href="#" target="_blank" rel="noopener">Coming soon</a>
+        <a class="btn btn-solid edition-buy" href="#" target="_blank" rel="noopener">Coming soon</a>
+      </article>
+      <article class="edition-card edition-card-featured">
+        <span class="edition-badge">Full library</span>
+        <h3>Pro</h3>
+        <div class="edition-price"><span class="price-original">$899</span><span class="price-current">$499</span></div>
+        <p class="edition-tag">The full synth, the whole library</p>
+        <ul>
+          <li>Everything in Standard</li>
+          <li>The complete 11,474-sound, 37 GB Silverplatter Audio library</li>
+          <li>Every pack, every sound, playable from day one</li>
+          <li><strong><u>Includes the entire Silverplatter Audio Everything Bundle</u></strong></li>
+          <li>Lifetime free library updates, same deal as the Everything Bundle: every new pack and every pack update, forever</li>
+        </ul>
+        <p class="edition-note">$499 is exactly what the Everything Bundle costs on its own (already discounted from $899), so SPASynth comes included at no extra cost.</p>
+        <!-- TODO: placeholder link, swap for the real Shopify product URL at launch -->
+        <a class="btn btn-solid edition-buy" href="#" target="_blank" rel="noopener">Coming soon</a>
+      </article>
+    </div>
+    <div class="upgrade-path">
+      <div class="upgrade-path-head">
+        <strong>Standard to Pro upgrade</strong>
+        <div class="edition-price edition-price-inline"><span class="price-original">$750</span><span class="price-current">$400</span><span class="price-badge">Intro price</span></div>
       </div>
+      <p>Already own Standard? Add the complete library for the difference: download it, drop it in the same folder. No reinstall, nothing to activate. Individual add-on packs install the same way. Every copy can carry a personal ownership stamp ("Licensed to you@…") shown in the footer. A signature, not a lock.</p>
+      <!-- TODO: placeholder link, swap for the real Shopify product URL at launch -->
+      <a class="btn btn-line upgrade-buy" href="#" target="_blank" rel="noopener">Coming soon</a>
     </div>
   </section>
 
   <!-- NO DRM -->
-  <section class="no-drm" id="no-drm">
-    <div class="wrap" data-reveal>
-      <p class="eyebrow">THE POSITION</p>
-      <blockquote>
-        SPASynth has no copy protection, no serial numbers, no activation, no
-        dongles, and it never phones home. We sell to people who pay for the
-        tools they love, and we price it accordingly. The license is simple:
-        use the sounds in anything you make, royalty-free, forever: just
-        don't redistribute the raw files.
-      </blockquote>
-    </div>
+  <section class="no-drm section-gutter" id="no-drm" data-sc-act="flow" aria-labelledby="drm-title">
+    <p class="eyebrow" id="drm-title">The position</p>
+    <blockquote>SPASynth has no copy protection, no serial numbers, no activation, no dongles, and it never phones home. We sell to people who pay for the tools they love, and we price it accordingly. The license is simple: use the sounds in anything you make, royalty-free, forever: just don't redistribute the raw files.</blockquote>
   </section>
 
   <!-- SPECS -->
-  <section class="section" id="specs">
-    <div class="wrap">
-      <div class="section-head" data-reveal>
-        <p class="eyebrow">SPECS</p>
-        <h2>Formats &amp; requirements</h2>
-      </div>
-      <div class="specs-table" data-reveal>
-        <div class="specs-row">
-          <span class="specs-os">macOS 11+</span>
-          <span class="specs-detail">Universal (Apple silicon &amp; Intel)</span>
-          <span class="specs-formats"><span class="tag">AU</span><span class="tag">VST3</span><span class="tag">Standalone</span></span>
-        </div>
-        <div class="specs-row">
-          <span class="specs-os">Windows 10+</span>
-          <span class="specs-detail">64-bit</span>
-          <span class="specs-formats"><span class="tag">VST3</span><span class="tag">Standalone</span></span>
-        </div>
-      </div>
-      <p class="specs-note" data-reveal>No AAX in v1. Current release: v1.0.15.
-      The full Pro library needs about 37 GB of free space, and it can live
-      on any drive, internal or external.</p>
+  <section class="specs section-gutter" id="specs" data-sc-act="flow" aria-labelledby="specs-title">
+    <div class="specs-heading"><p class="eyebrow">Specs</p><h2 id="specs-title">Formats &amp; requirements</h2></div>
+    <div class="specs-body">
+      <dl class="specs-table">
+        <div class="specs-row"><dt>macOS 11+</dt><dd>Universal (Apple silicon &amp; Intel)</dd><dd class="specs-formats"><span class="tag">AU</span><span class="tag">VST3</span><span class="tag">Standalone</span></dd></div>
+        <div class="specs-row"><dt>Windows 10+</dt><dd>64-bit</dd><dd class="specs-formats"><span class="tag">VST3</span><span class="tag">Standalone</span></dd></div>
+      </dl>
+      <p class="specs-note">No AAX in v1. Current release: v1.0.15. The full Pro library needs about 37 GB of free space, and it can live on any drive, internal or external.</p>
     </div>
   </section>
 
   <!-- FAQ -->
-  <section class="section" id="faq">
-    <div class="wrap">
-      <div class="section-head" data-reveal>
-        <p class="eyebrow">FAQ</p>
-        <h2>Good questions.</h2>
-      </div>
-      <div class="faq-list" data-reveal>
-        <details class="faq-item">
-          <summary>Will my DAW support it?</summary>
-          <p>On macOS, SPASynth ships as AU and VST3, plus a standalone app.
-          On Windows, it's VST3 and standalone. If your DAW hosts either
-          format, you're set.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Can I use SPASynth to add SFX to my film, TV, or game projects?</summary>
-          <p>Absolutely. Add SPASynth as an instrument track, load the sound
-          you want, and choose that pack's Keys preset from the preset
-          browser: Keys patches map the raw, unprocessed sound straight
-          across the keyboard, so you can drop it in anywhere you'd use a
-          one-shot or a Foley take. Use it in anything you make,
-          royalty-free, forever.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Do I need the library on my system drive?</summary>
-          <p>No. Point SPASynth at the library folder wherever it lives:
-          external drive, NAS, wherever. Auto-discovery finds it, and presets
-          use portable paths so sessions survive the library living anywhere.</p>
-        </details>
-        <details class="faq-item">
-          <summary>I already own Silverplatter sound-effects libraries. Can SPASynth use them?</summary>
-          <p>Yes. Point SPASynth at the folder holding your packs with SET
-          LIBRARY, no copying into a separate folder, and it builds presets
-          from whatever it finds. Sample rate doesn't matter, so 24-bit/96kHz
-          originals play as-is. Own some packs? You'll see exactly those.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Do I need to re-download or reorganize my libraries?</summary>
-          <p>No re-download and no conversion. Keep your libraries where they
-          are and point SPASynth at them. The only catch: SPASynth reads one
-          library folder at a time, so if your packs are scattered across
-          drives, put them under a single parent folder.</p>
-        </details>
-        <details class="faq-item">
-          <summary>I own the Everything Bundle. Do I get SPASynth?</summary>
-          <p>Yes, free, with lifetime updates. Point SPASynth at your
-          existing Everything Bundle folder with SET LIBRARY: no re-download,
-          no reorganizing, no activation.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Do I get new packs as Silverplatter Audio releases them?</summary>
-          <p>Yes, on Pro. It carries the same lifetime free library updates
-          as the Everything Bundle: every new pack, and every update to an
-          existing pack, is yours forever at no extra cost.</p>
-        </details>
-        <details class="faq-item">
-          <summary>How do I download the library after I buy it?</summary>
-          <p>After checkout, you get a download page with a button for each
-          file. Pro's 37 GB library arrives as 11 ZIP parts, roughly 2 to 3.5
-          GB each: that's normal for a library this size, and it keeps every
-          file a manageable download. Grab all 11, unzip them into the same
-          folder, and SPASynth finds the library automatically next time it
-          opens. No third-party account, no special software, nothing to
-          install beyond unzipping. Standard's 440-sound starter library is a
-          single, small download (about 3 GB). Downloads are hosted on our
-          own storage and the links stay valid, so you can come back and
-          re-download anytime.</p>
-        </details>
-        <details class="faq-item">
-          <summary>I purchased Pro. Where do I find the Everything Bundle library download links?</summary>
-          <p>They're included in your purchase: look for an HTML file named
-          "SPASynth Pro Library - Downloads.html." Open it in your browser
-          and download away.</p>
-        </details>
-        <details class="faq-item">
-          <summary>What happens when I upgrade to Pro?</summary>
-          <p>Pay the difference, download the complete 11,474-sound library,
-          drop it in the same folder as your Standard library. No reinstall,
-          nothing to activate.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Is there copy protection?</summary>
-          <p>No. No serial numbers, no activation, no dongles, no phone-home,
-          ever. Buy it, download it, own it.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Pro Tools / AAX support?</summary>
-          <p>Not in v1.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Can I load SPASynth in iZotope RX9?</summary>
-          <p>No, and that's expected. RX9 doesn't load software instruments
-          by design: it's a repair and restoration tool, not a plugin host
-          for synths. Load SPASynth in a DAW instead, see "Will my DAW
-          support it?" above.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Will I get updates?</summary>
-          <p>Yes. Updates across the v1 line are free. Since there's no
-          activation, updating is just downloading the latest installer
-          and running it.</p>
-        </details>
-        <details class="faq-item">
-          <summary>The Windows installer shows a security warning. Is that normal?</summary>
-          <p>Yes. The Windows installer isn't certificate-signed, so
-          SmartScreen may flag it on first run: click "More info," then
-          "Run anyway." The macOS installer is signed and notarized by
-          Apple, so it installs without warnings.</p>
-        </details>
-      </div>
+  <section class="faq section-gutter" id="faq" data-sc-act="flow" aria-labelledby="faq-title">
+    <div class="faq-heading"><p class="eyebrow">FAQ</p><h2 id="faq-title">Good questions.</h2></div>
+    <div class="faq-list">
+      <details class="faq-item"><summary>Will my DAW support it?</summary><p>On macOS, SPASynth ships as AU and VST3, plus a standalone app. On Windows, it's VST3 and standalone. If your DAW hosts either format, you're set.</p></details>
+      <details class="faq-item"><summary>Can I use SPASynth to add SFX to my film, TV, or game projects?</summary><p>Absolutely. Add SPASynth as an instrument track, load the sound you want, and choose that pack's Keys preset from the preset browser: Keys patches map the raw, unprocessed sound straight across the keyboard, so you can drop it in anywhere you'd use a one-shot or a Foley take. Use it in anything you make, royalty-free, forever.</p></details>
+      <details class="faq-item"><summary>Do I need the library on my system drive?</summary><p>No. Point SPASynth at the library folder wherever it lives: external drive, NAS, wherever. Auto-discovery finds it, and presets use portable paths so sessions survive the library living anywhere.</p></details>
+      <details class="faq-item"><summary>I already own Silverplatter sound-effects libraries. Can SPASynth use them?</summary><p>Yes. Point SPASynth at the folder holding your packs with SET LIBRARY, no copying into a separate folder, and it builds presets from whatever it finds. Sample rate doesn't matter, so 24-bit/96kHz originals play as-is. Own some packs? You'll see exactly those.</p></details>
+      <details class="faq-item"><summary>Do I need to re-download or reorganize my libraries?</summary><p>No re-download and no conversion. Keep your libraries where they are and point SPASynth at them. The only catch: SPASynth reads one library folder at a time, so if your packs are scattered across drives, put them under a single parent folder.</p></details>
+      <details class="faq-item"><summary>I own the Everything Bundle. Do I get SPASynth?</summary><p>Yes, free, with lifetime updates. Point SPASynth at your existing Everything Bundle folder with SET LIBRARY: no re-download, no reorganizing, no activation.</p></details>
+      <details class="faq-item"><summary>Do I get new packs as Silverplatter Audio releases them?</summary><p>Yes, on Pro. It carries the same lifetime free library updates as the Everything Bundle: every new pack, and every update to an existing pack, is yours forever at no extra cost.</p></details>
+      <details class="faq-item"><summary>How do I download the library after I buy it?</summary><p>After checkout, you get a download page with a button for each file. Pro's 37 GB library arrives as 11 ZIP parts, roughly 2 to 3.5 GB each: that's normal for a library this size, and it keeps every file a manageable download. Grab all 11, unzip them into the same folder, and SPASynth finds the library automatically next time it opens. No third-party account, no special software, nothing to install beyond unzipping. Standard's 440-sound starter library is a single, small download (about 3 GB). Downloads are hosted on our own storage and the links stay valid, so you can come back and re-download anytime.</p></details>
+      <details class="faq-item"><summary>I purchased Pro. Where do I find the Everything Bundle library download links?</summary><p>They're included in your purchase: look for an HTML file named "SPASynth Pro Library - Downloads.html." Open it in your browser and download away.</p></details>
+      <details class="faq-item"><summary>What happens when I upgrade to Pro?</summary><p>Pay the difference, download the complete 11,474-sound library, drop it in the same folder as your Standard library. No reinstall, nothing to activate.</p></details>
+      <details class="faq-item"><summary>Is there copy protection?</summary><p>No. No serial numbers, no activation, no dongles, no phone-home, ever. Buy it, download it, own it.</p></details>
+      <details class="faq-item"><summary>Pro Tools / AAX support?</summary><p>Not in v1.</p></details>
+      <details class="faq-item"><summary>Can I load SPASynth in iZotope RX9?</summary><p>No, and that's expected. RX9 doesn't load software instruments by design: it's a repair and restoration tool, not a plugin host for synths. Load SPASynth in a DAW instead, see "Will my DAW support it?" above.</p></details>
+      <details class="faq-item"><summary>Will I get updates?</summary><p>Yes. Updates across the v1 line are free. Since there's no activation, updating is just downloading the latest installer and running it.</p></details>
+      <details class="faq-item"><summary>The Windows installer shows a security warning. Is that normal?</summary><p>Yes. The Windows installer isn't certificate-signed, so SmartScreen may flag it on first run: click "More info," then "Run anyway." The macOS installer is signed and notarized by Apple, so it installs without warnings.</p></details>
     </div>
   </section>
 
+  <!-- CHANGELOG -->
+  <section class="changelog section-gutter" id="changelog" data-sc-act="flow" aria-labelledby="changelog-title">
+    <div class="changelog-heading"><p class="eyebrow">Changelog</p><h2 id="changelog-title">Every release,<br> newest first.</h2><p class="changelog-note">Updates across the v1 line are free. Download the latest installer and run it.</p></div>
+    <div class="changelog-list">
+<!-- CHANGELOG:START -->
+<details class="log-item">
+<summary><span class="log-version">v1.0.15</span> <span class="log-latest">Latest</span></summary>
+<div class="log-body">
+<p>A large round of features and fixes from our testers' playtest sessions.</p>
+<ul><li>Analog oscillators gain a SUB knob: a square wave one octave below the main waveform, phase-locked so it never drifts, just like the classic sub-oscillator slider on a vintage analog synth.</li><li>With LOOP on, sample oscillators gain a SYNC option that turns the loop into a beat-locked, tempo-matched part of your project. SYNC snaps the loop's start and end to the sample's own beat grid, stretches it to your project's tempo while keeping its pitch (using the sample's own detected tempo), and follows your project's tempo, locking to the transport while it plays, like a clip launcher: press a key and the loop joins in on the beat, right where the transport currently is. Turning LOOP off hides SYNC, since it's a loop feature. Each sample oscillator can also choose its own time signature for its beat-locked loop, defaulting to your project's, so loops in different meters can run against each other for polyrhythms.</li><li>A time signature setting is available for the standalone's tempo bar and, for hosts that don't tell us their own signature, from the settings menu as well, so synced sample loops always land on the right beat.</li><li>You can now zoom and pan the oscillator waveform display, which makes it much easier to work with long samples. Scroll or pinch to zoom in and out around your cursor, drag to pan once zoomed, and double-click to snap back to the whole file. Loop points and other markers stay lined up with the waveform no matter how far in you zoom.</li><li>Knobs that are being modulated now show it live, with a moving indicator and a shaded range on the ring, while the knob itself keeps your base setting.</li><li>EQ bands can now be switched between Bell, Low Shelf, High Shelf, Low Cut, High Cut, Notch, Band Pass and Tilt Shelf by right-clicking a node in the EQ display. Low Cut and High Cut bands also get a slope choice from 6 to 48 dB per octave, for a real low-cut or high-pass instead of a single gentle filter. Double-clicking near the left or right edge of the EQ display now drops in a low cut or high cut in one gesture.</li><li>Pulse factory presets now combine the pack's own sound with a real synth oscillator (wavetable, analog or FM), with the sample's own dynamics, pitch or envelope driving that synth layer in a different way for each of the six variants (its level, its pitch, the shared filter, a wavetable's scan position, or an FM amount). Every Pulse preset is now a genuine mix rather than sample-only. Every wavetable layer across all our factory presets now picks one of our built-in wavetable shapes to suit its character (Supersaw, Unison Spread, PWM or Bells, among others) instead of defaulting to a plain basic shape, and every preset's reverb has been re-voiced for our newer reverb engine, choosing the reverb character (Room, Plate, Chamber, Hall or Spring) and amount that best suits each sound.</li><li>Fixed a real cause of totally silent factory presets against long, real-world sound-effects files: a held note's sample loop is now a short, guaranteed-audible window near the start of the file rather than looping the file's full length, so a long recording's own natural decay, or a quiet stretch partway through, can no longer leave a held note silent for the rest of its hold; granular presets nudge their grain read position inward and widen its per-grain spray for the same reason. Every factory preset across every pack in our library has been verified audible on a held note.</li></ul>
+<ul><li>Added an ASSIGN mode to the mod matrix. Turn it on and everything that can be part of a modulation route starts glowing blue, both the things you can modulate and the matrix rows themselves. Click a glowing control, then click a glowing row menu, and that route is made for you. Works for sources as well as destinations, and stays on so you can wire up several routes in a row. Turn it off with the same button or the Esc key.</li><li>Fixed sample loops that stopped after one pass when the loop end was left at the very end of the file.</li><li>Enabled effects now show their tab name in bold and in the brighter text colour in the FX section, so you can see at a glance which effects are engaged without clicking through each tab.</li><li>The DIST effect has a new Crush type, a bit crusher. DRIVE controls both the bit depth and the sample rate reduction together, and TONE and MIX work exactly as they do for the other distortion types.</li><li>The ORGANIC CHAOS display now shows the real chaos modulation scrolling across in real time, like a seismograph, instead of a static preview curve.</li><li>Switching LATCH off now stops the arpeggio immediately, unless keys are still held, in which case it continues on just those.</li><li>RANDOMIZE ALL can no longer land on a silent patch. Every roll is checked and gently nudged so a played note always produces sound. The arpeggiator's first step of a new chord now always plays, with the chance control only affecting the steps after it, so a low chance setting can't roll a fully-silent arp pattern.</li><li>Factory presets have been redesigned with several distinct recipes for each type (Keys, Texture and Pulse), varying the synthesis engine, envelopes, filters, modulation and effects, so packs no longer all sound alike browsing through the preset list. Every factory preset now always features the pack's own sound in oscillator A, so its waveform is visible and audible rather than hidden behind another engine; neighbouring packs in the browser get different recipes so adjacent presets don't sound the same; and none of them use the arpeggiator. Existing factory presets are refreshed automatically the next time your library is scanned; your own saved presets are untouched.</li><li>The preset browser no longer covers the synth. It now eases open beside the instrument, and closing it restores the original window width. Where the host allows it, the window grows to the left so the instrument stays put on screen; otherwise it grows to the right, because the host owns the window's position there. Hosts that cannot resize the window at all fall back to the previous behavior, with the browser overlaying the instrument.</li><li>Wavetable oscillators now have a TABLE menu with built-in tables to choose from: Basic Shapes, Supersaw, PWM, Formant, Additive, Unison Spread, Sync Sweep and Bells, all morphable with the POSITION knob. Loading your own wavetable file still works exactly as before and takes priority over the TABLE menu.</li><li>The on-screen keyboard's computer-key playing can now be shifted by octave with the Z and X keys, or the new minus and plus buttons on the keyboard strip. The setting is saved with your session.</li><li>The REVERB effect has a new engine, based on the classic plate reverb design, for a smoother and more natural tail across all five modes (Hall, Plate, Chamber, Room, Spring).</li><li>All the effects' MIX knobs, including REVERB, now read in percent, and an even 50% now gives an exact half-and-half blend of the dry and processed signal instead of the more sensitive curve REVERB used before. Factory presets have been refreshed for the new REVERB feel.</li><li>If a preset's sound file can't be found (a moved or renamed library folder, an unplugged drive), the strip now says so clearly instead of reporting an unrecognized audio format.</li><li>The plugin window now opens at a size that fits the screen it appears on, and remembers the size you resize it to.</li><li>Fixed MIDI Learn not actually learning: moving a hardware control while a learn was armed could leave it waiting indefinitely. While a learn is armed, the control now shows what kinds of MIDI messages are arriving from your controller (notes, pitch bend, aftertouch, and CC) so you can tell at a glance whether it's sending anything at all, or sending everything except the CC needed for MIDI Learn (a common controller/DAW setting issue), and confirms exactly which controller it learned once a CC arrives.</li></ul>
+<h4>Notes for this build</h4>
+<ul><li>The macOS installer is signed and notarized by Apple, so it installs cleanly.</li><li>The Windows installer is unsigned by design. On first launch, click More info and then Run anyway to get past the SmartScreen prompt.</li></ul>
+</div>
+</details>
+<details class="log-item">
+<summary><span class="log-version">v1.0.14</span></summary>
+<div class="log-body">
+<p>Three stability fixes, two of them found with a memory checker (AddressSanitizer) that we have now added to our release checks.</p>
+<ul><li>Fixed a crash when recording in Logic (and other hosts) with a count-in or pre-roll while the arpeggiator was on. Before bar 1 the host reports a negative song position, and the arpeggiator used it to look up its pattern with a negative index. The pattern now wraps correctly from any position, so the arp plays the same notes during a count-in that it plays after bar 1.</li><li>Fixed rare, sudden bursts of noise in the reverb tail. When the modulated read position of a reverb delay line landed exactly on the buffer boundary, a rounding quirk read one sample past the end of the buffer and fed whatever happened to be in memory there into the reverb's feedback. Whether you ever heard it depended on memory layout, which is why it came and went between builds. The same boundary guard is now applied to the delay, the phaser and flanger, and the vibrato, which used the same read pattern.</li><li>Hardened the VOICE panel against a project being closed while it is open: the panel now cuts its ties to the synth the moment the plugin window goes away, so the host's deferred cleanup can never touch a synth that is already gone.</li></ul>
+</div>
+</details>
+<details class="log-item">
+<summary><span class="log-version">v1.0.13</span></summary>
+<div class="log-body">
+<p>Two small fixes on top of the 1.0.11 redesign.</p>
+<ul><li>Fixed the VOICE panel's MODE and PRIORITY dropdowns. They could refuse to stay open unless you held the mouse down, and selections would not register. Both now open and select normally, and closing the panel hands control straight back to QWERTY note play.</li><li>Fixed a crash in Logic when the plugin window was closed while the VOICE panel was still open. The panel now closes cleanly with the window.</li></ul>
+<h4>Notes for this build</h4>
+<ul><li>The macOS installer is signed and notarized by Apple, so it installs cleanly.</li><li>The Windows installer is unsigned by design. On first launch, click More info and then Run anyway to get past the SmartScreen prompt.</li><li>Runs on macOS 11 or later (Apple silicon and Intel) as AU, VST3, and Standalone, and on Windows 10 or later as VST3 and Standalone.</li><li>The Limiter's optional lookahead mode adds a small amount of latency and reports it to your host automatically so playback stays in sync. It's off by default, so live play stays at zero added latency until you turn it on.</li><li>Known limitation: on a Mac with a Retina laptop screen plus an external monitor, the standalone window may not drag across onto the external display (a fixed-aspect window plus mixed-resolution quirk in the window system). It works normally as a plugin in your DAW. Workaround: set the external display as your main display in System Settings, or use SPASynth as a plugin.</li></ul>
+</div>
+</details>
+<details class="log-item">
+<summary><span class="log-version">v1.0.11</span></summary>
+<div class="log-body">
+<p>A visual redesign of the faceplate, plus a tester-requested feature and two polish fixes.</p>
+<ul><li>SPASynth has a new look: one continuous dark faceplate instead of separate bordered modules, with recessed selector and title bands and softly layered shadows between rows. This is a visual pass only, nothing about how SPASynth sounds or behaves has changed.</li><li>Sample oscillators now show their loop points right on the waveform display. When LOOP is on, the loop region is shaded and its start/end points are marked with crisp lines, so you can see exactly where a long sample repeats instead of guessing from the knobs. The playback start point gets its own subtle marker. Turn LOOP off and the shading/markers clear, leaving just the start marker; this doesn't apply to granular mode, which already has its own live grain view.</li><li>Fixed a layout bug where a module's tab row (ENV, LFO, FILTER, the FX tabs) would condense and re-space itself the first time you clicked a tab. Tab rows now lay out the same way from the moment SPASynth opens.</li><li>Fixed a bug where an effect panel's bottom row of knob labels could get squashed or clipped on control-heavy tabs like TREM/VIB. Labels now always get the room they need; the panel's live display shrinks to make room for them if needed.</li></ul>
+<h4>Notes for this build</h4>
+<ul><li>The macOS installer is signed and notarized by Apple, so it installs cleanly.</li><li>The Windows installer is unsigned by design. On first launch, click More info and then Run anyway to get past the SmartScreen prompt.</li><li>Runs on macOS 11 or later (Apple silicon and Intel) as AU, VST3, and Standalone, and on Windows 10 or later as VST3 and Standalone.</li><li>The Limiter's optional lookahead mode adds a small amount of latency and reports it to your host automatically so playback stays in sync. It's off by default, so live play stays at zero added latency until you turn it on.</li><li>Known limitation: on a Mac with a Retina laptop screen plus an external monitor, the standalone window may not drag across onto the external display (a fixed-aspect window plus mixed-resolution quirk in the window system). It works normally as a plugin in your DAW. Workaround: set the external display as your main display in System Settings, or use SPASynth as a plugin.</li></ul>
+</div>
+</details>
+<details class="log-item">
+<summary><span class="log-version">v1.0.10</span></summary>
+<div class="log-body">
+<p>Fixes and polish from the latest round of tester feedback.</p>
+<ul><li>Playing notes from the computer keyboard no longer stops after clicking buttons such as RANDOMIZE ALL, SAVE, the preset arrows, or the panic button. A previous fix already covered knobs and dropdowns; every button in SPASynth now leaves your QWERTY playing alone. This also covers the preset browser (opening the browser itself while the on-screen keyboard is showing, picking a preset from the list, changing the pack category, and using the KEYS/TEXTURE/PULSE/USER filter chips) and every remaining on/off switch and dropdown across the FX sections and filters (for example an effect's own ON toggle or character menu) that had been missed by the earlier pass. Computer-keyboard playing should now survive any click anywhere in SPASynth, including opening the preset browser itself, and Esc still closes the browser either way.</li><li>Fixed a library folder bug: picking a folder that held sound files directly (with no pack subfolders inside it) was silently rejected, and in some cases quietly replaced your chosen folder with the default install location, with no explanation shown. SPASynth now accepts a plain folder of sound files as a library, and if a folder truly has none, it tells you plainly instead of failing silently or discarding your choice.</li><li>Controls that don't apply to the current setting are now visibly greyed out and can't be touched, instead of looking active but doing nothing. For example: an LFO's rate knob while it's synced to tempo (and its division menu while it isn't), a sample oscillator's loop range while looping is off, the delay's time knob while it's synced to tempo, and glide time while glide is off.</li><li>Fixed a short burst of noise on clicking a preset in the browser. It could happen if you'd just played and released a note (or the delay/reverb/mod tail was still ringing) right before switching patches, since the new preset's settings were being applied to that still-active leftover sound. Loading a preset now clears that leftover state first, so switching patches is always silent unless you're actually playing.</li><li>Added user preset banks. Inside the Save dialog, choose New Folder to create a bank in your User presets folder, and it shows up as its own category in the preset browser, right alongside your other presets.</li></ul>
+<h4>Notes for this build</h4>
+<ul><li>The macOS installer is signed and notarized by Apple, so it installs cleanly.</li><li>The Windows installer is unsigned by design. On first launch, click More info and then Run anyway to get past the SmartScreen prompt.</li><li>Runs on macOS 11 or later (Apple silicon and Intel) as AU, VST3, and Standalone, and on Windows 10 or later as VST3 and Standalone.</li><li>The Limiter's optional lookahead mode adds a small amount of latency and reports it to your host automatically so playback stays in sync. It's off by default, so live play stays at zero added latency until you turn it on.</li><li>Known limitation: on a Mac with a Retina laptop screen plus an external monitor, the standalone window may not drag across onto the external display (a fixed-aspect window plus mixed-resolution quirk in the window system). It works normally as a plugin in your DAW. Workaround: set the external display as your main display in System Settings, or use SPASynth as a plugin.</li></ul>
+</div>
+</details>
+<details class="log-item">
+<summary><span class="log-version">v1.0.9</span></summary>
+<div class="log-body">
+<p>A performance and stability pass, wrapping up ahead of launch.</p>
+<ul><li>Bypassing SPASynth in your host now lets reverb, delay, and other effect tails ring out naturally instead of cutting them off instantly.</li><li>Lower CPU use for long convolution impulses, and a lighter-weight reverb tail engine, with no change to how either sounds.</li><li>The EQ's spectrum analyzer no longer uses CPU while its tab isn't in view.</li><li>General hardening: tightened internal safety margins and a smaller memory footprint in a couple of engine components. Nothing here changes how any patch sounds.</li></ul>
+<h4>Notes for this build</h4>
+<ul><li>The macOS installer is signed and notarized by Apple, so it installs cleanly.</li><li>The Windows installer is unsigned by design. On first launch, click More info and then Run anyway to get past the SmartScreen prompt.</li><li>Runs on macOS 11 or later (Apple silicon and Intel) as AU, VST3, and Standalone, and on Windows 10 or later as VST3 and Standalone.</li><li>The Limiter's optional lookahead mode adds a small amount of latency and reports it to your host automatically so playback stays in sync. It's off by default, so live play stays at zero added latency until you turn it on.</li><li>Known limitation: on a Mac with a Retina laptop screen plus an external monitor, the standalone window may not drag across onto the external display (a fixed-aspect window plus mixed-resolution quirk in the window system). It works normally as a plugin in your DAW. Workaround: set the external display as your main display in System Settings, or use SPASynth as a plugin.</li></ul>
+</div>
+</details>
+<details class="log-item">
+<summary><span class="log-version">v1.0.8</span></summary>
+<div class="log-body">
+<p>A small fix for anyone using the on-screen keyboard's QWERTY (computer keyboard) note input.</p>
+<ul><li>Fixed QWERTY note input stopping after touching a knob or dropdown. Previously, playing notes from your computer keyboard would stop working the moment you turned any knob or changed any setting, and would only resume after clicking directly on a key in the on-screen keyboard. Knobs, dropdowns, and toggles no longer take over keyboard focus, so QWERTY play keeps working while you tweak the sound.</li></ul>
+</div>
+</details>
+<details class="log-item">
+<summary><span class="log-version">v1.0.7</span></summary>
+<div class="log-body">
+<p>A targeted fix for a serious tester-reported bug, plus extra safety hardening.</p>
+<ul><li>Fixed loud noise bursts in reopened DAW sessions. Reopening a saved session could occasionally produce intermittent loud blasts of noise over the patch, even while the session sat idle. The cause was a race while the session's settings were being restored: the audio engine could briefly run on a half-applied mix of old and new settings, and the resulting burst of energy then kept re-emerging from the delay's feedback loop. Restoring is now properly synchronized with the audio engine, so this cannot happen.</li><li>Effects no longer carry stale energy across an off/on toggle. Switching an EQ band or the phaser/flanger off and back on could release a burst of sound trapped from before the toggle; those effects now start clean every time they are re-enabled.</li><li>New output safety net. As an extra layer of protection, the synth now detects and clears any invalid audio state instead of letting it circulate, and the final output is capped at a hard ceiling so no malfunction, whatever the cause, can produce ear-damaging levels in headphones.</li></ul>
+</div>
+</details>
+<details class="log-item">
+<summary><span class="log-version">v1.0.6</span></summary>
+<div class="log-body">
+<p>A response to tester feedback, focused on levels and safety.</p>
+<ul><li>Reverb levels rebalanced. The reverb's wet signal was running much hotter than it should have, which made the MIX knob feel touchy (a little went a long way) and let 100 percent mix get loud enough to distort. The wet path now sits at a natural level: MIX sweeps smoothly from subtle to full wash, and full wet no longer overloads. Factory presets were retuned to match. Note: patches you saved with heavy reverb will sound a bit drier than before; nudge MIX up to taste.</li><li>RANDOMIZE ALL volume safety. Random patches could occasionally land painfully loud, especially in headphones, when several loud settings stacked together. Randomize now keeps the combined oscillator level within a sensible ceiling (preserving the balance between oscillators, so patches stay just as varied in character) and leaves the limiter switched on at transparent settings as a safety net. You can switch the limiter off afterward if you prefer.</li></ul>
+</div>
+</details>
+<details class="log-item">
+<summary><span class="log-version">v1.0.5</span></summary>
+<div class="log-body">
+<p>A stability and hardening release. We ran a full audit of the code ahead of launch and fixed every crash, freeze, and reliability issue it turned up; there are no new features here, just a more solid foundation.</p>
+<ul><li>Fixed a crash when loading a damaged or hand-edited preset file.</li><li>Fixed a possible crash when loading a corrupted WAV file.</li><li>Fixed a rare freeze when a host reports invalid timeline data to the arpeggiator.</li><li>Fixed possible crashes when closing the plugin while samples were still loading, or while a menu or dialog was open.</li><li>The reported effect tail now includes the Convolve impulse, so bounces and freezes no longer cut it short.</li><li>Smoother performance when oversampling is active.</li></ul>
+</div>
+</details>
+<details class="log-item">
+<summary><span class="log-version">v1.0.4</span></summary>
+<div class="log-body">
+<p>Fixes and small improvements from real-world testing feedback.</p>
+<ul><li>Filter 1 now has its own on/off switch, matching Filter 2.</li><li>Reset to Default. A new "Reset to Default" option in the settings menu brings every parameter back to its starting point, handy after RANDOMIZE ALL or a long tweaking session.</li><li>File browsers now remember the last folder you opened, for both sample/wavetable loading and the Convolve impulse browser.</li><li>Fixed the Convolve impulse browser showing valid WAV files as greyed out.</li><li>Tuned the reverb's Decay range so Hall mode no longer produces an overly long, uncontrolled-sounding tail at high settings.</li><li>If your library lives on an external drive, reconnecting after unplugging it is now much more reliable. Rescan Library offers to point you at a new folder instead of silently doing nothing, and sample/wavetable loading retries automatically instead of occasionally showing a spurious "unrecognized format" error right after a reconnect.</li></ul>
+</div>
+</details>
+<details class="log-item">
+<summary><span class="log-version">v1.0.3</span></summary>
+<div class="log-body">
+<p>A big update to the effects, the voice engine, and sound quality.</p>
+<h4>New effects</h4>
+<ul><li>Panic button. If a note ever gets stuck, one click stops all sound and clears any held or latched notes. It also responds to your host's panic control.</li><li>Reorderable effects. Drag the effect tabs (there is a grip handle on each one) to change the order the effects run in, and the chain order is saved with your preset. RANDOMIZE ALL can now shuffle the order too, and the limiter keeps its place at the end of the chain.</li><li>Mod tab. A new modulation effect that switches between Phaser and Flanger, with rate (free or tempo-synced), depth, feedback, stages, and stereo spread.</li><li>Tremolo / Vibrato tab. Independent tremolo (amplitude) and vibrato (pitch), usable together, with shape, rate, depth, and stereo controls.</li><li>Limiter / Maximizer. A loudness stage with drive, ceiling, character modes, optional lookahead, and auto-gain, shown on a scrolling gain-reduction meter so you can see it work in real time. It sits last in the chain by default.</li><li>Convolve. Use any sound from your library, or your own WAV, as a convolution impulse for reverbs, spaces, and creative textures. Browse your library packs right from the tab, shape the impulse with pre-delay, decay, and damping, and watch it on a live waveform view.</li><li>Reverb algorithms. The reverb now offers Hall, Plate, Chamber, Room, and Spring, with pre-delay, size, decay, damping, tail modulation, and tone controls.</li><li>Parametric EQ. A new Pro-style EQ with up to 8 bands, draggable nodes (drag for frequency and gain, mouse wheel or Cmd/Ctrl-drag for Q, double-click to add or remove a band), a live spectrum analyzer, and Clean / Modern / Vintage / Tube character modes.</li></ul>
+<h4>New voice engine</h4>
+<ul><li>Voice modes. Choose Poly, Mono, Duo, Paraphonic, or Unison from the new VOICE button in the top bar, with note priority (Last / High / Low) and unison voices, detune, and width.</li><li>Standalone tempo. The standalone app now has its own tempo: set the BPM, tap it in, or follow an external MIDI clock, so tempo-synced effects and the arpeggiator lock to the right speed without a host.</li></ul>
+<h4>Sound quality</h4>
+<ul><li>Oversampling. Run the whole synth at 2x, 4x, or 8x for cleaner, lower-alias sound on bright and hard-driven patches. Off by default; choose it from the settings menu.</li></ul>
+</div>
+</details>
+<details class="log-item">
+<summary><span class="log-version">v1.0.2</span></summary>
+<div class="log-body">
+<h4>New</h4>
+<ul><li>On-screen keyboard. Click the keyboard icon at the bottom-right of the window (or open the settings menu) to show a playable keyboard strip. Play it with the mouse or with your computer keyboard (QWERTY), so you can audition sounds without a MIDI controller connected. Click the icon again to hide it.</li><li>Settings menu. Click the SPASynth logo in the top-left to open a settings menu with Set Library Folder, Rescan Library, Accent Colors, Show Keyboard, and Clear All MIDI Learn. It works the same in the plugin and the standalone.</li></ul>
+<h4>Fixed</h4>
+<ul><li>The standalone app now launches on macOS 11 (Big Sur) and later. A missing build setting made it require a much newer macOS, so it would refuse to open on older systems even though the plugins loaded fine.</li><li>Reverb Mix now works as a true dry/wet dial: fully dry at 0 percent, fully wet (pure reverb) at 100 percent, with a smooth, even sweep in between. Before, the dry signal never fully left and enabling reverb nudged the level up.</li><li>Arpeggiator swing no longer drops notes. With swing turned up, every second step could be skipped depending on the audio buffer size.</li><li>The master output meter no longer sits flush against the right edge of the window.</li></ul>
+<h4>Notes for this build</h4>
+<ul><li>The macOS installer is signed and notarized by Apple, so it installs cleanly.</li><li>The Windows installer is unsigned by design. On first launch, click More info and then Run anyway to get past the SmartScreen prompt.</li><li>Runs on macOS 11 or later (Apple silicon and Intel) as AU, VST3, and Standalone, and on Windows 10 or later as VST3 and Standalone.</li><li>Known limitation: on a Mac with a Retina laptop screen plus an external monitor, the standalone window may not drag across onto the external display (a fixed-aspect window plus mixed-resolution quirk in the window system). It works normally as a plugin in your DAW. Workaround: set the external display as your main display in System Settings, or use SPASynth as a plugin.</li></ul>
+</div>
+</details>
+<!-- CHANGELOG:END -->
+    </div>
+  </section>
+
+  <!-- CLOSE -->
+  <footer class="close section-gutter">
+    <p>Buy it, download it, own it.</p>
+    <a class="product-link" href="#editions">Get SPASynth <span aria-hidden="true">↗</span></a>
+    <div class="close-bottom">
+      <a class="close-logo" href="https://www.silverplatteraudio.com" target="_blank" rel="noopener"><img src="assets/branding/SPAudio_logo_square_black.svg" alt="Silverplatter Audio" width="28" height="28"> Silverplatter Audio</a>
+      <span>SPASynth v1.0.15 · Built on the Silverplatter Audio sound library</span>
+      <nav class="close-nav" aria-label="Footer"><a href="#hook">Library</a><a href="#editions">Editions</a><a href="#no-drm">No DRM</a><a href="#faq">FAQ</a><a href="#changelog">Changelog</a></nav>
+    </div>
+  </footer>
 </main>
-
-<footer class="site-footer">
-  <div class="wrap footer-inner">
-    <a href="https://www.silverplatteraudio.com" target="_blank" rel="noopener">
-      <img class="footer-logo" src="assets/branding/SPAudio_logo_banner_white.svg" alt="Silverplatter Audio">
-    </a>
-    <p class="footer-copy">SPASynth v1.0.15. Built on the Silverplatter Audio sound library.</p>
-    <nav class="footer-nav">
-      <a href="#library">Library</a>
-      <a href="#editions">Editions</a>
-      <a href="#no-drm">No DRM</a>
-      <a href="#faq">FAQ</a>
-      <a href="https://www.silverplatteraudio.com" target="_blank" rel="noopener">Silverplatter Audio</a>
-    </nav>
-  </div>
-</footer>
-
-<script src="js/main.js"></script>
 </body>
 </html>
