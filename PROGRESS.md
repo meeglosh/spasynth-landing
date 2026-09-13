@@ -317,16 +317,30 @@ removed now — would need to be rebuilt, not just uncommented).
    description metas) and are written by `scripts/update-library-stats.py`
    from the SPAStation catalog (`~/spastation/shared/catalog-releases.json`,
    the release source of truth: verified, non-bundle, non-source-archive
-   entries). Run it after every pack release. The sound total is summed from
-   a per-pack `fileCount` field the catalog does not carry yet; until it
-   does, the script falls back to `scripts/library-stats.json` ->
-   `soundTotalFallback` (11,474, hand-verified for 88 packs) and warns.
-   **Step 1 still to do in the spastation repo:** have the registry build
-   (`scripts/build-release-registry.mjs` / the zip validation step) record
-   `fileCount` (WAV entries) per pack; then the total updates itself. The
-   spastation repo is private, so no GitHub Action fetches it; run the
-   script locally. As of 2026-09-13: 90 packs (Seagulls included), sounds
-   still on the 11,474 fallback, starter 450.
+   entries, summing each pack's `fileCount`) **plus the Vault's bonus
+   recordings** from `~/spastation/shared/vault-stats.json`. Mike's decision
+   2026-09-13: the "up to N sounds" figure is everything SPASynth can play,
+   packs + Vault, because only Pro / Everything Bundle owners get the full
+   library either way. The `size` stat (Pro card, specs note) is catalog zip
+   bytes + Vault bonus bytes in GB. **After every pack release or Vault
+   sync, in the spastation repo:** `python3 scripts/count-pack-sounds.py`
+   (reads each zip's central directory over Range requests, no full
+   downloads), `node scripts/build-release-registry.mjs`, and
+   `node scripts/vault-stats.mjs` (one read-only D1 aggregate query);
+   **then here:** `python3 scripts/update-library-stats.py` and commit. The
+   `soundTotalFallback` in `scripts/library-stats.json` is only used if any
+   pack lacks a fileCount (the script warns). Done 2026-09-13: 90 packs,
+   11,479 pack sounds + 7,632 Vault bonus = up to 19,111 sounds, 190 GB,
+   450-sound starter. Inclusion rule from Mike: count only packs, micro-packs and bundles
+   currently sold on the store (= the SPAStation catalog); legacy packs such
+   as Wood Impacts (101 sounds, in the old built library, not on Shopify)
+   are out. Download copy rewritten 2026-09-13: Pro = original 24/96 packs
+   via Everything Bundle links in Shopify order emails or SPAStation;
+   Standard = 24/48 starter via Shopify links or SPAStation. TODO: link
+   "SPAStation" in that FAQ once its public download page exists. Reconciled against the old 11,474:
+   + Seagulls 26, New York 23, Flashback 21, Fire Burning +35, Countryside
+   +1, minus Wood Impacts 101 (in the old built library, absent from the
+   SPAStation catalog; ask Mike whether it is retired).
 3. Once the Shopify store is live, swap the three placeholder "Coming soon"
    `href="#"` links (Standard, Pro, upgrade) for real Shopify product URLs
    (and likely change the label back to "Buy now").

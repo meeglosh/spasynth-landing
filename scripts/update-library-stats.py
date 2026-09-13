@@ -2,16 +2,22 @@
 """Sync the landing page's library numbers from the SPAStation catalog.
 
 Source of truth: ~/spastation/shared/catalog-releases.json (or $SPASTATION_CATALOG,
-or a path/URL passed as argv[1]). A "pack" is every entry with status
-"verified" that is not a bundle (no includedLibraryIds / archiveIncludes) and is
+or a path/URL passed as argv[1]). Inclusion rule (Mike, 2026-09-13): count only
+what is commercially available right now on the Silverplatter Audio store,
+i.e. what the SPAStation catalog lists; legacy packs that are no longer sold
+(e.g. Wood Impacts) are not counted even if older builds shipped them.
+A "pack" is every entry with status "verified" that is not a bundle (no includedLibraryIds / archiveIncludes) and is
 not a source archive whose contents are catalogued as their own packs.
 
   packs   = number of such entries
-  sounds  = sum of each pack's `fileCount` (WAV count) once the catalog carries
-            it. Until every pack has one, the total falls back to
-            scripts/library-stats.json -> soundTotalFallback and the script
-            warns which packs are missing a count, so the page never claims a
-            number nobody has verified.
+  sounds  = sum of each pack's `fileCount` (WAV count) PLUS the Vault's bonus
+            recordings from ~/spastation/shared/vault-stats.json (written by
+            `node scripts/vault-stats.mjs` there). Both ship to Pro / Everything
+            Bundle owners, and Pro is the only edition that gets the full
+            library, so "up to N sounds" is everything SPASynth can play. If any
+            pack lacks fileCount the pack part falls back to
+            scripts/library-stats.json -> soundTotalFallback with a warning.
+  size    = catalog zip bytes + Vault bonus bytes, rounded to whole GB
   starter = 5 * packs (Standard's starter library: five sounds from every pack)
 
 Rewrites every <span data-stat="..."> in index.html plus the three description
@@ -23,6 +29,7 @@ ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 PAGE = os.path.join(ROOT, 'index.html')
 LOCAL = os.path.join(ROOT, 'scripts', 'library-stats.json')
 DEFAULT_CATALOG = os.path.expanduser('~/spastation/shared/catalog-releases.json')
+DEFAULT_VAULT = os.path.expanduser('~/spastation/shared/vault-stats.json')
 
 def load_catalog(src):
     if re.match(r'^https?://', src):
@@ -52,13 +59,23 @@ def main():
         print('  missing:', ', '.join(missing), file=sys.stderr)
     else:
         sounds = sum(counts.values())
+    pack_sounds = sounds
+    vault_src = os.environ.get('SPASTATION_VAULT_STATS', DEFAULT_VAULT)
+    vault = load_catalog(vault_src) if (re.match(r'^https?://', vault_src) or os.path.exists(vault_src)) else {}
+    bonus = int(vault.get('bonusSounds') or 0)
+    if not bonus:
+        print(f'warning: no Vault bonus count at {vault_src}; run `node scripts/vault-stats.mjs` in spastation. '
+              'Sound total covers packs only.', file=sys.stderr)
+    sounds += bonus
+    size_bytes = sum(int(v.get('size') or 0) for v in packs) + int(vault.get('bonusBytes') or 0)
+    size_gb = round(size_bytes / 1e9)
     n_packs, starter = len(packs), 5 * len(packs)
     fmt = lambda n: f'{n:,}'
 
     page = open(PAGE, encoding='utf-8').read()
-    vals = {'packs': fmt(n_packs), 'sounds': fmt(sounds), 'starter': fmt(starter)}
+    vals = {'packs': fmt(n_packs), 'sounds': fmt(sounds), 'starter': fmt(starter), 'size': f'{size_gb} GB'}
     def sub(m): return f'<span data-stat="{m.group(1)}">{vals[m.group(1)]}</span>'
-    page, n = re.subn(r'<span data-stat="(packs|sounds|starter)">[^<]*</span>', sub, page)
+    page, n = re.subn(r'<span data-stat="(packs|sounds|starter|size)">[^<]*</span>', sub, page)
 
     desc = (f'SPASynth is a hybrid synthesizer built around the entire Silverplatter Audio sound-effects library '
             f'({vals["packs"]} packs, up to {vals["sounds"]} sounds), playable as oscillators, granular fuel, '
@@ -71,10 +88,12 @@ def main():
     page = re.sub(r'(<meta name="twitter:description" content=")[^"]*(")', lambda m: m.group(1)+social+m.group(2), page)
     open(PAGE, 'w', encoding='utf-8').write(page)
 
-    local.update({'packs': n_packs, 'sounds': sounds, 'starter': starter, 'soundsVerified': not missing, 'catalog': src})
+    local.update({'packs': n_packs, 'packSounds': pack_sounds, 'vaultBonusSounds': bonus, 'sounds': sounds, 'sizeGB': size_gb,
+                  'starter': starter, 'soundsVerified': not missing and bool(bonus), 'catalog': src, 'vaultStats': vault_src,
+                  'vaultCheckedAt': vault.get('checkedAt')})
     json.dump(local, open(LOCAL, 'w'), indent=2); open(LOCAL, 'a').write('\n')
-    print(f'library stats: {n_packs} packs, {fmt(sounds)} sounds{" (fallback)" if missing else ""}, '
-          f'{starter}-sound starter; {n} spans + 3 metas rewritten')
+    print(f'library stats: {n_packs} packs, {fmt(pack_sounds)} pack sounds{" (fallback)" if missing else ""} + {fmt(bonus)} Vault bonus '
+          f'= up to {fmt(sounds)} sounds, {size_gb} GB, {starter}-sound starter; {n} spans + 3 metas rewritten')
 
 if __name__ == '__main__':
     main()
