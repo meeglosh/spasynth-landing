@@ -343,13 +343,15 @@ removed now — would need to be rebuilt, not just uncommented).
    SPAStation catalog; ask Mike whether it is retired). **Also generated
    2026-09-14: a `presets` stat (3 * packs = 270), replacing the hardcoded
    "264" in two places** (see the 2026-09-14 session summary).
-   **Vault data flag (2026-09-14, unresolved):** the live
-   `~/spastation/shared/vault-stats.json` briefly read 25 bonus sounds
-   instead of 7,632 (packSounds unchanged), almost certainly a broken Vault
-   sync, not a real drop. The site is currently pinned to the last
-   known-good committed value (7,632 / 19,111 total), NOT the live file.
-   Check the live number has recovered before the next stats run; see the
-   2026-09-14 session summary for the full story.
+   **Vault bonus count is deliberately low right now (2026-09-14, confirmed
+   real by Mike, not a bug):** it dropped from 7,632 to 25 because
+   throwaway/generic Vault recordings are being culled and replaced with
+   deliberately-added sounds; Mike expects it to climb back toward ~2,000
+   over time. The site's numbers now use the live figure as-is (11,504
+   total sounds, 72 GB), no longer pinned to the old 7,632. **Re-run
+   `update-library-stats.py` periodically as the Vault refill progresses**;
+   see the 2026-09-14 session summary for the full story, including the
+   false-alarm first pass.
 3. Once the Shopify store is live, swap the three placeholder "Coming soon"
    `href="#"` links (Standard, Pro, upgrade) for real Shopify product URLs
    (and likely change the label back to "Buy now").
@@ -433,10 +435,21 @@ Did not publish that number: pinned the landing page's sound/size stats to
 the last known-good, git-committed spastation value (7,632 bonus / 19,111
 total / 190 GB, commit `1dbffc8`) via a one-off `SPASTATION_VAULT_STATS`
 override, documented in `scripts/library-stats.json`'s `vaultStats` note.
-**Before the next `update-library-stats.py` run, check whether
-`~/spastation/shared/vault-stats.json`'s live `bonusSounds` has recovered
-to something near 7,632; if it's still near-zero, the Vault sync itself
-needs fixing before trusting a re-run.**
+**Correction, same day, minutes later: Mike confirmed the drop was real
+and deliberate**, not a bug. Silverplatter is culling throwaway/generic
+Vault recordings and replacing them with deliberately-added sounds; the
+bonus count is genuinely ~25 right now and expected to climb back toward
+~2,000 over time as re-additions land, not snap back to 7,632. Re-ran
+`update-library-stats.py` against the live (unpinned) Vault file and
+published the real current numbers: 90 packs, 11,479 pack sounds + 25
+Vault bonus = 11,504 sounds, 72 GB. Removed the pin and the "flag as bug"
+framing from `scripts/library-stats.json`'s `vaultStats` note, replaced
+with a note that a low bonus count is expected during the refill and
+should just be taken as-is on each run, not treated as a signal to
+re-pin. **No action needed unless the number looks wrong in some new way**
+(e.g. it should only ever move up from here as sounds are re-added, so a
+further drop would be worth asking about; a rise toward ~2,000 over
+coming weeks/months is the expected, healthy trend).
 
 ## Recent session summary (2026-09-12, later: case-study redesign shipped)
 
