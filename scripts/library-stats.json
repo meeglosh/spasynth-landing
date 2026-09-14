@@ -9,6 +9,7 @@
   "packSounds": 11479,
   "vaultBonusSounds": 7632,
   "sizeGB": 190,
-  "vaultStats": "/Users/mikejerugim/spastation/shared/vault-stats.json",
-  "vaultCheckedAt": "2026-09-13T21:43:13.626Z"
+  "vaultStats": "~/spastation/shared/vault-stats.json (pinned to the 2026-09-13T21:43 git-committed value; the live file on disk that day briefly read 25 bonus sounds instead of 7,632, almost certainly a bad Vault sync run: flagged for Mike)",
+  "vaultCheckedAt": "2026-09-13T21:43:13.626Z",
+  "presets": 270
 }

@@ -1,6 +1,6 @@
 # SPASynth Landing Page — Project Progress
 
-Last updated: 2026-08-10
+Last updated: 2026-09-14
 
 ## What this is
 
@@ -340,7 +340,16 @@ removed now — would need to be rebuilt, not just uncommented).
    "SPAStation" in that FAQ once its public download page exists. Reconciled against the old 11,474:
    + Seagulls 26, New York 23, Flashback 21, Fire Burning +35, Countryside
    +1, minus Wood Impacts 101 (in the old built library, absent from the
-   SPAStation catalog; ask Mike whether it is retired).
+   SPAStation catalog; ask Mike whether it is retired). **Also generated
+   2026-09-14: a `presets` stat (3 * packs = 270), replacing the hardcoded
+   "264" in two places** (see the 2026-09-14 session summary).
+   **Vault data flag (2026-09-14, unresolved):** the live
+   `~/spastation/shared/vault-stats.json` briefly read 25 bonus sounds
+   instead of 7,632 (packSounds unchanged), almost certainly a broken Vault
+   sync, not a real drop. The site is currently pinned to the last
+   known-good committed value (7,632 / 19,111 total), NOT the live file.
+   Check the live number has recovered before the next stats run; see the
+   2026-09-14 session summary for the full story.
 3. Once the Shopify store is live, swap the three placeholder "Coming soon"
    `href="#"` links (Standard, Pro, upgrade) for real Shopify product URLs
    (and likely change the label back to "Buy now").
@@ -351,10 +360,17 @@ removed now — would need to be rebuilt, not just uncommented).
    layout, the retint hue-cycle animation — on an actual phone/tablet).
 5. Deployment/infra is done (HTTPS live and enforced). Everything else is
    content/polish, not blocking.
-6. **Site content vs. actual product — re-audited 2026-09-12** against
-   `~/spasynth/docs/CHANGELOG.md` (now through 1.0.15). Version number is
-   v1.0.15 (specs note + footer). All landing-worthy 1.0.8–1.0.15 items are
-   now folded into existing feature cards (see the 2026-09-12 summary).
+6. **Site content vs. actual product — re-audited 2026-09-12, spec-checked
+   against plugin source 2026-09-14.** Version is now v1.0.16 (specs note,
+   footer, hero strip, demo caption; bumped 2026-09-14). All landing-worthy
+   1.0.8–1.0.16 items are folded into existing feature cards (see the
+   2026-09-12 and 2026-09-14 summaries); the 2026-09-14 pass also verified
+   engine/filter/matrix/FX counts directly against `~/spasynth/source/`,
+   not just changelog prose, and fixed the preset count and arp mode list
+   (see above and the 2026-09-14 summary). Still unconfirmed: the Filters
+   card's "±4 octave envelope depth" and the exact mod-matrix destination
+   count (currently "90+", matches Shopify's own wording, not independently
+   recounted).
    Standalone tempo (1.0.3) finally landed in the PLAY card. Still open:
    - Screenshots refreshed to v1.0.15 on 2026-09-12 (UI demo, retint). The
      3D render (hero, teardown, studio photo) still models the pre-1.0.11
@@ -364,6 +380,63 @@ removed now — would need to be rebuilt, not just uncommented).
      inapplicable controls, factory preset re-voicing.
    - Re-run this audit against `~/spasynth/docs/CHANGELOG.md` next time a
      new version ships.
+
+## Recent session summary (2026-09-14, drift audit against source)
+
+Mike asked whether the site's specs still matched the shipped product,
+since the changelog is not the only ground truth, the C++ plugin source at
+`~/spasynth/source/` is. Grepped the parameter registry, DSP headers, and
+preset manager directly rather than trusting copy alone. Confirmed against
+source: 7 engines/3 slots, 8 filter types with drive/keytracking, 16 matrix
+routes, 20 mod sources (3 env, 3 LFO, 4 macros, velocity, mod wheel,
+aftertouch, chaos, 6 SFX followers), 64-sample mod block, 9 FX modules, 8 EQ
+bands with the listed shapes, Crush distortion, 5 reverb characters, 8
+built-in wavetables, white/pink/brown noise, 5 voice modes, unison
+detune/width, glide, CHANCE/STUTTER/JUMP/HUMAN, Panic, MIDI clock sync,
+2x/4x/8x oversampling, resizable window, portable preset paths. Found and
+fixed three real drifts:
+
+1. **v1.0.16 had shipped** (library self-refreshes when packs are
+   added/removed, no rescan needed, plus a VOICE-panel crash fix) and the
+   site was still on v1.0.15 everywhere (hero, demo caption, specs note,
+   footer) with the changelog accordion one entry short. Bumped all five
+   version strings by hand (no generator exists for the version number
+   itself, only the changelog body) and re-ran `build-changelog.py`.
+2. **"264 factory presets" was hardcoded and already wrong** at 90 packs
+   (should be 270): confirmed in `source/library/PresetManager.h` that the
+   plugin generates exactly 3 presets per pack (Keys/Texture/Pulse), not a
+   fixed 264. Added a `presets` stat (3 × packs) to
+   `scripts/update-library-stats.py` alongside the existing packs/sounds/
+   starter/size stats, wrapped both hardcoded "264" spots (Library feature
+   card, Pro edition bullet) in `<span data-stat="presets">`, and added a
+   line to the Library card that the library now self-refreshes (from the
+   1.0.16 fix above).
+3. **Arpeggiator mode list was incomplete.** `enum class ArpMode` in
+   `ParameterRegistry.h` has exactly 12 modes; the card named 8 and was
+   missing down/up, up/down-inclusive, as-played, and random. Card copy now
+   lists all 12.
+
+**Not fixed, flagged instead, not asked for:** the Filters card's "±4 octave
+envelope depth" claim could not be confirmed against a specific constant in
+source; the "90+ destinations" mod-matrix figure is built at runtime from
+parameter flags (`maxModDests = 96` cap) and could not be counted without
+building the plugin, matches Silverplatter's own Shopify listing wording
+("more than 90") so left as-is.
+
+**Vault data integrity flag for Mike, found while re-running the stats
+scripts, not part of what was asked:** `~/spastation/shared/vault-stats.json`
+was re-generated on disk (uncommitted) between the last session and this
+one, and its `bonusSounds` count collapsed from 7,632 to 25 while
+`packSounds` stayed at 11,493, a same-day, nearly-total drop that reads as a
+broken Vault sync run rather than 7,600 sounds actually leaving the store.
+Did not publish that number: pinned the landing page's sound/size stats to
+the last known-good, git-committed spastation value (7,632 bonus / 19,111
+total / 190 GB, commit `1dbffc8`) via a one-off `SPASTATION_VAULT_STATS`
+override, documented in `scripts/library-stats.json`'s `vaultStats` note.
+**Before the next `update-library-stats.py` run, check whether
+`~/spastation/shared/vault-stats.json`'s live `bonusSounds` has recovered
+to something near 7,632; if it's still near-zero, the Vault sync itself
+needs fixing before trusting a re-run.**
 
 ## Recent session summary (2026-09-12, later: case-study redesign shipped)
 

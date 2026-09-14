@@ -19,6 +19,8 @@ not a source archive whose contents are catalogued as their own packs.
             scripts/library-stats.json -> soundTotalFallback with a warning.
   size    = catalog zip bytes + Vault bonus bytes, rounded to whole GB
   starter = 5 * packs (Standard's starter library: five sounds from every pack)
+  presets = 3 * packs (factory presets: one each of Keys/Texture/Pulse per pack,
+            confirmed in source/library/PresetManager.h)
 
 Rewrites every <span data-stat="..."> in index.html plus the three description
 <meta> tags. Run after every pack release; safe to run repeatedly.
@@ -69,13 +71,13 @@ def main():
     sounds += bonus
     size_bytes = sum(int(v.get('size') or 0) for v in packs) + int(vault.get('bonusBytes') or 0)
     size_gb = round(size_bytes / 1e9)
-    n_packs, starter = len(packs), 5 * len(packs)
+    n_packs, starter, presets = len(packs), 5 * len(packs), 3 * len(packs)
     fmt = lambda n: f'{n:,}'
 
     page = open(PAGE, encoding='utf-8').read()
-    vals = {'packs': fmt(n_packs), 'sounds': fmt(sounds), 'starter': fmt(starter), 'size': f'{size_gb} GB'}
+    vals = {'packs': fmt(n_packs), 'sounds': fmt(sounds), 'starter': fmt(starter), 'size': f'{size_gb} GB', 'presets': fmt(presets)}
     def sub(m): return f'<span data-stat="{m.group(1)}">{vals[m.group(1)]}</span>'
-    page, n = re.subn(r'<span data-stat="(packs|sounds|starter|size)">[^<]*</span>', sub, page)
+    page, n = re.subn(r'<span data-stat="(packs|sounds|starter|size|presets)">[^<]*</span>', sub, page)
 
     desc = (f'SPASynth is a hybrid synthesizer built around the entire Silverplatter Audio sound-effects library '
             f'({vals["packs"]} packs, up to {vals["sounds"]} sounds), playable as oscillators, granular fuel, '
@@ -89,11 +91,11 @@ def main():
     open(PAGE, 'w', encoding='utf-8').write(page)
 
     local.update({'packs': n_packs, 'packSounds': pack_sounds, 'vaultBonusSounds': bonus, 'sounds': sounds, 'sizeGB': size_gb,
-                  'starter': starter, 'soundsVerified': not missing and bool(bonus), 'catalog': src, 'vaultStats': vault_src,
-                  'vaultCheckedAt': vault.get('checkedAt')})
+                  'starter': starter, 'presets': presets, 'soundsVerified': not missing and bool(bonus), 'catalog': src,
+                  'vaultStats': vault_src, 'vaultCheckedAt': vault.get('checkedAt')})
     json.dump(local, open(LOCAL, 'w'), indent=2); open(LOCAL, 'a').write('\n')
     print(f'library stats: {n_packs} packs, {fmt(pack_sounds)} pack sounds{" (fallback)" if missing else ""} + {fmt(bonus)} Vault bonus '
-          f'= up to {fmt(sounds)} sounds, {size_gb} GB, {starter}-sound starter; {n} spans + 3 metas rewritten')
+          f'= up to {fmt(sounds)} sounds, {size_gb} GB, {starter}-sound starter, {presets} factory presets; {n} spans + 3 metas rewritten')
 
 if __name__ == '__main__':
     main()
