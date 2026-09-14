@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Daily Vault sound-count refresh for spasynth.com.
+
+  Install (one time):
+    cp scripts/launchd/com.spasynth.vault-refresh.plist ~/Library/LaunchAgents/
+    launchctl load ~/Library/LaunchAgents/com.spasynth.vault-refresh.plist
+
+  Check on it:
+    tail ~/Library/Logs/spasynth-vault-refresh.log
+    launchctl list | grep spasynth
+
+  Stop it:
+    launchctl unload ~/Library/LaunchAgents/com.spasynth.vault-refresh.plist
+
+  Fires at 10:00 local. If the Mac is asleep then, launchd runs it on wake.
+  The script itself decides whether to actually poll (daily while the count is
+  moving, ~monthly once it has been steady for 90 days) and only commits when
+  a published number changes. See scripts/auto-refresh-vault.py.
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.spasynth.vault-refresh</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/bin/python3</string>
+        <string>/Users/mikejerugim/spasynth-landing/scripts/auto-refresh-vault.py</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/mikejerugim/spasynth-landing</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>10</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+
+    <key>RunAtLoad</key>
+    <false/>
+
+    <key>StandardOutPath</key>
+    <string>/Users/mikejerugim/Library/Logs/spasynth-vault-refresh.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/mikejerugim/Library/Logs/spasynth-vault-refresh.log</string>
+</dict>
+</plist>

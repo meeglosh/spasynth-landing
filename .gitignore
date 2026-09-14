@@ -1,1 +1,4 @@
 .DS_Store
+
+# Local-only polling state for scripts/auto-refresh-vault.py
+scripts/.vault-poll-state.json

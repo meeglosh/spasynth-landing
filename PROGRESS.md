@@ -343,6 +343,26 @@ removed now — would need to be rebuilt, not just uncommented).
    SPAStation catalog; ask Mike whether it is retired). **Also generated
    2026-09-14: a `presets` stat (3 * packs = 270), replacing the hardcoded
    "264" in two places** (see the 2026-09-14 session summary).
+   **Vault count auto-refreshes daily (set up 2026-09-14).**
+   `scripts/auto-refresh-vault.py` queries the live D1 Vault, regenerates the
+   page numbers, and commits + pushes only when a published number actually
+   moves. Cadence is adaptive per Mike: daily while the count is moving, and
+   once it has held steady for 90 days it self-throttles to roughly monthly
+   (it still wakes daily but returns early); any change snaps it back to
+   daily. Scheduled by a LaunchAgent, template at
+   `scripts/launchd/com.spasynth.vault-refresh.plist` (install instructions
+   in its header comment; `launchctl load` it once). Log:
+   `~/Library/Logs/spasynth-vault-refresh.log`. State:
+   `scripts/.vault-poll-state.json` (gitignored; deleting it just restarts
+   the cadence clock at daily). It skips itself if the repo has staged
+   changes, unexpected local edits, or is behind origin, and stages only
+   `index.html` + `scripts/library-stats.json`, never `git add -A`. A falling
+   count does NOT block publishing (the cull was real); only an unusable
+   query result does. Run manually any time with `--dry-run` or `--force`.
+   **Known issue:** spastation's own `scripts/vault-stats.mjs` is currently
+   broken, its isolated wrangler auth (`XDG_CONFIG_HOME` override) returns
+   7403 Unauthorized; the default `npx wrangler` login works fine, which is
+   what the refresh script uses. Worth fixing that script separately.
    **Vault bonus count is deliberately low right now (2026-09-14, confirmed
    real by Mike, not a bug):** it dropped from 7,632 to 25 because
    throwaway/generic Vault recordings are being culled and replaced with
