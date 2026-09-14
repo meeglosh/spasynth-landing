@@ -359,10 +359,19 @@ removed now — would need to be rebuilt, not just uncommented).
    `index.html` + `scripts/library-stats.json`, never `git add -A`. A falling
    count does NOT block publishing (the cull was real); only an unusable
    query result does. Run manually any time with `--dry-run` or `--force`.
-   **Known issue:** spastation's own `scripts/vault-stats.mjs` is currently
-   broken, its isolated wrangler auth (`XDG_CONFIG_HOME` override) returns
-   7403 Unauthorized; the default `npx wrangler` login works fine, which is
-   what the refresh script uses. Worth fixing that script separately.
+   **On wrangler auth (resolved 2026-09-14, no action needed):**
+   spastation's `scripts/vault-stats.mjs` briefly returned 7403
+   Unauthorized from its isolated wrangler store
+   (`XDG_CONFIG_HOME=~/spastation/.wrangler/auth`). That was just an expired
+   OAuth *access* token, not a broken or wrong-account credential: the
+   failing call itself triggered wrangler's automatic refresh via the stored
+   refresh token, and the next call succeeded. Both stores are the same
+   identity (info@silverplatteraudio.com, account 25de31a7...) and the
+   isolated one carries `d1:write`. `vault-stats.mjs` is verified working.
+   Expect an occasional one-off 7403 after a long idle gap; simply re-run.
+   The auto-refresh script uses the default wrangler login rather than the
+   isolated store, so it is unaffected either way. Credentials in both
+   stores are gitignored (`.wrangler/` in spastation's .gitignore).
    **Vault bonus count is deliberately low right now (2026-09-14, confirmed
    real by Mike, not a bug):** it dropped from 7,632 to 25 because
    throwaway/generic Vault recordings are being culled and replaced with
