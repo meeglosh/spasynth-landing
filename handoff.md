@@ -8,18 +8,32 @@ is just what is true right now and what to do next.
   `~/spasynth-landing`. Static one-page site, no build step, GitHub Pages behind
   Cloudflare at **spasynth.com**.
 - As of 2026-09-15 `main` is clean and fully pushed; the live site matches it.
+- The Vault refill is visibly progressing: bonus recordings went
+  7,632 -> 25 -> 98 -> 199 over 2026-09-14/15. Expect this number to keep
+  climbing toward roughly 2,000; the job publishes each move on its own.
 
-## One thing is waiting on you
+## The auto-refresh is live
 
-The daily Vault auto-refresh is **built and committed but not switched on**. It
-needs a one-time install, deliberately left to a human because the job pushes to
-the live site unattended:
+Mike loaded the LaunchAgent on 2026-09-14, so the Vault count now updates
+itself. Nothing is waiting on a human.
 
-    cp scripts/launchd/com.spasynth.vault-refresh.plist ~/Library/LaunchAgents/
-    launchctl load ~/Library/LaunchAgents/com.spasynth.vault-refresh.plist
+Its **first scheduled run failed** (2026-09-15 10:00 local) and has been fixed.
+Wrangler's own log showed the cause: it refreshed the expired OAuth access
+token and then the very next D1 call came back 7403, because a just-refreshed
+token is briefly not yet valid for the D1 API. Manual re-runs always worked,
+the same fail-once-then-succeed pattern seen earlier in the isolated store. The
+query now retries 3 times with backoff, which rides that window out; exhausting
+the retries still raises, so a genuine outage publishes nothing rather than a
+wrong number.
 
-Until that runs, the sound count only updates when someone runs the scripts by
-hand. Nothing else is blocked.
+Check on it:
+
+    tail ~/Library/Logs/spasynth-vault-refresh.log
+    launchctl list | grep spasynth      # second column is last exit status
+
+Note: three `query attempt N/3 failed` lines timestamped 2026-09-15T20:00:38 in
+that log are **unit-test output**, not a real outage. Left in place rather than
+rewriting the log.
 
 ## What the page says right now
 
@@ -30,8 +44,8 @@ Everything below is generated, not typed. Do not hand-edit these numbers in
 | Stat | Value | Where it comes from |
 |---|---|---|
 | Packs | 90 | SPAStation catalog, verified non-bundle entries |
-| Sounds ("up to") | 11,577 | 11,479 pack sounds + 98 Vault bonus |
-| Library size | 73 GB | catalog zip bytes + Vault bonus bytes |
+| Sounds ("up to") | 11,678 | 11,479 pack sounds + 199 Vault bonus |
+| Library size | 75 GB | catalog zip bytes + Vault bonus bytes |
 | Starter library | 450 | 5 x packs |
 | Factory presets | 270 | 3 x packs (Keys/Texture/Pulse per pack) |
 | Version | v1.0.16 | hand-bumped, see below |
@@ -59,6 +73,22 @@ and publishes nothing if the query fails or returns a structurally bad result.
 Cadence is daily while the count moves, self-throttling to ~monthly after 90
 steady days, snapping back to daily on any change. Log:
 `~/Library/Logs/spasynth-vault-refresh.log`.
+
+## Demo tracks (the listening room)
+
+Four tracks, in this order: SPA, The Onus is on You, City of Cones, Barnicle.
+Adding one is a manual job with settled conventions:
+
+- Convert Mike's AIFF master to **320 kbps MP3, 44.1 kHz stereo, no
+  normalization, trimming or effects**, and leave the original untouched:
+  `ffmpeg -i master.aif -codec:a libmp3lame -b:a 320k -ar 44100 -ac 2 -map_metadata -1 out.mp3`
+- **Filename keeps the working version number, the displayed title drops it**
+  (`the-onus-is-on-you-v1.0.mp3` renders as "The Onus is on You").
+- The "N tracks made entirely with SPASynth" sentence counts the players on the
+  page in `js/page.js`, so it updates itself. Set the static `data-track-count`
+  fallback to match for the pre-JS and no-JS cases. Never hardcode the number
+  anywhere else.
+- Starting one track pauses the others; that is also handled in `js/page.js`.
 
 **The version number is the one thing still hand-typed.** `v1.0.16` appears in
 five places (hero strip, demo caption alt text, demo figcaption, specs note,
@@ -105,9 +135,11 @@ footer). The changelog accordion body is generated separately by
 
 ## Gotchas
 
-- An occasional one-off `7403 Unauthorized` from wrangler after a long idle gap
-  is just an expired OAuth access token. The failing call itself triggers the
-  refresh; re-run and it works. Not a broken credential.
+- A one-off `7403 Unauthorized` from wrangler is **not** a broken credential.
+  It happens when an expired OAuth access token has just been refreshed and the
+  new one has not propagated to the D1 API yet. Re-running works, and the
+  auto-refresh script retries for exactly this reason. Only a persistent 7403
+  across retries means a real re-login is needed.
 - The design is the flat7.design SPASynth case-study grammar (scroll-craft
   engine in `js/scrollcraft.js` + `css/scrollcraft.css`). **Never edit the
   engine files**; bespoke behaviour is driven from `--sc-p` in page CSS/JS.
@@ -115,3 +147,7 @@ footer). The changelog accordion body is generated separately by
   stylized study model rather than a screenshot, so they were left as-is.
 - `scripts/.vault-poll-state.json` is gitignored local-only cadence state.
   Deleting it just restarts the clock at daily.
+- **Audio will not decode in the Claude-in-Chrome tab.** Media loading is
+  throttled there, so `loadedmetadata` times out even for tracks that have been
+  live for days. Verify audio with `ffprobe` plus an HTTP fetch, or on the real
+  site; a timeout in that tab proves nothing.
