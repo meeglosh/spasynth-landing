@@ -25,7 +25,7 @@ SAFETY RAILS, because this pushes to a live site with nobody watching:
 
 Run by hand any time: python3 scripts/auto-refresh-vault.py [--force] [--dry-run]
 """
-import json, os, re, subprocess, sys
+import json, os, re, subprocess, sys, time
 from datetime import datetime, timezone
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -46,7 +46,10 @@ ENV = {**os.environ, 'PATH': '/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin'}
 
 def log(msg):
     line = f'{datetime.now(timezone.utc).isoformat(timespec="seconds")}  {msg}'
-    print(line)
+    # Only echo when a human is watching. Under launchd there is no TTY and its
+    # StandardOutPath points at this same file, which would double every line.
+    if sys.stdout.isatty():
+        print(line)
     try:
         os.makedirs(os.path.dirname(LOG), exist_ok=True)
         with open(LOG, 'a', encoding='utf-8') as f:
@@ -58,6 +61,24 @@ def log(msg):
 def run(cmd, cwd=ROOT, check=True):
     return subprocess.run(cmd, cwd=cwd, env=ENV, check=check,
                           capture_output=True, text=True, timeout=300)
+
+
+def wrangler_error(proc_output):
+    """Pull the human-readable message out of wrangler's JSON error envelope."""
+    blob = proc_output or ''
+    m = re.search(r'\{.*\}', blob, re.S)
+    if m:
+        try:
+            err = json.loads(m.group(0)).get('error', {})
+            text = err.get('text') or err.get('name') or ''
+            notes = ' '.join(n.get('text', '') for n in err.get('notes', []) if isinstance(n, dict))
+            joined = ' '.join(x for x in (text, notes) if x).strip()
+            if joined:
+                return joined
+        except ValueError:
+            pass
+    lines = [ln for ln in blob.strip().splitlines() if ln.strip() not in ('{', '}', '')]
+    return lines[-1].strip() if lines else 'no error detail'
 
 
 def load_state():
@@ -82,8 +103,30 @@ def days_since(iso):
     return (datetime.now(timezone.utc) - then).total_seconds() / 86400
 
 
-def query_vault():
-    """Ask the live D1 database for the active run's sound counts."""
+def query_vault(attempts=3, backoff=8):
+    """Ask the live D1 database for the active run's sound counts.
+
+    Retries on failure. When the OAuth access token has expired, wrangler
+    refreshes it and then the very next API call can still come back 7403
+    because the new token has not propagated yet; the retry rides that out.
+    This is what broke the first scheduled run (2026-09-15 10:00 local).
+    """
+    last = None
+    for attempt in range(1, attempts + 1):
+        try:
+            return _query_once()
+        except subprocess.CalledProcessError as e:
+            last = e
+            detail = wrangler_error(e.stdout or e.stderr)
+            if attempt < attempts:
+                log(f'query attempt {attempt}/{attempts} failed ({detail}); retrying in {backoff}s')
+                time.sleep(backoff)
+            else:
+                log(f'query failed after {attempts} attempts: {detail}')
+    raise last
+
+
+def _query_once():
     out = run(['npx', 'wrangler', 'd1', 'execute', 'spastation-staging', '--remote',
                '--command', SQL, '--json', '--config', 'server/cloudflare/wrangler.jsonc'],
               cwd=SPASTATION)
@@ -157,9 +200,9 @@ def main():
     try:
         stats = query_vault()
     except subprocess.CalledProcessError as e:
-        detail = (e.stderr or e.stdout or '').strip().splitlines()
-        log(f'ERROR: Vault query failed: {detail[-1] if detail else e}')
-        log('       (if this says 7403/Unauthorized, the wrangler login needs refreshing)')
+        log(f'ERROR: Vault query failed: {wrangler_error(e.stdout or e.stderr)}')
+        log('       A lone 7403 here is usually a just-refreshed token that has not')
+        log('       propagated yet; the retries cover it. Persistent 7403 means re-login.')
         return 1
     except Exception as e:  # noqa: BLE001 - want any parse/shape failure logged, not published
         log(f'ERROR: Vault query unusable: {e}')
