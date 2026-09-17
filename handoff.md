@@ -77,12 +77,12 @@ steady days, snapping back to daily on any change. Log:
 ## Demo tracks (the listening room)
 
 Six tracks, in this order: SPA, The Onus is on You, City of Cones, Barnicle,
-Homebound (all Ruger Seeds), then Dark 01 (add.remove). More are expected;
+Homebound (all Ruger Seeds), then Dark (add.remove). More are expected;
 new tracks append to the bottom of the list.
 
 **This list and the flat7.design case study's have deliberately diverged as of
 2026-09-17.** The case study (`~/flat7-design-spasynth/public/spasynth/`) keeps
-the five Ruger Seeds tracks with no artist bylines; Dark 01 is landing-page
+the five Ruger Seeds tracks with no artist bylines; Dark is landing-page
 only, at Mike's request. Do not re-sync the two without asking.
 
 Adding a track is a manual job with settled conventions:
@@ -90,13 +90,15 @@ Adding a track is a manual job with settled conventions:
 - Convert Mike's AIFF master to **320 kbps MP3, 44.1 kHz stereo, no
   normalization, trimming or effects**, and leave the original untouched:
   `ffmpeg -i master.aif -codec:a libmp3lame -b:a 320k -ar 44100 -ac 2 -map_metadata -1 out.mp3`
-- **If Mike supplies an MP3 that is already 320 kbps stereo, copy it, don't
-  re-encode** — re-encoding only adds a second lossy generation. `dark-01.mp3`
-  came in that way and is 48 kHz rather than 44.1; browsers play it fine and
-  matching the sample rate is not worth the quality loss.
+- **If Mike supplies an MP3 rather than an AIFF and it is already 320 kbps
+  stereo, copy it, don't re-encode** — re-encoding only adds a second lossy
+  generation, and a 48 kHz sample rate is not worth fixing at that cost. This
+  came up once, for a first cut of Dark, and was superseded hours later by a
+  proper AIFF master. Ask for the AIFF if there is any doubt.
 - **Filename keeps the working version number, the displayed title drops it**
   (`the-onus-is-on-you-v1.0.mp3` renders as "The Onus is on You"). Filenames are
-  kebab-case (`Dark_01.mp3` became `dark-01.mp3`, displayed "Dark 01").
+  kebab-case, and a track with no version number in its name keeps none
+  (`Dark.aif` became `dark.mp3`, displayed "Dark", like `city-of-cones.mp3`).
 - **Every track carries an artist byline** in `<p class="track-artist">`, under
   the title, and names the artist in the player's `aria-label` ("Play <title> by
   <artist>, made entirely with SPASynth"). Ruger Seeds and add.remove are the
