@@ -106,6 +106,13 @@ Adding a track is a manual job with settled conventions:
   fallback to match for the pre-JS and no-JS cases. Never hardcode the number
   anywhere else.
 - Starting one track pauses the others; that is also handled in `js/page.js`.
+- **Bump the `?v=` on `css/styles.css` in `index.html` whenever the stylesheet
+  changes**, and do the same for any JS file you edit. Cloudflare caches CSS and
+  JS for four hours (`max-age=14400`, `cf-cache-status: HIT`) while the HTML is
+  not edge-cached at all (`DYNAMIC`, `max-age=600`). Without the bump, visitors
+  get new markup against a stale stylesheet for up to four hours — which is
+  exactly what happened when the artist bylines shipped on 2026-09-17. Check a
+  deploy with `curl -sI https://spasynth.com/css/styles.css | grep -i age`.
 
 **The version number is the one thing still hand-typed.** `v1.0.16` appears in
 five places (hero strip, demo caption alt text, demo figcaption, specs note,
