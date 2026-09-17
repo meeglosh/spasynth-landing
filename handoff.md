@@ -76,8 +76,11 @@ steady days, snapping back to daily on any change. Log:
 
 ## Demo tracks (the listening room)
 
-Four tracks, in this order: SPA, The Onus is on You, City of Cones, Barnicle.
-Adding one is a manual job with settled conventions:
+Five tracks, in this order: SPA, The Onus is on You, City of Cones, Barnicle,
+Homebound. The same five, in the same order, also appear on the flat7.design
+SPASynth case study (`~/flat7-design-spasynth/public/spasynth/`); keep the two
+in sync when a track is added. Adding one is a manual job with settled
+conventions:
 
 - Convert Mike's AIFF master to **320 kbps MP3, 44.1 kHz stereo, no
   normalization, trimming or effects**, and leave the original untouched:
