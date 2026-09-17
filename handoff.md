@@ -76,9 +76,10 @@ steady days, snapping back to daily on any change. Log:
 
 ## Demo tracks (the listening room)
 
-Six tracks, in this order: SPA, The Onus is on You, City of Cones, Barnicle,
-Homebound (all Ruger Seeds), then Dark (add.remove). More are expected;
-new tracks append to the bottom of the list.
+Six tracks, in this order: SPA, Dark, The Onus is on You, City of Cones,
+Barnicle, Homebound. All are Ruger Seeds except Dark, which is add.remove and
+sits second at Mike's request (2026-09-17). More are expected; a new track
+lands at the bottom unless Mike says otherwise.
 
 **This list and the flat7.design case study's have deliberately diverged as of
 2026-09-17.** The case study (`~/flat7-design-spasynth/public/spasynth/`) keeps
