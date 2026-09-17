@@ -76,17 +76,31 @@ steady days, snapping back to daily on any change. Log:
 
 ## Demo tracks (the listening room)
 
-Five tracks, in this order: SPA, The Onus is on You, City of Cones, Barnicle,
-Homebound. The same five, in the same order, also appear on the flat7.design
-SPASynth case study (`~/flat7-design-spasynth/public/spasynth/`); keep the two
-in sync when a track is added. Adding one is a manual job with settled
-conventions:
+Six tracks, in this order: SPA, The Onus is on You, City of Cones, Barnicle,
+Homebound (all Ruger Seeds), then Dark 01 (add.remove). More are expected;
+new tracks append to the bottom of the list.
+
+**This list and the flat7.design case study's have deliberately diverged as of
+2026-09-17.** The case study (`~/flat7-design-spasynth/public/spasynth/`) keeps
+the five Ruger Seeds tracks with no artist bylines; Dark 01 is landing-page
+only, at Mike's request. Do not re-sync the two without asking.
+
+Adding a track is a manual job with settled conventions:
 
 - Convert Mike's AIFF master to **320 kbps MP3, 44.1 kHz stereo, no
   normalization, trimming or effects**, and leave the original untouched:
   `ffmpeg -i master.aif -codec:a libmp3lame -b:a 320k -ar 44100 -ac 2 -map_metadata -1 out.mp3`
+- **If Mike supplies an MP3 that is already 320 kbps stereo, copy it, don't
+  re-encode** — re-encoding only adds a second lossy generation. `dark-01.mp3`
+  came in that way and is 48 kHz rather than 44.1; browsers play it fine and
+  matching the sample rate is not worth the quality loss.
 - **Filename keeps the working version number, the displayed title drops it**
-  (`the-onus-is-on-you-v1.0.mp3` renders as "The Onus is on You").
+  (`the-onus-is-on-you-v1.0.mp3` renders as "The Onus is on You"). Filenames are
+  kebab-case (`Dark_01.mp3` became `dark-01.mp3`, displayed "Dark 01").
+- **Every track carries an artist byline** in `<p class="track-artist">`, under
+  the title, and names the artist in the player's `aria-label` ("Play <title> by
+  <artist>, made entirely with SPASynth"). Ruger Seeds and add.remove are the
+  artists so far.
 - The "N tracks made entirely with SPASynth" sentence counts the players on the
   page in `js/page.js`, so it updates itself. Set the static `data-track-count`
   fallback to match for the pre-JS and no-JS cases. Never hardcode the number
