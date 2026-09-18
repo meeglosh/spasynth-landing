@@ -117,10 +117,46 @@ Adding a track is a manual job with settled conventions:
   exactly what happened when the artist bylines shipped on 2026-09-17. Check a
   deploy with `curl -sI https://spasynth.com/css/styles.css | grep -i age`.
 
-**The version number is the one thing still hand-typed.** `v1.0.16` appears in
-five places (hero strip, demo caption alt text, demo figcaption, specs note,
-footer). The changelog accordion body is generated separately by
-`python3 scripts/build-changelog.py` from `~/spasynth/docs/CHANGELOG.md`.
+## Shipping a new SPASynth version
+
+**This is automated now, and it deliberately stops one step short of publishing.**
+`scripts/prepare-release.py` notices when `~/spasynth` ships a version newer than
+the site advertises, regenerates the changelog accordion, bumps the version
+string in its five places (hero strip, demo caption alt text, demo figcaption,
+specs note, footer), commits locally, and posts a macOS notification. **It never
+pushes.** Mike does that when the build is actually downloadable.
+
+That gap is the whole point. The product changelog is written at *build* time —
+the 1.0.17 commit says "built + staged" — which can be days before customers can
+download anything. Publishing on that signal would put "Current release: v1.0.17"
+on the marketing site while the release was still staged.
+
+- Scheduled by `scripts/launchd/com.spasynth.release-prepare.plist`: fires on
+  every commit in `~/spasynth` (via `.git/logs/HEAD`) plus daily at 11:00 as a
+  backstop. Running on every product commit is fine — with the version unmoved
+  it exits in milliseconds. Log: `~/Library/Logs/spasynth-release-prepare.log`.
+- Version of record is `project(SPASynth VERSION x.y.z)` in
+  `~/spasynth/CMakeLists.txt`; notes come from `~/spasynth/docs/CHANGELOG.md`.
+  They must agree, or it refuses and says so rather than publish a version with
+  no release notes.
+- It reads **committed** state only, so a half-written changelog is invisible to
+  it. Save as much as you like; only a commit in the product repo counts.
+- It bails instead of guessing if the old version string stops appearing in
+  exactly five places outside the generated block — i.e. if someone restructures
+  the page. Reverts cleanly and commits nothing.
+- Run it by hand any time: `python3 scripts/prepare-release.py [--dry-run]`.
+  `--force` overrides the up-to-date and don't-roll-backwards checks.
+- To publish what it prepared: `git -C ~/spasynth-landing push origin main`.
+
+`scripts/build-changelog.py` still exists and does the accordion on its own;
+prepare-release.py calls it rather than duplicating it.
+
+**Both cron jobs refuse to run on unpushed commits.** The Vault refresh pushes
+`main`, so before 2026-09-18 it would have published any unpushed local commit
+as a side effect of a sound-count update — including a release being held back
+on purpose. Both scripts now stand down when the repo is ahead of origin. If a
+job logs `SKIP: N unpushed commit(s)`, something is waiting for a human; look
+before you clear it.
 
 ## Decisions worth not relitigating
 

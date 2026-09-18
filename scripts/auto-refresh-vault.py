@@ -171,6 +171,15 @@ def repo_is_safe():
     if behind != '0':
         log(f'SKIP: local main is {behind} commit(s) behind origin; a human should reconcile first.')
         return False
+    # An unpushed commit is somebody's held-back work -- most often a release
+    # prepared by scripts/prepare-release.py and deliberately NOT published yet.
+    # This job pushes main, so committing on top would publish that too, under a
+    # message about sound counts. Stand down until a human has dealt with it.
+    ahead = run(['git', 'rev-list', '--count', 'origin/main..HEAD']).stdout.strip()
+    if ahead != '0':
+        log(f'SKIP: {ahead} unpushed commit(s) on main; pushing now would publish '
+            f'them too. Leaving them for a human.')
+        return False
     return True
 
 
