@@ -43,6 +43,10 @@ LOG = os.path.expanduser('~/Library/Logs/spasynth-release-prepare.log')
 START, END = '<!-- CHANGELOG:START -->', '<!-- CHANGELOG:END -->'
 VERSION_SPOTS = 5  # hero strip, demo alt text, demo figcaption, specs note, footer
 
+# Commits this script makes itself, recognised so a superseded one can be
+# replaced instead of blocking every later version behind it.
+RELEASE_SUBJECT = re.compile(r'^Changelog and version: v\d+\.\d+\.\d+$')
+
 ENV = {**os.environ, 'PATH': '/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin'}
 
 
@@ -118,6 +122,26 @@ def product_is_committed():
     return True
 
 
+def unpushed_are_all_our_releases():
+    """Are the unpushed commits nothing but this script's own release preps?
+
+    Identified by both the exact subject line this script writes AND touching
+    index.html alone. A commit that fails either test is treated as somebody's
+    real work and left alone.
+    """
+    hashes = run(['git', 'rev-list', 'origin/main..HEAD']).stdout.split()
+    if not hashes:
+        return False, []
+    for h in hashes:
+        subject = run(['git', 'log', '-1', '--format=%s', h]).stdout.strip()
+        if not RELEASE_SUBJECT.match(subject):
+            return False, hashes
+        files = run(['git', 'show', '--name-only', '--format=', h]).stdout.split()
+        if files != ['index.html']:
+            return False, hashes
+    return True, hashes
+
+
 def repo_is_safe():
     """Never run over work in progress, and never build on an unpushed commit."""
     if run(['git', 'diff', '--cached', '--name-only']).stdout.strip():
@@ -139,9 +163,19 @@ def repo_is_safe():
         return False
     ahead = run(['git', 'rev-list', '--count', 'origin/main..HEAD']).stdout.strip()
     if ahead != '0':
-        log(f'SKIP: {ahead} unpushed commit(s) on main already — most likely a release '
-            f'waiting to be pushed. Not stacking another on top.')
-        return False
+        ours, hashes = unpushed_are_all_our_releases()
+        if not ours:
+            log(f'SKIP: {ahead} unpushed commit(s) on main that this script did not '
+                f'write; leaving them for a human.')
+            return False
+        # Our own earlier prep, superseded: the version moved again before Mike
+        # pushed. Standing down here would park every later version behind an
+        # obsolete commit, which is exactly how the site fell three versions
+        # behind. Replace it instead -- its content is regenerated from source
+        # immediately below, so nothing unique is lost, and the reflog keeps it.
+        log(f'replacing {len(hashes)} superseded prepared release commit(s): '
+            f'{", ".join(h[:9] for h in hashes)}')
+        run(['git', 'reset', '--hard', 'origin/main'])
     return True
 
 
@@ -197,6 +231,15 @@ def main():
 
     if not (dry or repo_is_safe()):
         return 0
+
+    # repo_is_safe may have dropped a superseded prep, which moves the page back
+    # to what is actually published. Re-read so the bump and the commit message
+    # describe the real starting point rather than the discarded one.
+    if not dry:
+        sv = site_version()
+        if pv == sv and not force:
+            log(f'up to date after dropping the superseded prep: both v{sv}')
+            return 0
 
     log(f'new version: site v{sv} -> product v{pv}')
     if dry:

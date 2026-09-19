@@ -144,6 +144,16 @@ on the marketing site while the release was still staged.
 - It bails instead of guessing if the old version string stops appearing in
   exactly five places outside the generated block — i.e. if someone restructures
   the page. Reverts cleanly and commits nothing.
+- **A prepared release that is superseded before it is pushed gets replaced, not
+  stacked behind.** If the version moves again while an earlier prep sits
+  unpushed, the script drops its own obsolete commit and prepares the current
+  version instead, so the pending commit always reflects the newest release and
+  its message measures from what is actually published. Recognised by the exact
+  subject `Changelog and version: vX.Y.Z` *and* touching `index.html` alone;
+  anything else counts as a human's work and still stops the run cold. Discarded
+  hashes are logged and remain in the reflog.
+  (Added 2026-09-19: without it the site sat three versions behind, because
+  1.0.20 was prepared but never pushed and 1.0.21 queued silently behind it.)
 - Run it by hand any time: `python3 scripts/prepare-release.py [--dry-run]`.
   `--force` overrides the up-to-date and don't-roll-backwards checks.
 - To publish what it prepared: `git -C ~/spasynth-landing push origin main`.
@@ -151,7 +161,11 @@ on the marketing site while the release was still staged.
 `scripts/build-changelog.py` still exists and does the accordion on its own;
 prepare-release.py calls it rather than duplicating it.
 
-**Both cron jobs refuse to run on unpushed commits.** The Vault refresh pushes
+**A pending release still pauses the Vault job, so push promptly.** The site
+falling behind is not the only cost of leaving one unpushed: the sound-count
+refresh stands down for as long as it sits there.
+
+**Both cron jobs refuse to run on unpushed commits they did not write.** The Vault refresh pushes
 `main`, so before 2026-09-18 it would have published any unpushed local commit
 as a side effect of a sound-count update — including a release being held back
 on purpose. Both scripts now stand down when the repo is ahead of origin. If a
