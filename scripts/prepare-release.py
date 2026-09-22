@@ -1,12 +1,24 @@
 #!/usr/bin/env python3
-"""Prepare (but never publish) a new SPASynth version on spasynth.com.
+"""Keep spasynth.com's changelog and version in step with the product, hands-off.
 
-Watches the product repo. When it ships a version newer than the one the
-landing page advertises, this regenerates the changelog accordion, bumps the
-hand-typed version strings, commits locally, and tells Mike. It does NOT push:
-the changelog is written at BUILD time ("1.0.17 built + staged"), which can be
-days before customers can download anything, and the site must not announce a
-release that is not out yet. Mike pushes when the build is actually live.
+Watches the product repo. When it ships a version newer than the one the landing
+page advertises, this regenerates the changelog accordion, bumps the hand-typed
+version strings, commits, and -- while SPASynth is pre-launch -- pushes.
+
+WHETHER IT PUBLISHES DEPENDS ON WHETHER YOU CAN BUY SPASYNTH YET.
+
+The worry that shaped this script was announcing a version before customers can
+download it: the changelog is written at BUILD time ("1.0.17 built + staged"),
+potentially days before a release is out. But SPASynth is not on sale at all yet
+-- the storefront has no listing and the page's own buttons say "Coming soon" --
+so no customer can be out of step with anything the page claims, and publishing
+unattended costs nothing. Every version so far was pushed by hand anyway.
+
+That stops being true the day it goes on sale. So before pushing, this checks
+Shopify's public catalogue for a SPASynth listing. Finds one, and it commits but
+does NOT push, telling Mike the decision is his again. Cannot get a trustworthy
+answer, same thing. Auto-publish is for the pre-launch site only, and it turns
+itself off rather than needing anyone to remember.
 
 Scheduled by ~/Library/LaunchAgents/com.spasynth.release-prepare.plist, which
 fires on every commit in ~/spasynth plus once daily as a backstop. Running on
@@ -26,11 +38,14 @@ SAFETY RAILS, because this writes to the repo unattended:
   - The old version string must appear exactly VERSION_SPOTS times outside the
     generated changelog block. Anything else means the page moved around and a
     human should look, so it bails rather than guess.
-  - Stages only index.html. Never `git add -A`. Never pushes.
+  - Stages only index.html. Never `git add -A`.
+  - Publishes nothing it did not just build and verify in this same run.
 
-Run by hand any time: python3 scripts/prepare-release.py [--dry-run] [--force]
+Run by hand any time:
+  python3 scripts/prepare-release.py [--dry-run] [--force] [--no-publish]
+`--no-publish` commits but leaves the push to you, whatever the storefront says.
 """
-import json, os, re, subprocess, sys
+import json, os, re, subprocess, sys, time, urllib.request
 from datetime import datetime, timezone
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -46,6 +61,14 @@ VERSION_SPOTS = 5  # hero strip, demo alt text, demo figcaption, specs note, foo
 # Commits this script makes itself, recognised so a superseded one can be
 # replaced instead of blocking every later version behind it.
 RELEASE_SUBJECT = re.compile(r'^Changelog and version: v\d+\.\d+\.\d+$')
+
+# Shopify exposes every live product here without authentication. It is how we
+# tell "pre-launch" from "on sale", which decides whether publishing is safe to
+# do unattended. See spasynth_is_on_sale(). Overridable so the on-sale branch can
+# be tested against a fixture without waiting for launch day.
+STOREFRONT = os.environ.get(
+    'SPASYNTH_STOREFRONT_URL',
+    'https://silverplatteraudio.com/products.json?limit=250')
 
 ENV = {**os.environ, 'PATH': '/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin'}
 
@@ -120,6 +143,37 @@ def product_is_committed():
             'waiting for a deliberate commit.')
         return False
     return True
+
+
+def spasynth_is_on_sale(attempts=3, backoff=5):
+    """Is SPASynth purchasable yet? Raises if it cannot get a trustworthy answer.
+
+    While the product is pre-launch the landing page is marketing a thing nobody
+    can buy, so publishing a version the moment it is built puts no customer out
+    of step and this script pushes on its own. The day SPASynth appears on the
+    storefront that stops being true, and the decision goes back to a human.
+    """
+    last = None
+    for i in range(attempts):
+        try:
+            req = urllib.request.Request(STOREFRONT, headers={'User-Agent': 'spasynth-landing/1.0'})
+            with urllib.request.urlopen(req, timeout=20) as r:
+                products = json.load(r).get('products', [])
+            # An empty catalogue means a broken or throttled read, not an empty
+            # shop. Treating it as "no SPASynth listing" would wrongly conclude
+            # pre-launch and publish, so insist on a plausible response.
+            if not products:
+                raise ValueError('storefront returned an empty catalogue')
+            for p in products:
+                blob = f"{p.get('title', '')}{p.get('handle', '')}{p.get('product_type', '')}".lower()
+                if 'spasynth' in blob:
+                    return True
+            return False
+        except Exception as e:  # noqa: BLE001 - any failure here must block publishing
+            last = e
+            if i < attempts - 1:
+                time.sleep(backoff * (i + 1))
+    raise RuntimeError(f'storefront check failed after {attempts} attempts: {last}')
 
 
 def unpushed_are_all_our_releases():
@@ -202,6 +256,7 @@ def bump_version_strings(old, new):
 def main():
     dry = '--dry-run' in sys.argv
     force = '--force' in sys.argv
+    no_publish = '--no-publish' in sys.argv
 
     try:
         pv, cv, sv = product_version(), changelog_top_version(), site_version()
@@ -265,21 +320,55 @@ def main():
     items = len(re.findall(
         r'<li>', open(PAGE, encoding='utf-8').read().split(START, 1)[1].split('</details>', 1)[0]))
 
+    # Decide before committing, so the message tells the truth about what
+    # happened rather than describing an intent that then did not happen.
+    hold_reason = None
+    if no_publish:
+        hold_reason = 'run with --no-publish'
+    else:
+        try:
+            if spasynth_is_on_sale():
+                hold_reason = ('SPASynth is on the storefront now, so customers can be '
+                               'out of step with the page')
+        except RuntimeError as e:
+            hold_reason = f'could not confirm whether SPASynth is on sale ({e})'
+
     run(['git', 'add', '--', 'index.html'])
+    provenance = (
+        f'Held back from origin: {hold_reason}.'
+        if hold_reason else
+        'Published automatically. SPASynth is still pre-launch, so no customer '
+        'can be out of step with what the page advertises; once it is on sale '
+        'this script stops publishing on its own.')
     msg = (f'Changelog and version: v{pv}\n\n'
            f'Regenerated the changelog accordion from the product changelog and '
            f'moved the advertised release from v{sv} to v{pv} in {spots} places.\n\n'
-           f'Prepared automatically; held back from origin so the site does not '
-           f'announce v{pv} before the build is downloadable.\n\n'
+           f'{provenance}\n\n'
            f'Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>')
     run(['git', 'commit', '-m', msg])
-    log(f'PREPARED v{pv} ({items} changelog items, {spots} version spots) — '
-        f'committed locally, NOT pushed.')
-    log('       Review with: git -C ~/spasynth-landing show')
-    log('       Publish with: git -C ~/spasynth-landing push origin main')
-    notify(f'SPASynth v{pv} ready to publish',
-           f'{items} changelog items staged on spasynth.com. '
-           f'Review and push when the build is live.')
+
+    if hold_reason:
+        log(f'PREPARED v{pv} ({items} changelog items, {spots} version spots) — '
+            f'NOT pushed: {hold_reason}.')
+        log('       Review with: git -C ~/spasynth-landing show')
+        log('       Publish with: git -C ~/spasynth-landing push origin main')
+        notify(f'SPASynth v{pv} needs your push',
+               f'{items} changelog items staged. Not published: {hold_reason}.')
+        return 0
+
+    try:
+        run(['git', 'push', 'origin', 'main'])
+    except subprocess.CalledProcessError as e:
+        log(f'WARNING: committed v{pv} locally but the push failed: {(e.stderr or "").strip()}')
+        log('       The next run will retry; nothing is lost.')
+        notify(f'SPASynth v{pv} committed, push failed',
+               'Prepared locally but not published. Check the log.')
+        return 1
+
+    log(f'PUBLISHED v{pv} ({items} changelog items, {spots} version spots) — '
+        f'committed and pushed.')
+    notify(f'SPASynth v{pv} is live',
+           f'spasynth.com now shows v{pv} with {items} changelog items.')
     return 0
 
 

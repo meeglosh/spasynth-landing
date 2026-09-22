@@ -119,17 +119,35 @@ Adding a track is a manual job with settled conventions:
 
 ## Shipping a new SPASynth version
 
-**This is automated now, and it deliberately stops one step short of publishing.**
+**This is fully automated while SPASynth is pre-launch.**
 `scripts/prepare-release.py` notices when `~/spasynth` ships a version newer than
 the site advertises, regenerates the changelog accordion, bumps the version
 string in its five places (hero strip, demo caption alt text, demo figcaption,
-specs note, footer), commits locally, and posts a macOS notification. **It never
-pushes.** Mike does that when the build is actually downloadable.
+specs note, footer), commits, pushes, and posts a macOS notification. Nobody
+needs to be involved.
 
-That gap is the whole point. The product changelog is written at *build* time —
-the 1.0.17 commit says "built + staged" — which can be days before customers can
-download anything. Publishing on that signal would put "Current release: v1.0.17"
-on the marketing site while the release was still staged.
+**It stops publishing by itself the day SPASynth goes on sale, and that is
+deliberate.** The original worry was announcing a version before customers could
+download it: the product changelog is written at *build* time (the 1.0.17 commit
+says "built + staged"), potentially days before a release is out. But SPASynth is
+not purchasable yet — Shopify lists 227 products and none of them is SPASynth,
+and the page's own edition buttons say "Coming soon" — so nobody can be out of
+step with what the page claims, and publishing unattended costs nothing.
+
+That changes at launch. Before each push the script reads Shopify's public
+catalogue (`silverplatteraudio.com/products.json`, no auth needed) and looks for
+a SPASynth listing:
+
+- **No listing** → pre-launch → commits and pushes on its own.
+- **Listing found** → commits, does *not* push, and notifies. The judgement of
+  when the site should announce a version is a human's again.
+- **Cannot get a trustworthy answer** (network down, or a suspiciously empty
+  catalogue, which means a broken read rather than an empty shop) → also holds
+  back. Every failure mode fails toward *not* publishing.
+
+So launch day needs nobody to remember to re-tighten this; it re-tightens itself.
+When that notification first appears, decide the real post-launch process and
+write it down here. `--no-publish` forces hold-back whatever the storefront says.
 
 - Scheduled by `scripts/launchd/com.spasynth.release-prepare.plist`: fires on
   every commit in `~/spasynth` (via `.git/logs/HEAD`) plus daily at 11:00 as a
@@ -161,9 +179,10 @@ on the marketing site while the release was still staged.
 `scripts/build-changelog.py` still exists and does the accordion on its own;
 prepare-release.py calls it rather than duplicating it.
 
-**A pending release still pauses the Vault job, so push promptly.** The site
-falling behind is not the only cost of leaving one unpushed: the sound-count
-refresh stands down for as long as it sits there.
+**A held-back release pauses the Vault job, so clear one promptly.** The
+sound-count refresh stands down while any unpushed commit sits on `main`. This
+only arises post-launch, or when the storefront check fails, since a pre-launch
+run leaves nothing pending.
 
 **Both cron jobs refuse to run on unpushed commits they did not write.** The Vault refresh pushes
 `main`, so before 2026-09-18 it would have published any unpushed local commit

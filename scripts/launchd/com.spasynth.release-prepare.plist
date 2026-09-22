@@ -20,9 +20,10 @@
   having touched nothing. StartCalendarInterval is a daily backstop in case a
   watch is missed while the Mac is asleep.
 
-  This job NEVER pushes. It prepares a local commit and posts a notification;
-  Mike reviews and pushes when the build is actually downloadable. See the
-  docstring in scripts/prepare-release.py for why.
+  While SPASynth is pre-launch this job publishes on its own: commits, pushes,
+  and posts a notification. Once SPASynth appears on the Shopify storefront it
+  stops pushing by itself and hands the decision back to a human, as does any
+  failure to check. See the docstring in scripts/prepare-release.py for why.
 -->
 <plist version="1.0">
 <dict>
