@@ -44,11 +44,15 @@ Everything below is generated, not typed. Do not hand-edit these numbers in
 | Stat | Value | Where it comes from |
 |---|---|---|
 | Packs | 90 | SPAStation catalog, verified non-bundle entries |
-| Sounds ("up to") | 11,678 | 11,479 pack sounds + 199 Vault bonus |
-| Library size | 75 GB | catalog zip bytes + Vault bonus bytes |
+| Sounds ("up to") | 11,988 | 11,479 pack sounds + 509 Vault bonus |
+| Library size | 78 GB | catalog zip bytes + Vault bonus bytes |
 | Starter library | 450 | 5 x packs |
 | Factory presets | 270 | 3 x packs (Keys/Texture/Pulse per pack) |
-| Version | v1.0.16 | hand-bumped, see below |
+| Version | v1.0.22 | automated, see "Shipping a new SPASynth version" |
+
+The sounds/size rows move on their own (the Vault refresh job) and the version
+row now does too, so treat all three as snapshots — `scripts/library-stats.json`
+and the page itself are the truth.
 
 ## The generator pipeline
 
@@ -172,9 +176,13 @@ write it down here. `--no-publish` forces hold-back whatever the storefront says
   hashes are logged and remain in the reflog.
   (Added 2026-09-19: without it the site sat three versions behind, because
   1.0.20 was prepared but never pushed and 1.0.21 queued silently behind it.)
-- Run it by hand any time: `python3 scripts/prepare-release.py [--dry-run]`.
-  `--force` overrides the up-to-date and don't-roll-backwards checks.
-- To publish what it prepared: `git -C ~/spasynth-landing push origin main`.
+- Run it by hand any time:
+  `python3 scripts/prepare-release.py [--dry-run] [--force] [--no-publish]`.
+  `--force` overrides the up-to-date and don't-roll-backwards checks;
+  `--no-publish` commits but leaves the push to you, whatever the storefront
+  says. Set `SPASYNTH_STOREFRONT_URL` to a fixture to exercise the post-launch
+  path without waiting for launch day.
+- To publish something it held back: `git -C ~/spasynth-landing push origin main`.
 
 `scripts/build-changelog.py` still exists and does the accordion on its own;
 prepare-release.py calls it rather than duplicating it.
@@ -214,7 +222,10 @@ before you clear it.
    request for "a FAQ answer confirming updates are free"? Never answered.
 2. **Shopify links.** Three CTAs (Standard, Pro, upgrade) are still
    `href="#"` placeholders labelled "Coming soon". Swap for real product URLs at
-   launch and likely relabel to "Buy now".
+   launch and likely relabel to "Buy now". **Listing SPASynth on Shopify is also
+   what switches release auto-publishing off** (see "Shipping a new SPASynth
+   version"), so expect that notification around the same time and settle the
+   post-launch release process then.
 3. **Link "SPAStation"** in the download FAQ once its public download page exists.
 4. **Real-device pass.** Verified only via headless Chrome and one in-browser
    check; no actual phone/tablet run of the mobile nav, hover states, the pinned
