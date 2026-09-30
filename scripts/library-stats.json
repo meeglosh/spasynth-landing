@@ -2,14 +2,14 @@
   "soundTotalFallback": 11474,
   "_note": "soundTotalFallback is the last hand-verified WAV total (88 packs, 2026-07). It is used only while the SPAStation catalog lacks a per-pack fileCount. Once every verified pack carries fileCount, the total is summed from the catalog and this value is ignored.",
   "packs": 90,
-  "sounds": 12149,
+  "sounds": 12171,
   "starter": 450,
   "soundsVerified": true,
   "catalog": "/Users/mikejerugim/spastation/shared/catalog-releases.json",
   "packSounds": 11479,
-  "vaultBonusSounds": 670,
-  "sizeGB": 82,
+  "vaultBonusSounds": 692,
+  "sizeGB": 83,
   "vaultStats": "/Users/mikejerugim/spastation/shared/vault-stats.json",
-  "vaultCheckedAt": "2026-09-29T14:00:06.941Z",
+  "vaultCheckedAt": "2026-09-30T14:00:18.428Z",
   "presets": 270
 }
