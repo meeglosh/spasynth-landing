@@ -47,7 +47,7 @@ Everything below is generated, not typed. Do not hand-edit these numbers in
 | Sounds ("up to") | 11,988 | 11,479 pack sounds + 509 Vault bonus |
 | Library size | 78 GB | catalog zip bytes + Vault bonus bytes |
 | Starter library | 450 | 5 x packs |
-| Factory presets | 270 | 3 x packs (Keys/Texture/Pulse per pack) |
+| Factory presets | 370 | 3 x packs (Keys/Texture/Pulse per pack) + 100 synth bank |
 | Version | v1.0.22 | automated, see "Shipping a new SPASynth version" |
 
 The sounds/size rows move on their own (the Vault refresh job) and the version

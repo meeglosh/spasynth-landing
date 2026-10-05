@@ -19,8 +19,12 @@ not a source archive whose contents are catalogued as their own packs.
             scripts/library-stats.json -> soundTotalFallback with a warning.
   size    = catalog zip bytes + Vault bonus bytes, rounded to whole GB
   starter = 5 * packs (Standard's starter library: five sounds from every pack)
-  presets = 3 * packs (factory presets: one each of Keys/Texture/Pulse per pack,
-            confirmed in source/library/PresetManager.h)
+  presets = 3 * packs + synth bank (factory presets: one each of Keys/Texture/Pulse
+            per pack, confirmed in source/library/PresetManager.h, PLUS the fixed
+            synth-only bank added in 1.0.31, which needs no library and does not
+            grow with packs. The bank size is counted from
+            ~/spasynth/source/library/SynthBank.cpp when present (or
+            $SPASYNTH_REPO), else SYNTH_BANK_FALLBACK below.)
 
 Rewrites every <span data-stat="..."> in index.html plus the three description
 <meta> tags. Run after every pack release; safe to run repeatedly.
@@ -32,6 +36,19 @@ PAGE = os.path.join(ROOT, 'index.html')
 LOCAL = os.path.join(ROOT, 'scripts', 'library-stats.json')
 DEFAULT_CATALOG = os.path.expanduser('~/spastation/shared/catalog-releases.json')
 DEFAULT_VAULT = os.path.expanduser('~/spastation/shared/vault-stats.json')
+
+SYNTH_BANK_FALLBACK = 100   # 10 types x 10 presets, 1.0.31; used when the synth repo is absent
+
+def synth_bank_count():
+    path = os.path.join(os.environ.get('SPASYNTH_REPO', os.path.expanduser('~/spasynth')),
+                        'source', 'library', 'SynthBank.cpp')
+    try:
+        text = open(path, encoding='utf-8').read()
+    except OSError:
+        print(f'warning: {path} not found; using SYNTH_BANK_FALLBACK={SYNTH_BANK_FALLBACK}', file=sys.stderr)
+        return SYNTH_BANK_FALLBACK
+    n = len(re.findall(r'^\s*\{ "[^"]+", "[^"]+", R"\(', text, re.M))
+    return n or SYNTH_BANK_FALLBACK
 
 def load_catalog(src):
     if re.match(r'^https?://', src):
@@ -71,7 +88,7 @@ def main():
     sounds += bonus
     size_bytes = sum(int(v.get('size') or 0) for v in packs) + int(vault.get('bonusBytes') or 0)
     size_gb = round(size_bytes / 1e9)
-    n_packs, starter, presets = len(packs), 5 * len(packs), 3 * len(packs)
+    n_packs, starter, presets = len(packs), 5 * len(packs), 3 * len(packs) + synth_bank_count()
     fmt = lambda n: f'{n:,}'
 
     page = open(PAGE, encoding='utf-8').read()
@@ -81,10 +98,10 @@ def main():
 
     desc = (f'SPASynth is a hybrid synthesizer built around the entire Silverplatter Audio sound-effects library '
             f'({vals["packs"]} packs, up to {vals["sounds"]} sounds), playable as oscillators, granular fuel, '
-            f'modulation sources, and convolution impulses. No DRM, ever.')
+            f'modulation sources, and convolution impulses. Serial licensing with a free 14-day trial.')
     social = (f'A hybrid synthesizer built around the entire Silverplatter Audio sound-effects library, up to '
               f'{vals["sounds"]} sounds playable as oscillators, granular fuel, modulation sources, and convolution '
-              f'impulses. No DRM, ever.')
+              f'impulses. Serial licensing with a free 14-day trial.')
     page = re.sub(r'(<meta name="description" content=")[^"]*(")', lambda m: m.group(1)+desc+m.group(2), page)
     page = re.sub(r'(<meta property="og:description" content=")[^"]*(")', lambda m: m.group(1)+social+m.group(2), page)
     page = re.sub(r'(<meta name="twitter:description" content=")[^"]*(")', lambda m: m.group(1)+social+m.group(2), page)
