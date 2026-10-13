@@ -35,6 +35,21 @@ Note: three `query attempt N/3 failed` lines timestamped 2026-09-15T20:00:38 in
 that log are **unit-test output**, not a real outage. Left in place rather than
 rewriting the log.
 
+## Pricing model change (2026-10-14)
+
+Pro and "Standard to Pro upgrade" are gone from the page. Editions now shows two
+cards: SPASynth Standard (intro $99, regular $149) and the Everything Bundle
+(intro $499, regular $699; includes SPASynth, full library, free updates for
+life). A "Seats and upgrades" box below carries the seats rule (first seat full
+price, each extra seat half, 1 to 10 online, contact us above 10, one serial per
+seat, 3 computers per serial; SPASynth and the bundle only for now) and the
+upgrade rule (bundle price for the same seats minus what was paid for Standard,
+via a personal upgrade code). FAQ: Pro entries removed or reworded, three new
+entries (Standard vs bundle, upgrading, seats). Also fixed 20 -> 21 mod sources
+and seven -> eight engines. Intro pricing has no end date. Products still say
+"Coming soon". `scripts/update-library-stats.py` was not run. The old note below
+that "Three CTAs (Standard, Pro, upgrade)" now means two CTAs.
+
 ## What the page says right now
 
 Everything below is generated, not typed. Do not hand-edit these numbers in

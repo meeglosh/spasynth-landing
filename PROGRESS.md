@@ -1,6 +1,10 @@
 # SPASynth Landing Page — Project Progress
 
-Last updated: 2026-09-14
+Last updated: 2026-10-14
+
+2026-10-14: pricing model change. Pro and Upgrade cards removed; Editions is now
+SPASynth Standard + Everything Bundle with seat pricing note and upgrade line;
+FAQ and Pro wording updated; engines 8, mod sources 21. See handoff.md.
 
 ## What this is
 
