@@ -7,10 +7,12 @@ is just what is true right now and what to do next.
 - Repo `github.com/meeglosh/spasynth-landing`, branch `main`, local
   `~/spasynth-landing`. Static one-page site, no build step, GitHub Pages behind
   Cloudflare at **spasynth.com**.
-- As of 2026-09-15 `main` is clean and fully pushed; the live site matches it.
+- As of 2026-10-17 `main` is clean and fully pushed (head `08002d5`); the live
+  site matches it.
 - The Vault refill is visibly progressing: bonus recordings went
-  7,632 -> 25 -> 98 -> 199 over 2026-09-14/15. Expect this number to keep
-  climbing toward roughly 2,000; the job publishes each move on its own.
+  7,632 -> 25 -> 98 -> 199 -> 509 -> 733 (last check 2026-10-12). Expect this
+  number to keep climbing toward roughly 2,000; the job publishes each move on
+  its own.
 
 ## The auto-refresh is live
 
@@ -35,20 +37,29 @@ Note: three `query attempt N/3 failed` lines timestamped 2026-09-15T20:00:38 in
 that log are **unit-test output**, not a real outage. Left in place rather than
 rewriting the log.
 
-## Pricing model change (2026-10-14)
+## Pricing and editions (current as of 2026-10-14)
 
-Pro and "Standard to Pro upgrade" are gone from the page. Editions now shows two
-cards: SPASynth Standard (intro $99, regular $149) and the Everything Bundle
-(intro $499, regular $699; includes SPASynth, full library, free updates for
-life). A "Seats and upgrades" box below carries the seats rule (first seat full
-price, each extra seat half, 1 to 10 online, contact us above 10, one serial per
-seat, 3 computers per serial; SPASynth and the bundle only for now) and the
-upgrade rule (bundle price for the same seats minus what was paid for Standard,
-via a personal upgrade code). FAQ: Pro entries removed or reworded, three new
-entries (Standard vs bundle, upgrading, seats). Also fixed 20 -> 21 mod sources
-and seven -> eight engines. Intro pricing has no end date. Products still say
-"Coming soon". `scripts/update-library-stats.py` was not run. The old note below
-that "Three CTAs (Standard, Pro, upgrade)" now means two CTAs.
+Pro and the "Standard to Pro upgrade" are gone. "SPASynth Standard" was renamed
+to just **SPASynth** (2026-10-13); do not reintroduce "Standard" in copy.
+Editions shows two cards, both with "Intro price" badges and no end date:
+
+- **SPASynth**: intro $99, regular $149, 450-sound 24/48 starter library.
+  A **single purchase**, not seat-based: buy as many copies as needed, each
+  with its own serial. Note under the card: "Buy 3 or more of our apps and save
+  20%." (the 20% applies across Silverplatter apps, not just SPASynth).
+- **Everything Bundle**: intro $499, regular $699; SPASynth plus the full
+  library and free updates for life. **The only seat-based product**: first
+  seat full price, each extra seat half, 1 to 10 seats online, contact us above
+  10. Card note: two seats are $748.50 intro / $1,048.50 regular.
+
+Every seat and every copy gets its own serial; each serial activates up to 3
+computers. **Upgrade:** pay the bundle price for the same number of seats as
+SPASynth copies owned, minus what was paid for SPASynth, via a personal upgrade
+code. The "Seats and upgrades" box below the cards and three FAQ entries
+(SPASynth vs bundle, upgrading, "Can I buy more than one copy or seat?") all
+state these rules; keep them in sync if pricing changes again. Both buy
+buttons still say "Coming soon". Also fixed in that pass: 21 mod sources, eight
+engines.
 
 ## What the page says right now
 
@@ -59,11 +70,11 @@ Everything below is generated, not typed. Do not hand-edit these numbers in
 | Stat | Value | Where it comes from |
 |---|---|---|
 | Packs | 90 | SPAStation catalog, verified non-bundle entries |
-| Sounds ("up to") | 11,988 | 11,479 pack sounds + 509 Vault bonus |
-| Library size | 78 GB | catalog zip bytes + Vault bonus bytes |
+| Sounds ("up to") | 12,212 | 11,479 pack sounds + 733 Vault bonus |
+| Library size | 86 GB | catalog zip bytes + Vault bonus bytes |
 | Starter library | 450 | 5 x packs |
 | Factory presets | 370 | 3 x packs (Keys/Texture/Pulse per pack) + 100 synth bank |
-| Version | v1.0.22 | automated, see "Shipping a new SPASynth version" |
+| Version | v1.0.36 | automated, see "Shipping a new SPASynth version" |
 
 The sounds/size rows move on their own (the Vault refresh job) and the version
 row now does too, so treat all three as snapshots — `scripts/library-stats.json`
@@ -217,7 +228,7 @@ before you clear it.
 ## Decisions worth not relitigating
 
 - **"Up to N sounds" = packs + Vault bonus.** Mike's call 2026-09-14: only
-  Pro/Everything Bundle owners get the full library either way, so the ceiling
+  Everything Bundle owners get the full library either way, so the ceiling
   is everything SPASynth can play. Vault bonus is added; the Vault's own pack
   mirror (11,493) is not, the catalog is authoritative for packs.
 - **Count only what is currently sold.** The SPAStation catalog is the
@@ -227,16 +238,16 @@ before you clear it.
   culled 2026-09-14 and are being replaced with deliberate additions; expect it
   to climb back toward ~2,000 over time. It went 7,632 -> 25 -> 98. Do not
   "fix" a drop by pinning to an older figure; publish what the database says.
-- **Pro is 24/96, Standard's starter is 24/48**, delivered via Everything
-  Bundle links in Shopify order emails or directly in SPAStation.
+- **The Everything Bundle is 24/96, SPASynth's starter is 24/48**, delivered
+  via Everything Bundle links in Shopify order emails or directly in SPAStation.
 - No em dashes in visible copy.
 
 ## Open items
 
 1. **Ask Mike:** does the existing "Will I get updates?" FAQ satisfy his older
    request for "a FAQ answer confirming updates are free"? Never answered.
-2. **Shopify links.** Three CTAs (Standard, Pro, upgrade) are still
-   `href="#"` placeholders labelled "Coming soon". Swap for real product URLs at
+2. **Shopify links.** The two edition buttons (SPASynth, Everything Bundle) are
+   still `href="#"` placeholders labelled "Coming soon". Swap for real product URLs at
    launch and likely relabel to "Buy now". **Listing SPASynth on Shopify is also
    what switches release auto-publishing off** (see "Shipping a new SPASynth
    version"), so expect that notification around the same time and settle the
