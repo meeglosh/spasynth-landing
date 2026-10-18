@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Download SPASynth | Silverplatter Audio</title>
+<meta name="description" content="Download the SPASynth installer for macOS or Windows. Try every feature free for 14 days, then activate with your serial.">
+<link rel="canonical" href="https://spasynth.com/download">
+<link rel="icon" href="/assets/branding/SPAudio_logo_white.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--canvas:#101413;--surface:#1b211f;--ink:#eeeae0;--ink-soft:#b0b9b1;--accent:#6dd6c2;--accent-ink:#101413;--line:rgba(222,232,221,.18)}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--canvas);color:var(--ink);font:17px/1.6 "Barlow",system-ui,sans-serif}
+  a{color:var(--accent)}
+  .wrap{max-width:880px;margin:0 auto;padding:0 16px}
+  header{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--line)}
+  .brand{display:flex;gap:10px;align-items:center;color:var(--ink);text-decoration:none;font:600 16px "Barlow Condensed",sans-serif;letter-spacing:.12em;text-transform:uppercase}
+  h1{font:500 clamp(40px,8vw,64px)/1 "Barlow Condensed",sans-serif;margin:56px 0 12px;text-transform:uppercase;letter-spacing:.02em}
+  .lede{color:var(--ink-soft);max-width:60ch;margin:0 0 36px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:24px}
+  .card.primary{border-color:var(--accent)}
+  .card h2{font:500 28px "Barlow Condensed",sans-serif;margin:0 0 4px;text-transform:uppercase}
+  .meta{color:var(--ink-soft);font-size:14px;margin:0 0 20px}
+  .btn{display:inline-block;padding:12px 18px;border-radius:4px;font-weight:600;text-decoration:none;border:1px solid var(--accent);color:var(--accent)}
+  .primary .btn{background:var(--accent);color:var(--accent-ink)}
+  section{margin:48px 0}
+  h3{font:500 22px "Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px}
+  ol{padding-left:20px;margin:0}li{margin:0 0 8px}
+  .hash{font:12px/1.4 ui-monospace,monospace;color:var(--ink-soft);word-break:break-all;margin-top:14px}
+  footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--ink-soft);font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="brand" href="/"><img src="/assets/branding/SPAudio_logo_white.svg" alt="" width="20" height="20">SPASynth</a>
+    <a href="/#editions">Get SPASynth</a>
+  </header>
+
+  <main>
+    <h1>Download SPASynth</h1>
+    <p class="lede">Version 1.0.36. Every feature is open for a free 14-day trial. When you buy SPASynth, your serial activates this same installer, so there is nothing else to download.</p>
+
+    <div class="grid">
+      <div class="card" id="mac">
+        <h2>macOS</h2>
+        <p class="meta">macOS 11 or later · Apple silicon and Intel · AU, VST3, Standalone · 21.6 MB</p>
+        <a class="btn" href="https://downloads.spasynth.com/installers/spasynth/1.0.36/SPASynth-1.0.36-macOS.pkg">Download for macOS</a>
+        <p class="hash">SHA-256 29dd2e2e4d714fc524214885d12c327c3aec2cd71e381947f63a3c1c4cf61de9</p>
+      </div>
+      <div class="card" id="win">
+        <h2>Windows</h2>
+        <p class="meta">Windows 10 or later, 64-bit · VST3, Standalone · 7.4 MB</p>
+        <a class="btn" href="https://downloads.spasynth.com/installers/spasynth/1.0.36/SPASynth-1.0.36-Windows.exe">Download for Windows</a>
+        <p class="hash">SHA-256 6bc85ca35d10771a17e4bec82688670bb04b039b23dd71105425a9907564769a</p>
+      </div>
+    </div>
+
+    <section>
+      <h3>Installing</h3>
+      <ol>
+        <li>Quit your music software, then open the installer.</li>
+        <li>Get the sound library with <a href="https://silverplatteraudio.com/products/spastation">SPAStation</a>, our free download app. It installs the starter library straight into your SPASynth library folder. If you already own our sound libraries, point SPASynth at them with SET LIBRARY.</li>
+        <li>Bought SPASynth? Your serial is in SPAStation, in the Licenses view. Click the TRIAL badge in SPASynth to activate.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h3>A note for Windows</h3>
+      <p>Our installers are digitally signed by Kenzora Games, Inc. Windows SmartScreen may still show a blue "Windows protected your PC" message for a new installer. Check that the publisher reads Kenzora Games, Inc., then click "More info" and "Run anyway".</p>
+    </section>
+  </main>
+
+  <footer>Silverplatter Audio · <a href="https://www.silverplatteraudio.com">silverplatteraudio.com</a></footer>
+</div>
+<script>
+  // Lead with the visitor's platform; the other stays one click away.
+  (function(){var w=/Windows/i.test(navigator.userAgent);var el=document.getElementById(w?'win':'mac');el.classList.add('primary');if(w)el.parentNode.insertBefore(el,el.parentNode.firstChild);})();
+</script>
+</body>
+</html>
