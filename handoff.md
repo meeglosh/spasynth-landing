@@ -265,6 +265,15 @@ before you clear it.
    page, and prefer verifying spec numbers against `~/spasynth/source/` directly
    rather than changelog prose; that is how the stale 264-preset count and the
    incomplete arpeggiator list were caught.
+7. **SEO/AEO follow-ups (2026-10-17 audit).** (a) Turn off Cloudflare's managed
+   robots.txt / "Block AI bots" so the repo's allow-all `robots.txt` is served;
+   until then Cloudflare's version (blocks Google-Extended, GPTBot, ClaudeBot)
+   wins. (b) `https://www.spasynth.com` fails TLS; proxy the `www` record or add
+   a redirect rule. (c) Submit `sitemap.xml` to Google Search Console and Bing.
+   (d) At launch, add `offers` (prices, Shopify URLs) to the SoftwareApplication
+   JSON-LD in the head. Keep counts and the version string out of the JSON-LD:
+   counts would go stale, and `prepare-release.py` requires the version in
+   exactly five places.
 
 ## Gotchas
 

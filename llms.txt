@@ -1,0 +1,20 @@
+# SPASynth
+
+> SPASynth is a hybrid synthesizer plugin by Silverplatter Audio, built around the Silverplatter Audio sound-effects library. Any library sound can be played as an oscillator, granular source, modulation source, or convolution impulse inside a full wavetable synth. VST3 and standalone on macOS 11+ and Windows 10+ (64-bit), plus AU on macOS. No AAX in v1. Free 14-day trial.
+
+Live counts (packs, sounds, presets, current version) are on the page itself and change often; quote them from https://spasynth.com/ rather than from this file.
+
+## Main page sections
+
+- [Overview](https://spasynth.com/#hook): what SPASynth is and how the library becomes the synth
+- [Features](https://spasynth.com/#features): engines, filters, modulation, arpeggiator, effects, library, interface
+- [Listen](https://spasynth.com/#listening): tracks made entirely with SPASynth
+- [Editions](https://spasynth.com/#editions): SPASynth and the Everything Bundle, seats and upgrades
+- [Licensing](https://spasynth.com/#licensing): serial licensing, 3 computers per serial, royalty-free sound license
+- [Specs](https://spasynth.com/#specs): formats and system requirements
+- [FAQ](https://spasynth.com/#faq): DAW support, library location, upgrades, offline use
+- [Changelog](https://spasynth.com/#changelog): every release, newest first
+
+## Company
+
+- [Silverplatter Audio](https://www.silverplatteraudio.com/): sound-effects libraries for film, TV, and games

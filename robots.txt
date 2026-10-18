@@ -1,0 +1,5 @@
+# spasynth.com is a product page: every crawler, search or AI, is welcome.
+User-agent: *
+Allow: /
+
+Sitemap: https://spasynth.com/sitemap.xml

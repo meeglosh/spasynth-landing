@@ -96,9 +96,9 @@ def main():
     def sub(m): return f'<span data-stat="{m.group(1)}">{vals[m.group(1)]}</span>'
     page, n = re.subn(r'<span data-stat="(packs|sounds|starter|size|presets)">[^<]*</span>', sub, page)
 
-    desc = (f'SPASynth is a hybrid synthesizer built around the entire Silverplatter Audio sound-effects library '
-            f'({vals["packs"]} packs, up to {vals["sounds"]} sounds), playable as oscillators, granular fuel, '
-            f'modulation sources, and convolution impulses. Serial licensing with a free 14-day trial.')
+    desc = (f'SPASynth is a hybrid synth plugin (VST3, AU, standalone) for macOS and Windows, built around the '
+            f'entire Silverplatter Audio sound-effects library ({vals["packs"]} packs, up to {vals["sounds"]} sounds) '
+            f'as oscillators, granular fuel, modulation sources, and convolution impulses. Free 14-day trial.')
     social = (f'A hybrid synthesizer built around the entire Silverplatter Audio sound-effects library, up to '
               f'{vals["sounds"]} sounds playable as oscillators, granular fuel, modulation sources, and convolution '
               f'impulses. Serial licensing with a free 14-day trial.')
