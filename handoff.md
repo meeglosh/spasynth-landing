@@ -7,8 +7,8 @@ is just what is true right now and what to do next.
 - Repo `github.com/meeglosh/spasynth-landing`, branch `main`, local
   `~/spasynth-landing`. Static one-page site, no build step, GitHub Pages behind
   Cloudflare at **spasynth.com**.
-- As of 2026-10-17 `main` is clean and fully pushed (head `08002d5`); the live
-  site matches it.
+- As of 2026-10-17 `main` is clean and fully pushed (head: the SEO/AEO
+  commit `92b5cd9` plus this handoff update); the live site matches it.
 - The Vault refill is visibly progressing: bonus recordings went
   7,632 -> 25 -> 98 -> 199 -> 509 -> 733 (last check 2026-10-12). Expect this
   number to keep climbing toward roughly 2,000; the job publishes each move on
@@ -60,6 +60,41 @@ code. The "Seats and upgrades" box below the cards and three FAQ entries
 state these rules; keep them in sync if pricing changes again. Both buy
 buttons still say "Coming soon". Also fixed in that pass: 21 mod sources, eight
 engines.
+
+## SEO / AEO (audited 2026-10-17)
+
+Audited against AgriciDaniel/claude-seo (the top-starred SEO/GEO skills repo,
+~19k stars; read only, its scripts were never run) and shipped in `92b5cd9`:
+
+- **Title** "SPASynth: Sound-Effects Synth Plugin (VST3, AU) | Silverplatter
+  Audio" (also og/twitter titles). Hero eyebrow is now "Hybrid synth plugin by
+  Silverplatter Audio". Mike approved title/meta/eyebrow changes but **not** the
+  H1; leave "Your sound library is the synth." alone.
+- **Meta descriptions** are still generated: the wording lives in the `desc` /
+  `social` templates in `scripts/update-library-stats.py`. Edit there, never in
+  the page.
+- **Head**: canonical `https://spasynth.com/`, robots meta
+  (`max-image-preview:large`), og:site_name, og:image width/height/alt.
+- **JSON-LD** `@graph` in the head: Organization (Silverplatter Audio), WebSite,
+  SoftwareApplication. Deliberately has **no offers** (Mike: no prices until
+  it's purchasable), **no counts** (would go stale; the stats script doesn't
+  touch it) and **no version string** (`prepare-release.py` demands the version
+  in exactly five places outside the changelog block; a sixth makes it refuse).
+  No FAQPage: Google retired FAQ rich results 2026-05-07, and the FAQ is already
+  plain server-rendered HTML that AI crawlers read.
+- **New files**: `robots.txt` (allow all + Sitemap line; Mike chose to allow
+  every AI bot, training included), `sitemap.xml` (single URL; bump `lastmod`
+  on meaningful content changes), `llms.txt` (no live numbers by design; Google
+  ignores it, other AI tools may not), `404.html` (noindex, branded).
+- Already fine, no change needed: all content is in raw HTML (no JS
+  dependency), clean H1/H2/H3, images have alt and dimensions, AI *search*
+  bots (OAI-SearchBot, Claude-SearchBot, PerplexityBot) were already allowed.
+
+**Cloudflare currently prepends its managed block to our robots.txt.** The live
+file is Cloudflare's rules (Disallow for Google-Extended, GPTBot, ClaudeBot,
+CCBot, Applebot-Extended, etc.) followed by ours; the bot-specific Disallows win.
+Verify with `curl -s https://spasynth.com/robots.txt | head`; it is fixed when
+"BEGIN Cloudflare Managed content" is gone.
 
 ## What the page says right now
 
@@ -265,15 +300,17 @@ before you clear it.
    page, and prefer verifying spec numbers against `~/spasynth/source/` directly
    rather than changelog prose; that is how the stale 264-preset count and the
    incomplete arpeggiator list were caught.
-7. **SEO/AEO follow-ups (2026-10-17 audit).** (a) Turn off Cloudflare's managed
-   robots.txt / "Block AI bots" so the repo's allow-all `robots.txt` is served;
-   until then Cloudflare's version (blocks Google-Extended, GPTBot, ClaudeBot)
-   wins. (b) `https://www.spasynth.com` fails TLS; proxy the `www` record or add
-   a redirect rule. (c) Submit `sitemap.xml` to Google Search Console and Bing.
+7. **SEO/AEO follow-ups (2026-10-17 audit).** (a) **Mike:** Cloudflare dashboard, Security -> Bots,
+   turn off managed robots.txt / "Block AI bots" (see the SEO / AEO section). (b) **Mike:** `https://www.spasynth.com` fails TLS (curl
+   verify error 10; `www` is DNS-only to GitHub Pages; `http://www` redirects
+   fine). Proxy the `www` record or add a redirect rule to the apex. (c) **Mike:** submit `sitemap.xml` to Google Search Console and Bing
+   Webmaster Tools (Bing feeds ChatGPT search and Copilot).
    (d) At launch, add `offers` (prices, Shopify URLs) to the SoftwareApplication
    JSON-LD in the head. Keep counts and the version string out of the JSON-LD:
    counts would go stale, and `prepare-release.py` requires the version in
-   exactly five places.
+   exactly five places. (e) Off-site entity signals matter most for AI
+   answers: YouTube walkthrough, Reddit threads, KVR listing, links from
+   silverplatteraudio.com. (f) Mobile hero not checked on a real phone.
 
 ## Gotchas
 
