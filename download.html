@@ -32,6 +32,17 @@
   ol{padding-left:20px;margin:0}li{margin:0 0 8px}
   .hash{font:12px/1.4 ui-monospace,monospace;color:var(--ink-soft);word-break:break-all;margin-top:14px}
   footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--ink-soft);font-size:14px}
+  .signup{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:24px}
+  .signup p{color:var(--ink-soft);margin:0 0 16px;max-width:60ch}
+  .signup .row{display:flex;flex-wrap:wrap;gap:10px}
+  .signup input[type=email]{flex:1 1 240px;min-width:0;padding:11px 12px;border-radius:4px;border:1px solid var(--line);background:var(--canvas);color:var(--ink);font:inherit}
+  .signup input[type=email]:focus{outline:2px solid var(--accent);outline-offset:1px}
+  .signup button{padding:11px 18px;border-radius:4px;border:1px solid var(--accent);background:transparent;color:var(--accent);font:600 16px "Barlow",sans-serif;cursor:pointer}
+  .signup button:disabled{opacity:.5;cursor:default}
+  .signup label.consent{display:flex;gap:8px;align-items:flex-start;margin-top:12px;font-size:15px;cursor:pointer}
+  .signup label.consent input{accent-color:var(--accent);margin-top:5px}
+  .signup .note{min-height:1.6em;margin:10px 0 0;font-size:15px}
+  .signup .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 </style>
 </head>
 <body>
@@ -61,6 +72,20 @@
     </div>
 
     <section>
+      <h3>Newsletter (optional)</h3>
+      <form class="signup" id="signup" novalidate>
+        <p>Your download never depends on this. Leave your email if you'd like product news, new releases and the occasional offer from Silverplatter Audio.</p>
+        <div class="row">
+          <label class="hp" aria-hidden="true">Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+          <input type="email" name="email" autocomplete="email" placeholder="you@example.com" aria-label="Email address">
+          <button type="submit">Sign up</button>
+        </div>
+        <label class="consent"><input type="checkbox" name="consent"> Send me the Silverplatter Audio newsletter. Unsubscribe any time.</label>
+        <p class="note" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section>
       <h3>Installing</h3>
       <ol>
         <li>Quit your music software, then open the installer.</li>
@@ -80,6 +105,27 @@
 <script>
   // Lead with the visitor's platform; the other stays one click away.
   (function(){var w=/Windows/i.test(navigator.userAgent);var el=document.getElementById(w?'win':'mac');el.classList.add('primary');if(w)el.parentNode.insertBefore(el,el.parentNode.firstChild);})();
+  // Optional newsletter sign-up. The email Worker stores the consent on a
+  // Shopify customer, tagged with where it came from.
+  (function(){
+    var form=document.getElementById('signup'),note=form.querySelector('.note'),button=form.querySelector('button');
+    var say=function(t){note.textContent=t;};
+    form.addEventListener('submit',function(e){
+      e.preventDefault();
+      var email=form.email.value.trim();
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return say('Please check the email address.');
+      if(!form.consent.checked)return say('Tick the box to confirm you want the newsletter.');
+      button.disabled=true;say('Signing you up...');
+      fetch('https://signal-desk-email.odd-wood-4a98.workers.dev/email',{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({email:email,consent:true,source:'spasynth-download',website:form.website.value})})
+        .then(function(r){
+          if(r.ok){form.reset();say("You're subscribed. Thanks!");}
+          else say(r.status===400?'Please check the email address.':'The newsletter could not be reached. Please try again later.');
+        })
+        .catch(function(){say('The newsletter could not be reached. Please try again later.');})
+        .then(function(){button.disabled=false;});
+    });
+  })();
 </script>
 </body>
 </html>
