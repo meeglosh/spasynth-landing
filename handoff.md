@@ -219,6 +219,25 @@ that switches release auto-publishing off (see the next section).
 
 - Price $99, compare-at $149, theme template `spasynth`, collections "Apps (3+
   discount)" and "Software". Media: five promo images plus the two demo videos.
+- **The `spasynth` theme template, not the product description, drives the
+  page.** `templates/product.spasynth.json` (live theme "Updated copy of
+  Streamline", #170150887703) has the description block and full-width
+  description section *disabled*; all copy is hardcoded in its sections.
+  Anything meant to appear on the page goes in the template. Edit with the
+  Shopify CLI (already logged in): `shopify theme pull --store
+  silverplatter-audio.myshopify.com --theme 170150887703 --only
+  templates/product.spasynth.json`, edit, then `shopify theme push ... --only
+  <same> --allow-live --nodelete`. Check a draft in the theme customizer
+  (`/themes/<id>/editor?previewPath=/products/spasynth`); `?view=spasynth` on
+  any live product renders the template for a quick curl check.
+- 2026-10-27: added "See it play" (custom-liquid section looping the product's
+  video media with the site's captions) after the intro text, and "Hear it:
+  100% SPASynth" plus six `spa-audio-preview` sections (one per demo track,
+  MP3s in Content -> Files, same names as `assets/audio/`) after "Inside the
+  synth". A new track means a new `spa-audio-preview` section there. The
+  description also carries the six players (harmless, not rendered).
+  SEO title is now "SPASynth: Sound-Effects Synth Plugin (VST3, AU)" (theme
+  appends " – Silverplatter Audio"), meta description mentions VST3/AU.
 - 2026-10-27: the description's leftover "Standard is the complete
   synthesizer" became "SPASynth is …", and the placeholder "[UPGRADE OFFER FOR
   STANDARD OWNERS: …]" was replaced with the site's upgrade wording (pay the
