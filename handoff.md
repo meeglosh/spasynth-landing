@@ -182,6 +182,30 @@ Adding a track is a manual job with settled conventions:
   exactly what happened when the artist bylines shipped on 2026-09-17. Check a
   deploy with `curl -sI https://spasynth.com/css/styles.css | grep -i age`.
 
+## Video demos ("See it play", added 2026-10-27)
+
+Two screen recordings sit in their own section just before the listening
+room, click to play with sound (one player at a time, shared with the audio
+tracks in `js/page.js`):
+
+- **Sample Pool: a new laugh on every note** (preset SFX Crowd Laughter). All
+  three oscillators are in Sample Pool mode, Random, holding 4 + 5 + 4 = 13
+  laughter takes. Mike wanted this one clearly labelled as the Sample Pool
+  demo; keep that framing.
+- **Haunted Forest** (preset SC Haunted Forest): three Sample oscillators
+  layering air ambience, crickets and a tonal drone.
+
+Mike's `.mov` masters stay in `assets/videos/` but are gitignored. The page uses
+web encodes made from them (1080p30 H.264, CRF 24, AAC 192k, faststart, about
+3.5 MB each) plus poster JPGs from mid-video, since both recordings open on
+black:
+`ffmpeg -i in.mov -map 0:v:0 -map 0:a:0 -vf "fps=30,scale=1920:-2" -c:v libx264 -preset slow -crf 24 -pix_fmt yuv420p -c:a aac -b:a 192k -movflags +faststart -map_metadata -1 out.mp4`
+
+The same two videos (same posters as covers, alt text starting "Sample Pool
+demo:" / "Soundscape demo:") are on the draft SPASynth Shopify product,
+after the five images. Shopify's gallery shows no captions, so alt text is the
+only label there.
+
 ## Shipping a new SPASynth version
 
 **This is fully automated while SPASynth is pre-launch.**

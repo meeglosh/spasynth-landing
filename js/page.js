@@ -56,10 +56,11 @@
   window.addEventListener('spasynth:ready', queue);
   update();
 
-  /* ---------- audio: one track at a time, count stays honest ---------- */
+  /* ---------- audio + video: one player at a time, count stays honest ---------- */
   const players = document.querySelectorAll('.audio-track audio');
-  players.forEach(audio => audio.addEventListener('play', () => {
-    players.forEach(other => { if (other !== audio) other.pause(); });
+  const media = document.querySelectorAll('.audio-track audio, .video-demo video');
+  media.forEach(el => el.addEventListener('play', () => {
+    media.forEach(other => { if (other !== el) other.pause(); });
   }));
   const words = ['Zero','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve'];
   const count = document.querySelector('[data-track-count]');
