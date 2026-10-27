@@ -16,6 +16,10 @@ Live counts (packs, sounds, presets, current version) are on the page itself and
 - [FAQ](https://spasynth.com/#faq): DAW support, library location, upgrades, offline use
 - [Changelog](https://spasynth.com/#changelog): every release, newest first
 
+## Download
+
+- [Download SPASynth](https://spasynth.com/download): macOS and Windows installers, free 14-day trial, activate with a serial
+
 ## Company
 
 - [Silverplatter Audio](https://www.silverplatteraudio.com/): sound-effects libraries for film, TV, and games
