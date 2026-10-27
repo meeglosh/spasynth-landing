@@ -7,10 +7,11 @@ is just what is true right now and what to do next.
 - Repo `github.com/meeglosh/spasynth-landing`, branch `main`, local
   `~/spasynth-landing`. Static one-page site, no build step, GitHub Pages behind
   Cloudflare at **spasynth.com**.
-- As of 2026-10-17 `main` is clean and fully pushed (head: the SEO/AEO
-  commit `92b5cd9` plus this handoff update); the live site matches it.
+- As of 2026-10-27 `main` is clean and fully pushed (head: the video-demos
+  commit `4957757` plus this handoff update); the live site matches it.
 - The Vault refill is visibly progressing: bonus recordings went
-  7,632 -> 25 -> 98 -> 199 -> 509 -> 733 (last check 2026-10-12). Expect this
+  7,632 -> 25 -> 98 -> 199 -> 509 -> 733 -> 826 (published 2026-10-23,
+  unchanged at the 2026-10-26 poll). Expect this
   number to keep climbing toward roughly 2,000; the job publishes each move on
   its own.
 
@@ -105,8 +106,8 @@ Everything below is generated, not typed. Do not hand-edit these numbers in
 | Stat | Value | Where it comes from |
 |---|---|---|
 | Packs | 90 | SPAStation catalog, verified non-bundle entries |
-| Sounds ("up to") | 12,212 | 11,479 pack sounds + 733 Vault bonus |
-| Library size | 86 GB | catalog zip bytes + Vault bonus bytes |
+| Sounds ("up to") | 12,305 | 11,479 pack sounds + 826 Vault bonus |
+| Library size | 87 GB | catalog zip bytes + Vault bonus bytes |
 | Starter library | 450 | 5 x packs |
 | Factory presets | 370 | 3 x packs (Keys/Texture/Pulse per pack) + 100 synth bank |
 | Version | v1.0.36 | automated, see "Shipping a new SPASynth version" |
@@ -204,7 +205,43 @@ black:
 The same two videos (same posters as covers, alt text starting "Sample Pool
 demo:" / "Soundscape demo:") are on the draft SPASynth Shopify product,
 after the five images. Shopify's gallery shows no captions, so alt text is the
-only label there.
+only label there. Mike was offered a visible "Watch it play" block in the
+product description and has not asked for it; don't add it unprompted.
+
+## The SPASynth Shopify listing (draft)
+
+SPASynth **does** have a Shopify product now, as a **Draft**:
+`https://admin.shopify.com/store/silverplatter-audio/products/10425859899671`
+(Mike's admin, reached through Claude in Chrome). Drafts are not in the public
+`products.json`, which is why `prepare-release.py` still sees "no listing" and
+keeps auto-publishing. **Setting this product to Active is the launch trigger**
+that switches release auto-publishing off (see the next section).
+
+- Price $99, compare-at $149, theme template `spasynth`, collections "Apps (3+
+  discount)" and "Software". Media: five promo images plus the two demo videos.
+- 2026-10-27: the description's leftover "Standard is the complete
+  synthesizer" became "SPASynth is …", and the placeholder "[UPGRADE OFFER FOR
+  STANDARD OWNERS: …]" was replaced with the site's upgrade wording (pay the
+  bundle price for the same number of seats, minus what you paid, personal
+  upgrade code). Keep it in sync with the site's "Seats and upgrades" box if
+  pricing changes.
+- The description is a TinyMCE editor (`tinymce.get('product-description-ro')`).
+  Exact-string replacements on `getContent()`, then `setContent()` plus
+  `fire('change')`, register as unsaved changes; then click Save. Verify after
+  a reload.
+- **Uploading media through Claude in Chrome needs a workaround.** The real file
+  input is inside a shadow DOM and the upload tool cannot target it, and
+  fetching from localhost is blocked by Shopify's CSP. What worked: inject a
+  temporary `<input type=file>` into the page, fill it with the upload tool, copy
+  its `files` onto Shopify's input with a DataTransfer, and dispatch **one
+  non-bubbling** `change` (a bubbling/composed one uploads everything twice).
+  **Wait until every thumbnail has finished "Processing…" before clicking
+  Save**, or the videos are silently dropped. Cover images upload through the
+  media viewer's "Upload image" input, and doing so clears any unsaved alt
+  text, so set the cover first, then the alt text, then Save.
+- Deleting Shopify files is permanent, so Claude does not do it; Mike deletes
+  them himself (Content -> Files, keep the copy with alt text and "1 product"
+  under References). The stray uploads from 2026-10-27 are already deleted.
 
 ## Shipping a new SPASynth version
 
@@ -219,7 +256,8 @@ needs to be involved.
 deliberate.** The original worry was announcing a version before customers could
 download it: the product changelog is written at *build* time (the 1.0.17 commit
 says "built + staged"), potentially days before a release is out. But SPASynth is
-not purchasable yet — Shopify lists 227 products and none of them is SPASynth,
+not purchasable yet — the public Shopify catalogue has no SPASynth (the listing
+exists only as a Draft, see above),
 and the page's own edition buttons say "Coming soon" — so nobody can be out of
 step with what the page claims, and publishing unattended costs nothing.
 
@@ -307,7 +345,9 @@ before you clear it.
    request for "a FAQ answer confirming updates are free"? Never answered.
 2. **Shopify links.** The two edition buttons (SPASynth, Everything Bundle) are
    still `href="#"` placeholders labelled "Coming soon". Swap for real product URLs at
-   launch and likely relabel to "Buy now". **Listing SPASynth on Shopify is also
+   launch and likely relabel to "Buy now". The SPASynth product exists as a Draft
+   (see "The SPASynth Shopify listing"); its storefront URL is known once it is
+   Active. **Activating it is also
    what switches release auto-publishing off** (see "Shipping a new SPASynth
    version"), so expect that notification around the same time and settle the
    post-launch release process then.
@@ -335,6 +375,13 @@ before you clear it.
    exactly five places. (e) Off-site entity signals matter most for AI
    answers: YouTube walkthrough, Reddit threads, KVR listing, links from
    silverplatteraudio.com. (f) Mobile hero not checked on a real phone.
+
+8. **Video demos follow-ups (2026-10-27).** (a) No "Watch" link in the masthead
+   nav (it already has eight); add one if Mike wants it. (b) Haunted Forest's
+   audio is quiet (peaks about -18.5 dBFS against -8.5 for the laughter demo);
+   left as recorded, mention it if Mike re-records. (c) Not yet played back on a
+   real phone. (d) New demo videos: same encode, poster and labelling pattern
+   as in "Video demos"; name what the video shows off (feature, preset).
 
 ## Gotchas
 
