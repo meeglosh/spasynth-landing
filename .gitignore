@@ -2,3 +2,6 @@
 
 # Local-only polling state for scripts/auto-refresh-vault.py
 scripts/.vault-poll-state.json
+
+# Original screen-recording masters; the page uses the web MP4s beside them
+assets/videos/*.mov
