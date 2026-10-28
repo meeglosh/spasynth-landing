@@ -142,9 +142,10 @@ steady days, snapping back to daily on any change. Log:
 
 ## Demo tracks (the listening room)
 
-Six tracks, in this order: SPA, Dark, The Onus is on You, City of Cones,
-Barnicle, Homebound. All are Ruger Seeds except Dark, which is add.remove and
-sits second at Mike's request (2026-09-17). More are expected; a new track
+Seven tracks, in this order: SPA, Dark, The Onus is on You, City of Cones,
+Barnicle, Homebound, Breath. All are Ruger Seeds except Dark, which is add.remove and
+sits second at Mike's request (2026-09-17). Breath is by Philharmonic (added
+2026-10-28 from a 24-bit/48 kHz WAV master, converted with the command below). More are expected; a new track
 lands at the bottom unless Mike says otherwise.
 
 **This list and the flat7.design case study's have deliberately diverged as of
@@ -168,8 +169,8 @@ Adding a track is a manual job with settled conventions:
   (`Dark.aif` became `dark.mp3`, displayed "Dark", like `city-of-cones.mp3`).
 - **Every track carries an artist byline** in `<p class="track-artist">`, under
   the title, and names the artist in the player's `aria-label` ("Play <title> by
-  <artist>, made entirely with SPASynth"). Ruger Seeds and add.remove are the
-  artists so far.
+  <artist>, made entirely with SPASynth"). Ruger Seeds, add.remove and
+  Philharmonic are the artists so far.
 - The "N tracks made entirely with SPASynth" sentence counts the players on the
   page in `js/page.js`, so it updates itself. Set the static `data-track-count`
   fallback to match for the pre-JS and no-JS cases. Never hardcode the number
@@ -234,7 +235,8 @@ that switches release auto-publishing off (see the next section).
   video media with the site's captions) after the intro text, and "Hear it:
   100% SPASynth" plus six `spa-audio-preview` sections (one per demo track,
   MP3s in Content -> Files, same names as `assets/audio/`) after "Inside the
-  synth". A new track means a new `spa-audio-preview` section there. The
+  synth". A new track means a new `spa-audio-preview` section there. Also bump the
+  "Six/Seven tracks" sentence in the `spasynth_listen` section. The
   description also carries the six players (harmless, not rendered).
   SEO title is now "SPASynth: Sound-Effects Synth Plugin (VST3, AU)" (theme
   appends " – Silverplatter Audio"), meta description mentions VST3/AU.
