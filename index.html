@@ -63,6 +63,23 @@
         "One-button patch randomizer",
         "Free 14-day trial, serial licensing, up to 3 computers per serial"
       ]
+    },
+    {
+      "@type": "MusicPlaylist",
+      "@id": "https://spasynth.com/#listening",
+      "name": "100% SPASynth demo tracks",
+      "description": "Original tracks made entirely with SPASynth. No other instruments or effects were used.",
+      "url": "https://spasynth.com/#listening",
+      "numTracks": 7,
+      "track": [
+        {"@type": "MusicRecording", "name": "SPA", "byArtist": {"@type": "MusicGroup", "name": "Ruger Seeds"}, "duration": "PT1M1S", "url": "https://spasynth.com/assets/audio/spa-1.2.mp3"},
+        {"@type": "MusicRecording", "name": "Dark", "byArtist": {"@type": "MusicGroup", "name": "add.remove"}, "duration": "PT38S", "url": "https://spasynth.com/assets/audio/dark.mp3"},
+        {"@type": "MusicRecording", "name": "The Onus is on You", "byArtist": {"@type": "MusicGroup", "name": "Ruger Seeds"}, "duration": "PT50S", "url": "https://spasynth.com/assets/audio/the-onus-is-on-you-v1.0.mp3"},
+        {"@type": "MusicRecording", "name": "City of Cones", "byArtist": {"@type": "MusicGroup", "name": "Ruger Seeds"}, "duration": "PT1M22S", "url": "https://spasynth.com/assets/audio/city-of-cones.mp3"},
+        {"@type": "MusicRecording", "name": "Barnicle", "byArtist": {"@type": "MusicGroup", "name": "Ruger Seeds"}, "duration": "PT1M10S", "url": "https://spasynth.com/assets/audio/barnicle-v1.1.mp3"},
+        {"@type": "MusicRecording", "name": "Homebound", "byArtist": {"@type": "MusicGroup", "name": "Ruger Seeds"}, "duration": "PT1M9S", "url": "https://spasynth.com/assets/audio/homebound-v1.0.mp3"},
+        {"@type": "MusicRecording", "name": "Breath", "byArtist": {"@type": "MusicGroup", "name": "Philharmonic"}, "duration": "PT2M55S", "url": "https://spasynth.com/assets/audio/breath.mp3"}
+      ]
     }
   ]
 }
@@ -72,9 +89,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/scrollcraft.css">
-<link rel="stylesheet" href="css/styles.css?v=20261027-videos">
+<link rel="stylesheet" href="css/styles.css?v=20261028-playlist">
 <script src="js/scrollcraft.js" defer></script>
-<script src="js/page.js?v=20261027-videos" defer></script>
+<script src="js/page.js?v=20261028-playlist" defer></script>
 <script type="module" src="js/scene.js?v=20261004-v1031"></script>
 </head>
 <body>
@@ -245,6 +262,15 @@
     <div class="video-demos">
       <figure class="video-demo">
         <figcaption class="video-meta">
+          <span class="track-category">Preset demo · Soundscape</span>
+          <h3>Haunted Forest</h3>
+          <p class="video-preset">Preset: SC Haunted Forest</p>
+          <p>Three Sample oscillators layered into one playable scene: steady air ambience, a cricket chorus at night and a dark tonal drone.</p>
+        </figcaption>
+        <video controls preload="none" playsinline width="1920" height="1080" poster="assets/videos/haunted-forest-soundscape-poster.jpg" aria-label="Soundscape demo: the SC Haunted Forest preset layering air, crickets and a drone"><source src="assets/videos/haunted-forest-soundscape.mp4" type="video/mp4"></video>
+      </figure>
+      <figure class="video-demo">
+        <figcaption class="video-meta">
           <span class="track-category">Feature demo · Sample Pool</span>
           <h3>Sample Pool: a new laugh on every note</h3>
           <p class="video-preset">Preset: SFX Crowd Laughter</p>
@@ -253,29 +279,32 @@
         </figcaption>
         <video controls preload="none" playsinline width="1920" height="1080" poster="assets/videos/sample-pool-crowd-laughter-poster.jpg" aria-label="Sample Pool demo: the SFX Crowd Laughter preset picking a different laughter take on every note"><source src="assets/videos/sample-pool-crowd-laughter.mp4" type="video/mp4"></video>
       </figure>
-      <figure class="video-demo">
-        <figcaption class="video-meta">
-          <span class="track-category">Preset demo · Soundscape</span>
-          <h3>Haunted Forest</h3>
-          <p class="video-preset">Preset: SC Haunted Forest</p>
-          <p>Three Sample oscillators layered into one playable scene: steady air ambience, a cricket chorus at night and a dark tonal drone.</p>
-        </figcaption>
-        <video controls preload="none" playsinline width="1920" height="1080" poster="assets/videos/haunted-forest-soundscape-poster.jpg" aria-label="Soundscape demo: the SC Haunted Forest preset layering air, crickets and a drone"><source src="assets/videos/haunted-forest-soundscape.mp4" type="video/mp4"></video>
-      </figure>
     </div>
   </section>
 
   <!-- LISTENING -->
   <section class="listening section-gutter" id="listening" aria-labelledby="listening-title" data-sc-act="flow">
     <div class="listening-title"><p class="eyebrow">Hear it</p><h2 id="listening-title">A little room<br> for listening.</h2><p class="listening-note"><strong>100% SPASynth.</strong> <span data-track-count>Seven</span> <span data-track-noun>tracks</span> made entirely with SPASynth. No other instruments or effects were used.</p></div>
-    <div class="audio-tracks">
-      <div class="audio-track"><div class="track-meta"><span class="track-category">Original track · 100% SPASynth</span><h3>SPA</h3><p class="track-artist">Ruger Seeds</p></div><audio controls preload="none" src="assets/audio/spa-1.2.mp3" aria-label="Play SPA by Ruger Seeds, made entirely with SPASynth"></audio></div>
-      <div class="audio-track"><div class="track-meta"><span class="track-category">Original track · 100% SPASynth</span><h3>Dark</h3><p class="track-artist">add.remove</p></div><audio controls preload="none" src="assets/audio/dark.mp3" aria-label="Play Dark by add.remove, made entirely with SPASynth"></audio></div>
-      <div class="audio-track"><div class="track-meta"><span class="track-category">Original track · 100% SPASynth</span><h3>The Onus is on You</h3><p class="track-artist">Ruger Seeds</p></div><audio controls preload="none" src="assets/audio/the-onus-is-on-you-v1.0.mp3" aria-label="Play The Onus is on You by Ruger Seeds, made entirely with SPASynth"></audio></div>
-      <div class="audio-track"><div class="track-meta"><span class="track-category">Original track · 100% SPASynth</span><h3>City of Cones</h3><p class="track-artist">Ruger Seeds</p></div><audio controls preload="none" src="assets/audio/city-of-cones.mp3" aria-label="Play City of Cones by Ruger Seeds, made entirely with SPASynth"></audio></div>
-      <div class="audio-track"><div class="track-meta"><span class="track-category">Original track · 100% SPASynth</span><h3>Barnicle</h3><p class="track-artist">Ruger Seeds</p></div><audio controls preload="none" src="assets/audio/barnicle-v1.1.mp3" aria-label="Play Barnicle by Ruger Seeds, made entirely with SPASynth"></audio></div>
-      <div class="audio-track"><div class="track-meta"><span class="track-category">Original track · 100% SPASynth</span><h3>Homebound</h3><p class="track-artist">Ruger Seeds</p></div><audio controls preload="none" src="assets/audio/homebound-v1.0.mp3" aria-label="Play Homebound by Ruger Seeds, made entirely with SPASynth"></audio></div>
-      <div class="audio-track"><div class="track-meta"><span class="track-category">Original track · 100% SPASynth</span><h3>Breath</h3><p class="track-artist">Philharmonic</p></div><audio controls preload="none" src="assets/audio/breath.mp3" aria-label="Play Breath by Philharmonic, made entirely with SPASynth"></audio></div>
+    <div class="playlist" data-playlist>
+      <div class="playlist-deck" data-playlist-deck hidden>
+        <audio preload="none"></audio>
+        <div class="pl-buttons">
+          <button type="button" class="pl-btn" data-pl="prev" aria-label="Previous track"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h2v12H6zM9.5 12 18 18V6z"/></svg></button>
+          <button type="button" class="pl-btn pl-toggle" data-pl="toggle" aria-label="Play"><svg class="pl-icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><svg class="pl-icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg></button>
+          <button type="button" class="pl-btn" data-pl="next" aria-label="Next track"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg></button>
+        </div>
+        <div class="pl-now" aria-live="polite"><span class="track-category">Now playing</span><p class="pl-title" data-pl-title></p><p class="track-artist" data-pl-artist></p></div>
+        <div class="pl-seek"><span data-pl-time>0:00</span><input type="range" min="0" max="1000" step="1" value="0" aria-label="Seek" data-pl-seek><span data-pl-duration>0:00</span></div>
+      </div>
+      <ol class="audio-tracks">
+        <li class="audio-track"><a class="track-play" href="assets/audio/spa-1.2.mp3" aria-label="Play SPA by Ruger Seeds, made entirely with SPASynth"></a><div class="track-meta"><h3>SPA</h3><p class="track-artist">Ruger Seeds</p></div><span class="track-time">1:01</span></li>
+        <li class="audio-track"><a class="track-play" href="assets/audio/dark.mp3" aria-label="Play Dark by add.remove, made entirely with SPASynth"></a><div class="track-meta"><h3>Dark</h3><p class="track-artist">add.remove</p></div><span class="track-time">0:38</span></li>
+        <li class="audio-track"><a class="track-play" href="assets/audio/the-onus-is-on-you-v1.0.mp3" aria-label="Play The Onus is on You by Ruger Seeds, made entirely with SPASynth"></a><div class="track-meta"><h3>The Onus is on You</h3><p class="track-artist">Ruger Seeds</p></div><span class="track-time">0:50</span></li>
+        <li class="audio-track"><a class="track-play" href="assets/audio/city-of-cones.mp3" aria-label="Play City of Cones by Ruger Seeds, made entirely with SPASynth"></a><div class="track-meta"><h3>City of Cones</h3><p class="track-artist">Ruger Seeds</p></div><span class="track-time">1:22</span></li>
+        <li class="audio-track"><a class="track-play" href="assets/audio/barnicle-v1.1.mp3" aria-label="Play Barnicle by Ruger Seeds, made entirely with SPASynth"></a><div class="track-meta"><h3>Barnicle</h3><p class="track-artist">Ruger Seeds</p></div><span class="track-time">1:10</span></li>
+        <li class="audio-track"><a class="track-play" href="assets/audio/homebound-v1.0.mp3" aria-label="Play Homebound by Ruger Seeds, made entirely with SPASynth"></a><div class="track-meta"><h3>Homebound</h3><p class="track-artist">Ruger Seeds</p></div><span class="track-time">1:09</span></li>
+        <li class="audio-track"><a class="track-play" href="assets/audio/breath.mp3" aria-label="Play Breath by Philharmonic, made entirely with SPASynth"></a><div class="track-meta"><h3>Breath</h3><p class="track-artist">Philharmonic</p></div><span class="track-time">2:55</span></li>
+      </ol>
     </div>
   </section>
 

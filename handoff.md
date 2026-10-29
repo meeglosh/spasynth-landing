@@ -167,15 +167,25 @@ Adding a track is a manual job with settled conventions:
   (`the-onus-is-on-you-v1.0.mp3` renders as "The Onus is on You"). Filenames are
   kebab-case, and a track with no version number in its name keeps none
   (`Dark.aif` became `dark.mp3`, displayed "Dark", like `city-of-cones.mp3`).
+- **The tracks play through one playlist player** (since 2026-10-28, when the
+  list reached seven): a deck with previous / play / next, a seek bar and the
+  current title, over a numbered track list. Each track is one `<li
+  class="audio-track">` in `index.html`: a `.track-play` link to the MP3 (it
+  covers the whole row; without JavaScript it simply opens the file), the
+  title `<h3>`, the artist `<p class="track-artist">` and a `.track-time`
+  length (m:ss, from `ffprobe`). Copy an existing row for a new track. Playback
+  runs straight down the list and stops back on track 1 after the last.
 - **Every track carries an artist byline** in `<p class="track-artist">`, under
-  the title, and names the artist in the player's `aria-label` ("Play <title> by
+  the title, and names the artist in the link's `aria-label` ("Play <title> by
   <artist>, made entirely with SPASynth"). Ruger Seeds, add.remove and
   Philharmonic are the artists so far.
-- The "N tracks made entirely with SPASynth" sentence counts the players on the
-  page in `js/page.js`, so it updates itself. Set the static `data-track-count`
+- **Also add the track to the `MusicPlaylist` node in the JSON-LD** at the top of
+  `index.html` (name, artist, ISO duration, MP3 URL) and bump its `numTracks`.
+- The "N tracks made entirely with SPASynth" sentence counts the playlist rows in
+  `js/page.js`, so it updates itself. Set the static `data-track-count`
   fallback to match for the pre-JS and no-JS cases. Never hardcode the number
   anywhere else.
-- Starting one track pauses the others; that is also handled in `js/page.js`.
+- The playlist and the videos share "one sound at a time"; also in `js/page.js`.
 - **Bump the `?v=` on `css/styles.css` in `index.html` whenever the stylesheet
   changes**, and do the same for any JS file you edit. Cloudflare caches CSS and
   JS for four hours (`max-age=14400`, `cf-cache-status: HIT`) while the HTML is
@@ -187,7 +197,8 @@ Adding a track is a manual job with settled conventions:
 ## Video demos ("See it play", added 2026-10-27)
 
 Two screen recordings sit in their own section just before the listening
-room, click to play with sound (one player at a time, shared with the audio
+room, Haunted Forest first and Sample Pool second (swapped at Mike's request
+2026-10-28), click to play with sound (one player at a time, shared with the audio
 tracks in `js/page.js`):
 
 - **Sample Pool: a new laugh on every note** (preset SFX Crowd Laughter). All
@@ -233,11 +244,19 @@ that switches release auto-publishing off (see the next section).
   any live product renders the template for a quick curl check.
 - 2026-10-27: added "See it play" (custom-liquid section looping the product's
   video media with the site's captions) after the intro text, and "Hear it:
-  100% SPASynth" plus six `spa-audio-preview` sections (one per demo track,
-  MP3s in Content -> Files, same names as `assets/audio/`) after "Inside the
-  synth". A new track means a new `spa-audio-preview` section there. Also bump the
-  "Six/Seven tracks" sentence in the `spasynth_listen` section. The
-  description also carries the six players (harmless, not rendered).
+  100% SPASynth" after "Inside the synth". MP3s live in Content -> Files, same
+  names as `assets/audio/`.
+- 2026-10-28: the per-track `spa-audio-preview` sections were replaced by one
+  playlist in the `spasynth_listen` section (custom liquid, same accent
+  #e8553d as the store's other players). A new track is one more `<li
+  class="spa-pl__row">` in that section's code (copy a row; CDN URL, title,
+  artist, m:ss length); the "Seven tracks" count is filled in by its script.
+  The track rows start as links and the script swaps them for buttons, because
+  the theme's own link handling otherwise opens the MP3 instead of playing it.
+  Text in the rows uses `<span>`s, not `<p>`, to dodge the theme's paragraph
+  margins. "See it play" shows Haunted Forest first regardless of the
+  product's media order. The product description still carries seven plain
+  players (harmless, not rendered).
   SEO title is now "SPASynth: Sound-Effects Synth Plugin (VST3, AU)" (theme
   appends " – Silverplatter Audio"), meta description mentions VST3/AU.
 - 2026-10-27: the description's leftover "Standard is the complete

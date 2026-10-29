@@ -8,7 +8,7 @@ Live counts (packs, sounds, presets, current version) are on the page itself and
 
 - [Overview](https://spasynth.com/#hook): what SPASynth is and how the library becomes the synth
 - [Features](https://spasynth.com/#features): engines, filters, modulation, arpeggiator, effects, library, interface
-- [Watch](https://spasynth.com/#watch): screen-recorded demos of two presets (Sample Pool laughter, Haunted Forest soundscape)
+- [Watch](https://spasynth.com/#watch): screen-recorded demos of two presets (Haunted Forest soundscape, Sample Pool laughter)
 - [Listen](https://spasynth.com/#listening): tracks made entirely with SPASynth
 - [Editions](https://spasynth.com/#editions): SPASynth and the Everything Bundle, seats and upgrades
 - [Licensing](https://spasynth.com/#licensing): serial licensing, 3 computers per serial, royalty-free sound license
