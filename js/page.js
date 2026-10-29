@@ -56,17 +56,77 @@
   window.addEventListener('spasynth:ready', queue);
   update();
 
-  /* ---------- audio + video: one player at a time, count stays honest ---------- */
-  const players = document.querySelectorAll('.audio-track audio');
-  const media = document.querySelectorAll('.audio-track audio, .video-demo video');
+  /* ---------- audio playlist + video: one player at a time, count stays honest ---------- */
+  const playlist = document.querySelector('[data-playlist]');
+  const links = playlist ? [...playlist.querySelectorAll('.track-play')] : [];
+  if (playlist && links.length) {
+    const deck = playlist.querySelector('[data-playlist-deck]');
+    const audio = deck.querySelector('audio');
+    const toggle = deck.querySelector('[data-pl="toggle"]');
+    const seek = deck.querySelector('[data-pl-seek]');
+    const timeEl = deck.querySelector('[data-pl-time]');
+    const durEl = deck.querySelector('[data-pl-duration]');
+    const rows = links.map(a => a.closest('.audio-track'));
+    const fmt = t => { t = Math.max(0, Math.floor(t || 0)); return Math.floor(t / 60) + ':' + String(t % 60).padStart(2, '0'); };
+    let current = 0, seeking = false;
+    const setProgress = v => { seek.value = v; seek.style.setProperty('--p', v / 10 + '%'); };
+    const select = (i, play) => {
+      current = (i + links.length) % links.length;
+      rows.forEach((r, j) => { r.classList.toggle('is-current', j === current); if (j === current) r.setAttribute('aria-current', 'true'); else r.removeAttribute('aria-current'); });
+      const row = rows[current];
+      deck.querySelector('[data-pl-title]').textContent = row.querySelector('h3').textContent;
+      deck.querySelector('[data-pl-artist]').textContent = row.querySelector('.track-artist').textContent;
+      durEl.textContent = row.querySelector('.track-time').textContent;
+      const src = links[current].getAttribute('href');
+      if (audio.getAttribute('src') !== src) { audio.src = src; setProgress(0); timeEl.textContent = '0:00'; }
+      if (play) audio.play().catch(() => {});
+    };
+    links.forEach((a, i) => a.addEventListener('click', e => {
+      e.preventDefault();
+      if (i === current && !audio.paused) audio.pause(); else select(i, true);
+    }));
+    toggle.addEventListener('click', () => { if (audio.paused) audio.play().catch(() => {}); else audio.pause(); });
+    deck.querySelector('[data-pl="prev"]').addEventListener('click', () => {
+      if (audio.currentTime > 3) audio.currentTime = 0; else select(current - 1, !audio.paused);
+    });
+    deck.querySelector('[data-pl="next"]').addEventListener('click', () => select(current + 1, !audio.paused));
+    const sync = () => {
+      const playing = !audio.paused;
+      playlist.classList.toggle('is-playing', playing);
+      toggle.setAttribute('aria-label', playing ? 'Pause' : 'Play');
+    };
+    audio.addEventListener('play', sync);
+    audio.addEventListener('pause', sync);
+    audio.addEventListener('emptied', sync);
+    audio.addEventListener('loadedmetadata', () => { durEl.textContent = fmt(Math.round(audio.duration)); });
+    audio.addEventListener('timeupdate', () => {
+      if (seeking || !audio.duration) return;
+      setProgress(Math.round(audio.currentTime / audio.duration * 1000));
+      timeEl.textContent = fmt(audio.currentTime);
+    });
+    // Play straight through the list, then rest on the first track.
+    audio.addEventListener('ended', () => select(current + 1, current < links.length - 1));
+    seek.addEventListener('input', () => {
+      seeking = true;
+      seek.style.setProperty('--p', seek.value / 10 + '%');
+      if (audio.duration) timeEl.textContent = fmt(seek.value / 1000 * audio.duration);
+    });
+    seek.addEventListener('change', () => {
+      seeking = false;
+      if (audio.duration) audio.currentTime = seek.value / 1000 * audio.duration; else setProgress(0);
+    });
+    select(0, false);
+    deck.hidden = false;
+  }
+  const media = document.querySelectorAll('.playlist audio, .video-demo video');
   media.forEach(el => el.addEventListener('play', () => {
     media.forEach(other => { if (other !== el) other.pause(); });
   }));
   const words = ['Zero','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve'];
   const count = document.querySelector('[data-track-count]');
   const noun = document.querySelector('[data-track-noun]');
-  if (count) count.textContent = players.length < words.length ? words[players.length] : String(players.length);
-  if (noun) noun.textContent = players.length === 1 ? 'track' : 'tracks';
+  if (count) count.textContent = links.length < words.length ? words[links.length] : String(links.length);
+  if (noun) noun.textContent = links.length === 1 ? 'track' : 'tracks';
 
   /* ---------- Organic Chaos scope: a wandering random walk ---------- */
   function makeScope(canvas, opts) {
