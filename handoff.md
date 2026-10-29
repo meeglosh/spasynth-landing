@@ -7,8 +7,19 @@ is just what is true right now and what to do next.
 - Repo `github.com/meeglosh/spasynth-landing`, branch `main`, local
   `~/spasynth-landing`. Static one-page site, no build step, GitHub Pages behind
   Cloudflare at **spasynth.com**.
-- As of 2026-10-27 `main` is clean and fully pushed (head: the video-demos
-  commit `4957757` plus this handoff update); the live site matches it.
+- As of 2026-10-29 `main` is clean and fully pushed (latest work: the demo-track
+  playlist `9bf7e2d` plus this handoff update); the live site matches it.
+- **One other live branch: `download-page`**, the launch-day download page. It is
+  deliberately NOT merged; see "Launch-day download page" below. It is pushed to
+  GitHub as a backup (GitHub Pages builds only `main`, so that deploys nothing).
+  `case-study-redesign` and `experiment/fullscreen-hero-bg` are old, fully merged
+  into `main`, and can be ignored.
+- Source masters and unused images stay out of git via `.gitignore`
+  (`assets/videos/*.mov`, `assets/audio/*.wav`, the product-shot PNG, and two
+  images Mike dropped in that the page doesn't use: `SPASynth-Rainforest.png`,
+  `studio2.jpg`). Anything committed under `assets/` is publicly served, so keep
+  masters out. `assets/scene/studio.jpg` is still in the repo but no longer used
+  since the product shot replaced it (2026-10-27).
 - The Vault refill is visibly progressing: bonus recordings went
   7,632 -> 25 -> 98 -> 199 -> 509 -> 733 -> 826 (published 2026-10-23,
   unchanged at the 2026-10-26 poll). Expect this
@@ -362,6 +373,31 @@ on purpose. Both scripts now stand down when the repo is ahead of origin. If a
 job logs `SKIP: N unpushed commit(s)`, something is waiting for a human; look
 before you clear it.
 
+## Launch-day download page (branch `download-page`)
+
+`download.html` (served as spasynth.com/download) holds the macOS and Windows
+installer links, file sizes and SHA-256 hashes, install steps, a SmartScreen note
+and an optional newsletter sign-up (unticked consent box, never gates the
+download; posts to the newsletter Worker with source `spasynth-download`). The
+branch also adds `/download` to `sitemap.xml`, a Download section to `llms.txt`,
+and social share tags on the page. Mike's call on 2026-10-29: **keep it unmerged
+until launch day.** Reason: as of that date both 1.0.36 installer URLs on
+`downloads.spasynth.com` return 404, so merging would publish a page with dead
+download buttons.
+
+- **Keep it current:** after every push to `main`, merge `main` into it (`git
+  checkout download-page && git merge main`, then push the branch), so the launch
+  merge stays conflict-free. Done through `9bf7e2d` (the playlist).
+- **Filling it in:** `~/spastation/scripts/publish-release.sh --public` uploads the
+  installers and rewrites the page's `data-release` slots (version, sizes, URLs,
+  hashes). It commits to `main` if `origin/main` already has `download.html`,
+  otherwise to `download-page`. **It aborts if this repo has any uncommitted or
+  untracked file**, which is why the masters above are gitignored.
+- **Launch day:** upload the installers, check both URLs return 200, merge
+  `download-page` into `main`, push, then check `curl -sI
+  https://spasynth.com/download` returns 200 and that the sitemap and llms.txt
+  entries are live. Do this together with the Shopify launch steps in Open items.
+
 ## Decisions worth not relitigating
 
 - **"Up to N sounds" = packs + Vault bonus.** Mike's call 2026-09-14: only
@@ -422,6 +458,21 @@ before you clear it.
    left as recorded, mention it if Mike re-records. (c) Not yet played back on a
    real phone. (d) New demo videos: same encode, poster and labelling pattern
    as in "Video demos"; name what the video shows off (feature, preset).
+9. **Waiting on Mike before launch (raised 2026-10-27/28, not yet answered).**
+   (a) Add `offers` to the JSON-LD at launch (item 7d): is $99 the early-release
+   price? (b) Switch the "Coming soon" edition buttons to the Shopify product URL
+   in the launch merge (item 2)? (c) The Shopify theme customizer preview showed
+   SPASynth at $140, compare-at $210, likely a non-USD market's converted price;
+   check the USD price on the live product before activating. (d) Cloudflare
+   AI-bot blocking (item 7a) is still on: GPTBot and ClaudeBot get 403 on
+   spasynth.com, and they are what AI answer engines use to read the site.
+   After Mike turns it off, re-check with `curl -A GPTBot -sI
+   https://spasynth.com/` and the robots.txt content.
+10. **Playlist follow-ups (2026-10-28).** Not yet tried on a real phone
+   (lock-screen controls, background playback). Seeking needs a server that
+   answers HTTP range requests: GitHub Pages and the Shopify CDN do, but Python's
+   built-in `http.server` does not, so local testing with it shows the scrubber
+   snapping back to 0:00. Use a range-aware local server to test seeking.
 
 ## Gotchas
 
