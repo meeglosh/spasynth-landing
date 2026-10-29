@@ -5,3 +5,11 @@ scripts/.vault-poll-state.json
 
 # Original screen-recording masters; the page uses the web MP4s beside them
 assets/videos/*.mov
+
+# Audio and image masters; the page uses the web encodes beside them
+assets/audio/*.wav
+assets/scene/SPASYNTH-Product-Shot.png
+
+# Images Mike dropped in that the page does not use; kept local so they are not published
+assets/scene/SPASynth-Rainforest.png
+assets/scene/studio2.jpg
