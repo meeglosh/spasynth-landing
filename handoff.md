@@ -7,8 +7,9 @@ is just what is true right now and what to do next.
 - Repo `github.com/meeglosh/spasynth-landing`, branch `main`, local
   `~/spasynth-landing`. Static one-page site, no build step, GitHub Pages behind
   Cloudflare at **spasynth.com**.
-- As of 2026-10-29 `main` is clean and fully pushed (latest work: the demo-track
-  playlist `9bf7e2d` plus this handoff update); the live site matches it.
+- As of 2026-10-30 `main` is clean and fully pushed (latest work: the v1.0.36
+  renders `3362903`, Breath moved to third in the playlist, this handoff
+  update); the live site matches it.
 - **One other live branch: `download-page`**, the launch-day download page. It is
   deliberately NOT merged; see "Launch-day download page" below. It is pushed to
   GitHub as a backup (GitHub Pages builds only `main`, so that deploys nothing).
@@ -25,6 +26,23 @@ is just what is true right now and what to do next.
   unchanged at the 2026-10-26 poll). Expect this
   number to keep climbing toward roughly 2,000; the job publishes each move on
   its own.
+
+## 2026-10-30: new 3D renders and interface shots (v1.0.36)
+
+Replaced from the Tape-display session scratchpad (owner approved):
+`assets/scene/studio-assembled.webp`, `studio-exploded.webp`, all 181
+`sequence/` frames and 181 `sequence-mobile/` frames, `assets/images/og-image.jpg`
+(URL unchanged, no ?v= on it), plus the matching interface screenshots
+`assets/scene/interface.png`, `assets/images/spasynth-demo-base.png` and
+`assets/images/spasynth-accent.png`. Dimensions are identical to the old files.
+New cache-bust / `#synth-stage` `data-model-version` string:
+**20261030-v1036** (every ?v= on a replaced file; `spasynth-demo-panel.png`
+and `js/scene.js` were not replaced and keep their old values). The 3D model now has knob bores
+and shafts, 3D toggles, raised top-bar keys and the v1.0.36 compressor knob
+layout. `studio.jpg`, `studio2.jpg`, `product-shot.jpg` untouched. The preset
+count stays at **370 on purpose** until the release ships. The Tape colour may
+change again (filter-aware colour on branch `tape-no-tiles` awaits owner
+approval); if it does, re-render and bump the version string again.
 
 ## The auto-refresh is live
 
@@ -153,11 +171,12 @@ steady days, snapping back to daily on any change. Log:
 
 ## Demo tracks (the listening room)
 
-Seven tracks, in this order: SPA, Dark, The Onus is on You, City of Cones,
-Barnicle, Homebound, Breath. All are Ruger Seeds except Dark, which is add.remove and
-sits second at Mike's request (2026-09-17). Breath is by Philharmonic (added
-2026-10-28 from a 24-bit/48 kHz WAV master, converted with the command below). More are expected; a new track
-lands at the bottom unless Mike says otherwise.
+Seven tracks, in this order: SPA, Dark, Breath, The Onus is on You, City of
+Cones, Barnicle, Homebound. All are Ruger Seeds except Dark, which is add.remove and
+sits second at Mike's request (2026-09-17), and Breath, which is by Philharmonic
+(added 2026-10-28 from a 24-bit/48 kHz WAV master, converted with the command
+below) and sits third at Mike's request (2026-10-30, same order on Shopify).
+More are expected; a new track lands at the bottom unless Mike says otherwise.
 
 **This list and the flat7.design case study's have deliberately diverged as of
 2026-09-17.** The case study (`~/flat7-design-spasynth/public/spasynth/`) keeps
@@ -458,16 +477,16 @@ download buttons.
    left as recorded, mention it if Mike re-records. (c) Not yet played back on a
    real phone. (d) New demo videos: same encode, poster and labelling pattern
    as in "Video demos"; name what the video shows off (feature, preset).
-9. **Waiting on Mike before launch (raised 2026-10-27/28, not yet answered).**
-   (a) Add `offers` to the JSON-LD at launch (item 7d): is $99 the early-release
-   price? (b) Switch the "Coming soon" edition buttons to the Shopify product URL
-   in the launch merge (item 2)? (c) The Shopify theme customizer preview showed
-   SPASynth at $140, compare-at $210, likely a non-USD market's converted price;
-   check the USD price on the live product before activating. (d) Cloudflare
-   AI-bot blocking (item 7a) is still on: GPTBot and ClaudeBot get 403 on
-   spasynth.com, and they are what AI answer engines use to read the site.
-   After Mike turns it off, re-check with `curl -A GPTBot -sI
-   https://spasynth.com/` and the robots.txt content.
+9. **Launch decisions (Mike answered 2026-10-30).** (a) $99 is an intro price;
+   it goes to $149 when the initial sale ends (end date TBD). At launch, add
+   `offers` to the JSON-LD (item 7d) reflecting that, and update them when the
+   sale ends. (b) Yes: the launch merge switches the "Coming soon" edition
+   buttons to the Shopify product URLs (item 2). (c) The $140 / $210 theme
+   preview was most likely viewed from Canada (CAD market); still confirm the
+   USD price on the live product when activating. (d) Cloudflare AI-bot
+   blocking (item 7a) gets turned off **at launch**, not before. Afterwards
+   re-check with `curl -A GPTBot -sI https://spasynth.com/` and the robots.txt
+   content.
 10. **Playlist follow-ups (2026-10-28).** Not yet tried on a real phone
    (lock-screen controls, background playback). Seeking needs a server that
    answers HTTP range requests: GitHub Pages and the Shopify CDN do, but Python's
@@ -484,8 +503,8 @@ download buttons.
 - The design is the flat7.design SPASynth case-study grammar (scroll-craft
   engine in `js/scrollcraft.js` + `css/scrollcraft.css`). **Never edit the
   engine files**; bespoke behaviour is driven from `--sc-p` in page CSS/JS.
-- The 3D hero/teardown renders model the pre-1.0.11 faceplate. They read as a
-  stylized study model rather than a screenshot, so they were left as-is.
+- The 3D hero/teardown renders were re-rendered for v1.0.36 on 2026-10-30
+  (see that section). Re-render them when the faceplate changes visibly.
 - `scripts/.vault-poll-state.json` is gitignored local-only cadence state.
   Deleting it just restarts the clock at daily.
 - **Audio will not decode in the Claude-in-Chrome tab.** Media loading is
