@@ -406,7 +406,7 @@ download buttons.
 
 - **Keep it current:** after every push to `main`, merge `main` into it (`git
   checkout download-page && git merge main`, then push the branch), so the launch
-  merge stays conflict-free. Done through the 2026-10-30 Google verification file.
+  merge stays conflict-free. Done through the 2026-10-30 Bing verification file.
 - **Filling it in:** `~/spastation/scripts/publish-release.sh --public` uploads the
   installers and rewrites the page's `data-release` slots (version, sizes, URLs,
   hashes). It commits to `main` if `origin/main` already has `download.html`,
@@ -467,8 +467,10 @@ download buttons.
    by `google1d358ba6505841b2.html` in the repo root (**never delete it**, or
    verification lapses); `sitemap.xml` submitted. It showed "Couldn't fetch"
    right after submitting even though Googlebot gets a 200; recheck in a day or
-   two. **Bing Webmaster Tools still to do** (Bing feeds ChatGPT search and
-   Copilot); needs Mike signed in.
+   two. **Bing: done 2026-10-30** (Bing feeds ChatGPT search and Copilot).
+   Site `https://spasynth.com/` added manually (not imported from Google),
+   verified by `BingSiteAuth.xml` in the repo root (**never delete it** either),
+   sitemap submitted and "Processing".
    (d) At launch, add `offers` (prices, Shopify URLs) to the SoftwareApplication
    JSON-LD in the head. Keep counts and the version string out of the JSON-LD:
    counts would go stale, and `prepare-release.py` requires the version in
