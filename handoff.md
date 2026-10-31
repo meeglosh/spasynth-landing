@@ -26,6 +26,23 @@ is just what is true right now and what to do next.
   number to keep climbing toward roughly 2,000; the job publishes each move on
   its own.
 
+## 2026-10-30: new 3D renders and interface shots (v1.0.36)
+
+Replaced from the Tape-display session scratchpad (owner approved):
+`assets/scene/studio-assembled.webp`, `studio-exploded.webp`, all 181
+`sequence/` frames and 181 `sequence-mobile/` frames, `assets/images/og-image.jpg`
+(URL unchanged, no ?v= on it), plus the matching interface screenshots
+`assets/scene/interface.png`, `assets/images/spasynth-demo-base.png` and
+`assets/images/spasynth-accent.png`. Dimensions are identical to the old files.
+New cache-bust / `#synth-stage` `data-model-version` string:
+**20261030-v1036** (every ?v= on a replaced file; `spasynth-demo-panel.png`
+and `js/scene.js` were not replaced and keep their old values). The 3D model now has knob bores
+and shafts, 3D toggles, raised top-bar keys and the v1.0.36 compressor knob
+layout. `studio.jpg`, `studio2.jpg`, `product-shot.jpg` untouched. The preset
+count stays at **370 on purpose** until the release ships. The Tape colour may
+change again (filter-aware colour on branch `tape-no-tiles` awaits owner
+approval); if it does, re-render and bump the version string again.
+
 ## The auto-refresh is live
 
 Mike loaded the LaunchAgent on 2026-09-14, so the Vault count now updates
