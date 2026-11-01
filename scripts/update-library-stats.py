@@ -19,12 +19,14 @@ not a source archive whose contents are catalogued as their own packs.
             scripts/library-stats.json -> soundTotalFallback with a warning.
   size    = catalog zip bytes + Vault bonus bytes, rounded to whole GB
   starter = 5 * packs (Standard's starter library: five sounds from every pack)
-  presets = 3 * packs + synth bank (factory presets: one each of Keys/Texture/Pulse
-            per pack, confirmed in source/library/PresetManager.h, PLUS the fixed
-            synth-only bank added in 1.0.31, which needs no library and does not
-            grow with packs. The bank size is counted from
-            ~/spasynth/source/library/SynthBank.cpp when present (or
-            $SPASYNTH_REPO), else SYNTH_BANK_FALLBACK below.)
+  presets = every factory preset SPASynth ships (1.0.37 on): the synth bank
+            (source/library/SynthBank.cpp) + the Drums / Rhythmic Loops / Hybrid
+            Design / Sample Pool banks (source/library/FactoryBanks.cpp) + the
+            artist banks (one .spasynth file each under
+            source/library/factory-data/Artist Presets/). Counted from
+            ~/spasynth (or $SPASYNTH_REPO) when present, else
+            FACTORY_PRESETS_FALLBACK below. The banks no longer grow with packs;
+            the per-pack Keys/Texture/Pulse presets were retired in 1.0.37.
 
 Rewrites every <span data-stat="..."> in index.html plus the three description
 <meta> tags. Run after every pack release; safe to run repeatedly.
@@ -37,18 +39,23 @@ LOCAL = os.path.join(ROOT, 'scripts', 'library-stats.json')
 DEFAULT_CATALOG = os.path.expanduser('~/spastation/shared/catalog-releases.json')
 DEFAULT_VAULT = os.path.expanduser('~/spastation/shared/vault-stats.json')
 
-SYNTH_BANK_FALLBACK = 100   # 10 types x 10 presets, 1.0.31; used when the synth repo is absent
+FACTORY_PRESETS_FALLBACK = 243   # 100 synth + 101 banks + 42 artist, 1.0.37; used when the synth repo is absent
 
-def synth_bank_count():
-    path = os.path.join(os.environ.get('SPASYNTH_REPO', os.path.expanduser('~/spasynth')),
-                        'source', 'library', 'SynthBank.cpp')
+def factory_preset_count():
+    lib = os.path.join(os.environ.get('SPASYNTH_REPO', os.path.expanduser('~/spasynth')), 'source', 'library')
+    artist = os.path.join(lib, 'factory-data', 'Artist Presets')
     try:
-        text = open(path, encoding='utf-8').read()
-    except OSError:
-        print(f'warning: {path} not found; using SYNTH_BANK_FALLBACK={SYNTH_BANK_FALLBACK}', file=sys.stderr)
-        return SYNTH_BANK_FALLBACK
-    n = len(re.findall(r'^\s*\{ "[^"]+", "[^"]+", R"\(', text, re.M))
-    return n or SYNTH_BANK_FALLBACK
+        synth = len(re.findall(r'^\s*\{ "[^"]+", "[^"]+", R"\(', open(os.path.join(lib, 'SynthBank.cpp'), encoding='utf-8').read(), re.M))
+        banks = len(re.findall(r'^\s*\{ [A-Z], "[^"]+", "[^"]+", R"\(', open(os.path.join(lib, 'FactoryBanks.cpp'), encoding='utf-8').read(), re.M))
+        artists = sum(f.endswith('.spasynth') for _, _, fs in os.walk(artist) for f in fs)
+    except OSError as e:
+        print(f'warning: {e}; using FACTORY_PRESETS_FALLBACK={FACTORY_PRESETS_FALLBACK}', file=sys.stderr)
+        return FACTORY_PRESETS_FALLBACK
+    if not (synth and banks and artists):
+        print(f'warning: preset count looks wrong (synth {synth}, banks {banks}, artist {artists}); '
+              f'using FACTORY_PRESETS_FALLBACK={FACTORY_PRESETS_FALLBACK}', file=sys.stderr)
+        return FACTORY_PRESETS_FALLBACK
+    return synth + banks + artists
 
 def load_catalog(src):
     if re.match(r'^https?://', src):
@@ -88,7 +95,7 @@ def main():
     sounds += bonus
     size_bytes = sum(int(v.get('size') or 0) for v in packs) + int(vault.get('bonusBytes') or 0)
     size_gb = round(size_bytes / 1e9)
-    n_packs, starter, presets = len(packs), 5 * len(packs), 3 * len(packs) + synth_bank_count()
+    n_packs, starter, presets = len(packs), 5 * len(packs), factory_preset_count()
     fmt = lambda n: f'{n:,}'
 
     page = open(PAGE, encoding='utf-8').read()

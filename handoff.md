@@ -39,10 +39,10 @@ New cache-bust / `#synth-stage` `data-model-version` string:
 **20261030-v1036** (every ?v= on a replaced file; `spasynth-demo-panel.png`
 and `js/scene.js` were not replaced and keep their old values). The 3D model now has knob bores
 and shafts, 3D toggles, raised top-bar keys and the v1.0.36 compressor knob
-layout. `studio.jpg`, `studio2.jpg`, `product-shot.jpg` untouched. The preset
-count stays at **370 on purpose** until the release ships. The Tape colour may
-change again (filter-aware colour on branch `tape-no-tiles` awaits owner
-approval); if it does, re-render and bump the version string again.
+layout. `studio.jpg`, `studio2.jpg`, `product-shot.jpg` untouched. The Tape
+colour changed again after these renders (filter-aware colour from
+`tape-no-tiles`, merged into `~/spasynth` main for 1.0.37), so the renders and
+interface shots likely need redoing and the version string bumping again.
 
 ## The auto-refresh is live
 
@@ -138,8 +138,8 @@ Everything below is generated, not typed. Do not hand-edit these numbers in
 | Sounds ("up to") | 12,305 | 11,479 pack sounds + 826 Vault bonus |
 | Library size | 87 GB | catalog zip bytes + Vault bonus bytes |
 | Starter library | 450 | 5 x packs |
-| Factory presets | 370 | 3 x packs (Keys/Texture/Pulse per pack) + 100 synth bank |
-| Version | v1.0.36 | automated, see "Shipping a new SPASynth version" |
+| Factory presets | 243 | 100 synth bank + 101 Drums/Loops/Hybrid/Sample Pool + 42 artist, counted from `~/spasynth/source/library` (1.0.37 retired the per-pack Keys/Texture/Pulse presets; switched 2026-10-31) |
+| Version | v1.0.37 | automated, see "Shipping a new SPASynth version" |
 
 The sounds/size rows move on their own (the Vault refresh job) and the version
 row now does too, so treat all three as snapshots — `scripts/library-stats.json`
