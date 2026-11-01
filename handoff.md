@@ -7,9 +7,9 @@ is just what is true right now and what to do next.
 - Repo `github.com/meeglosh/spasynth-landing`, branch `main`, local
   `~/spasynth-landing`. Static one-page site, no build step, GitHub Pages behind
   Cloudflare at **spasynth.com**.
-- As of 2026-10-30 `main` is clean and fully pushed (latest work: the v1.0.36
-  renders `3362903`, Breath moved to third in the playlist, this handoff
-  update); the live site matches it.
+- As of 2026-11-01 `main` is clean and fully pushed (latest work: bundle copy
+  `d06a4a2` plus this handoff update) and `download-page` has `main` merged in;
+  the live site matches `main`.
 - **One other live branch: `download-page`**, the launch-day download page. It is
   deliberately NOT merged; see "Launch-day download page" below. It is pushed to
   GitHub as a backup (GitHub Pages builds only `main`, so that deploys nothing).
@@ -23,9 +23,40 @@ is just what is true right now and what to do next.
   since the product shot replaced it (2026-10-27).
 - The Vault refill is visibly progressing: bonus recordings went
   7,632 -> 25 -> 98 -> 199 -> 509 -> 733 -> 826 (published 2026-10-23,
-  unchanged at the 2026-10-26 poll). Expect this
+  still unchanged at the 2026-11-01 poll). Expect this
   number to keep climbing toward roughly 2,000; the job publishes each move on
   its own.
+
+## 2026-10-30/31 session (start here)
+
+Done and live:
+- **Breath moved to third** in the playlist (site list + JSON-LD, and the
+  Shopify `spasynth_listen` section).
+- **Search engines:** Google Search Console and Bing Webmaster Tools both set up
+  for `https://spasynth.com/` (URL-prefix property on meeglosh@gmail.com, Bing
+  added manually, not imported from Google). Verified by
+  `google1d358ba6505841b2.html` and `BingSiteAuth.xml` in the repo root:
+  **never delete either.** `sitemap.xml` submitted to both. Google showed
+  "Couldn't fetch" right after submitting though Googlebot gets a 200: recheck
+  it (Search Console -> Sitemaps).
+- **v1.0.37 auto-published** at 2026-10-31 03:51 UTC by prepare-release.py (pre-launch
+  path, as designed), even though 1.0.37 is only cut for macOS and not uploaded
+  anywhere.
+- **Factory presets 370 -> 243** (1.0.37 retired the per-pack Keys/Texture/Pulse
+  presets for fixed banks). `update-library-stats.py` now counts SynthBank.cpp
+  (100) + FactoryBanks.cpp (101) + artist `.spasynth` files (42) from
+  `~/spasynth`. Shopify template updated too (intro line and the Presets row of
+  the specs table).
+- **Everything Bundle card** button is "Buy now", linking to
+  `https://silverplatteraudio.com/collections/bundles/products/everything-bundle`.
+  The bundle is on sale now; only SPASynth is "Coming soon". Because SPASynth is
+  not out, the bundle card and two FAQs say it includes SPASynth "once it's
+  released" (remove at launch, see Open items 2).
+- Launch decisions recorded in Open items 9.
+
+Next up (see Open items 11 for detail): the "No AAX in v1" specs note is now
+wrong; re-render for the new Tape colour; check the Shopify product
+description for a leftover 370.
 
 ## 2026-10-30: new 3D renders and interface shots (v1.0.36)
 
@@ -508,6 +539,19 @@ download buttons.
    answers HTTP range requests: GitHub Pages and the Shopify CDN do, but Python's
    built-in `http.server` does not, so local testing with it shows the scrubber
    snapping back to 0:00. Use a range-aware local server to test seeking.
+
+11. **Follow-ups from 2026-10-31.** (a) **Ask Mike:** the specs note says "No
+   AAX in v1. Current release: v1.0.37." but 1.0.37 adds AAX on Mac (Pro Tools,
+   optional installer choice) and the page's own changelog says so; Windows AAX
+   is held waiting on PACE. Suggested wording "AAX on Mac; AAX on Windows
+   coming", not yet approved. That sentence is one of the five version spots
+   prepare-release.py rewrites, so keep `v1.0.37` in it exactly once.
+   (b) The renders/interface shots predate the 1.0.37 Tape colour (see the
+   2026-10-30 renders section). (c) The Shopify product *description* (not
+   rendered, the template is) was not checked for "370". (d) Recheck Google's
+   sitemap status. (e) `~/spasynth/handoff.md` still lists "Preset count 370 ->
+   243 on spasynth-landing, Shopify and library-stats" as a to-do; it is done
+   here, tell that repo's next session.
 
 ## Gotchas
 
