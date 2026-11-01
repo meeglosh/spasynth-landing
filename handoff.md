@@ -445,7 +445,11 @@ download buttons.
    request for "a FAQ answer confirming updates are free"? Never answered.
 2. **Shopify link.** The SPASynth edition button is still an `href="#"`
    placeholder labelled "Coming soon"; at launch swap in the product URL and
-   relabel it "Buy now" like the bundle button (Mike confirmed 2026-10-30). The SPASynth product exists as a Draft
+   relabel it "Buy now" like the bundle button (Mike confirmed 2026-10-30).
+   Same launch pass: drop "once it's released" from the four places that say
+   the bundle includes SPASynth (bundle card tag and first bullet, FAQ "I own
+   the Everything Bundle. Do I get SPASynth?", FAQ "What is the difference…").
+   Added 2026-10-31 because the bundle is on sale before SPASynth is. The SPASynth product exists as a Draft
    (see "The SPASynth Shopify listing"); its storefront URL is known once it is
    Active. **Activating it is also
    what switches release auto-publishing off** (see "Shipping a new SPASynth
