@@ -87,8 +87,13 @@ computers. **Upgrade:** pay the bundle price for the same number of seats as
 SPASynth copies owned, minus what was paid for SPASynth, via a personal upgrade
 code. The "Seats and upgrades" box below the cards and three FAQ entries
 (SPASynth vs bundle, upgrading, "Can I buy more than one copy or seat?") all
-state these rules; keep them in sync if pricing changes again. Both buy
-buttons still say "Coming soon". Also fixed in that pass: 21 mod sources, eight
+state these rules; keep them in sync if pricing changes again. The SPASynth
+buy button still says "Coming soon"; the **Everything Bundle button says "Buy
+now" and links to
+`https://silverplatteraudio.com/collections/bundles/products/everything-bundle`**
+(since 2026-10-31: Mike, the bundle is on sale now, only SPASynth is coming
+soon). Its live Shopify prices matched the card that day ($499 / $699 one
+seat, $748.50 / $1,048.50 two). Also fixed in that pass: 21 mod sources, eight
 engines.
 
 ## SEO / AEO (audited 2026-10-17)
@@ -438,9 +443,9 @@ download buttons.
 
 1. **Ask Mike:** does the existing "Will I get updates?" FAQ satisfy his older
    request for "a FAQ answer confirming updates are free"? Never answered.
-2. **Shopify links.** The two edition buttons (SPASynth, Everything Bundle) are
-   still `href="#"` placeholders labelled "Coming soon". Swap for real product URLs at
-   launch and likely relabel to "Buy now". The SPASynth product exists as a Draft
+2. **Shopify link.** The SPASynth edition button is still an `href="#"`
+   placeholder labelled "Coming soon"; at launch swap in the product URL and
+   relabel it "Buy now" like the bundle button (Mike confirmed 2026-10-30). The SPASynth product exists as a Draft
    (see "The SPASynth Shopify listing"); its storefront URL is known once it is
    Active. **Activating it is also
    what switches release auto-publishing off** (see "Shipping a new SPASynth
@@ -487,8 +492,8 @@ download buttons.
 9. **Launch decisions (Mike answered 2026-10-30).** (a) $99 is an intro price;
    it goes to $149 when the initial sale ends (end date TBD). At launch, add
    `offers` to the JSON-LD (item 7d) reflecting that, and update them when the
-   sale ends. (b) Yes: the launch merge switches the "Coming soon" edition
-   buttons to the Shopify product URLs (item 2). (c) The $140 / $210 theme
+   sale ends. (b) Yes: the launch merge switches the SPASynth "Coming soon"
+   button to its Shopify product URL (item 2); the bundle button is already live. (c) The $140 / $210 theme
    preview was most likely viewed from Canada (CAD market); still confirm the
    USD price on the live product when activating. (d) Cloudflare AI-bot
    blocking (item 7a) gets turned off **at launch**, not before. Afterwards
